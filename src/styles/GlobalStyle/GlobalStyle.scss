@@ -4,7 +4,6 @@
 
 :root {
     --primary: #29A07E;
-    --max-width: 1200px;
 }
 
 html {
@@ -34,4 +33,18 @@ p {
     margin: 0;
     display: flex;
     align-items: center;
+}
+
+.bg-main {
+    background: var(--primary);
+}
+
+.list-group-item.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.list-group-item:hover {
+    background-color: var(--primary);
+    color: white;
 }

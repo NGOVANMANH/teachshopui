@@ -3,11 +3,13 @@ import { Header, Footer } from "../../components";
 
 const DefaultLayout = ({ children }) => {
     return (
-        <div className="container">
+        <React.Fragment>
             <Header />
-            {children}
+            <div className="container">
+                {children}
+            </div>
             <Footer />
-        </div>
+        </React.Fragment>
     );
 }
 
