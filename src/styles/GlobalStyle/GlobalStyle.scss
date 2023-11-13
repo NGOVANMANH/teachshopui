@@ -1,0 +1,37 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;900&display=swap');
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+    --primary: #29A07E;
+    --max-width: 1200px;
+}
+
+html {
+    font-size: 65.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    background-color: #f5f5f5;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
