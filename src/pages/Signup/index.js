@@ -17,7 +17,7 @@ const Signup = () => {
     };
 
     return (
-        <Form className='bg-white mt-3 mb-3' noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form className='container bg-white mt-3 mb-3 rounded' noValidate validated={validated} onSubmit={handleSubmit}>
             <Row className='justify-content-center h2 pt-4 pb-1'>Tạo tài khoản khách hàng cá nhân</Row>
             <Row className='justify-content-center m-2 fs-5'>
                 <Form.Group as={Col} md="4" controlId="validationEmail" className={clsx(styles.form)}>
@@ -87,7 +87,7 @@ const Signup = () => {
                 </Form.Group>
             </Row>
             <Row className="justify-content-center m-2 fs-5">
-                <Form.Group as={Col} md="4" controlId="validationPhoneNumber" className={clsx(styles.form)}>
+                <Form.Group as={Col} md="4" controlId="validationAddress" className={clsx(styles.form)}>
                     <Form.Label className='text-secondary'>Địa chỉ(*)</Form.Label>
                     <Form.Control type="text" placeholder="Address..." required />
                     <Form.Control.Feedback type="invalid">
