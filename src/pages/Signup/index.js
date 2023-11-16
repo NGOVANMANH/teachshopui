@@ -96,8 +96,8 @@ const Signup = () => {
                 </Form.Group>
             </Row>
             <Row className='justify-content-center m-2 fs-5' >
-                <Col className='d-flex justify-content-center m-2'>
-                    <Button type="submit" className='bg-main'>ĐĂNG KÍ</Button>
+                <Col className='d-flex justify-content-center m-3'>
+                    <Button type="submit" size='lg' className='bg-main'>ĐĂNG KÍ</Button>
                 </Col>
             </Row>
         </Form>

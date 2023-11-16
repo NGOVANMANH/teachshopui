@@ -11,11 +11,19 @@ import logo from '../../assets/images/logo.svg';
 
 import styles from './Header.module.scss';
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Category from "../Category";
 
 const Header = () => {
     const usenavigate = useNavigate();
+    const [isShow, setIsShow] = useState(false)
+
+    const showCategory = () => {
+        setIsShow(!isShow);
+    }
+
     return (
-        <div className="Header">
+        <div className={clsx("Header position-fixed", styles.Header)}>
             <div className={clsx("Header-1", "bg-main")}>
                 <div className={clsx("container")}>
 
@@ -73,7 +81,9 @@ const Header = () => {
                 </div>
             </div>
             <div className="bg-white">
-                <div className={clsx("Header-2", "container")}>
+                <div className={clsx("Header-2", "container ")}>
+
+
                     <div className="row">
 
                         <div className={clsx("col-md-auto")}>
@@ -81,7 +91,7 @@ const Header = () => {
                         </div>
 
                         <div className={clsx("col", styles.centerY)}>
-                            <Button className={clsx("bg-main d-flex justify-content-center align-items-center", styles.categoryButton)}><HiMenu /><span>DANH MỤC</span></Button>
+                            <Button onClick={showCategory} className={clsx("bg-main d-flex justify-content-center align-items-center", styles.categoryButton)}><HiMenu /><span>DANH MỤC</span></Button>
                         </div>
 
                         <div className={clsx("col", styles.centerY)}>
@@ -117,6 +127,11 @@ const Header = () => {
                     </div>
                 </div>
             </div>
+            {isShow && (
+                <div className={clsx("position-fixed", styles.backCategory)}>
+                    <Category className={clsx("position-absolute shadow mt-1", styles.Category)} />
+                </div>
+            )}
         </div>
     );
 }

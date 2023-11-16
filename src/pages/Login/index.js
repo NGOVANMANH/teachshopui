@@ -53,7 +53,7 @@ const Login = () => {
 
                     <Row className='justify-content-center m-2 fs-5' >
                         <Col className='d-flex justify-content-center m-2'>
-                            <Button type="submit" className='bg-main'>Đăng nhập</Button>
+                            <Button type="submit" size='lg' className='bg-main'>Đăng nhập</Button>
                         </Col>
                     </Row>
                 </Form>
@@ -66,7 +66,7 @@ const Login = () => {
                         Đăng ký là thành viên để hưởng nhiều lợi ích và đặt mua hàng dễ dàng hơn.
                     </Col>
                     <Col className='d-flex justify-content-center m-2'>
-                        <Button onClick={toSignup} type="submit" className='bg-main'>Đăng kí ngay</Button>
+                        <Button onClick={toSignup} size='lg' type="submit" className='bg-main'>Đăng kí ngay</Button>
                     </Col>
                 </Row>
             </Col>

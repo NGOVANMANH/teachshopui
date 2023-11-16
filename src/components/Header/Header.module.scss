@@ -3,6 +3,12 @@
     align-items: center;
 }
 
+.Header {
+    width: 100%;
+    z-index: 1;
+    top: 0;
+}
+
 .box {
     display: flex;
     justify-content: center;
@@ -71,12 +77,18 @@
 
 .search {
     height: 4rem;
+    border-radius: 1rem;
 
     input {
         font-size: 1.4rem;
+        border-top-left-radius: 1rem !important;
+        border-bottom-left-radius: 1rem !important;
     }
 
     button {
+        border-top-right-radius: 1rem !important;
+        border-bottom-right-radius: 1rem !important;
+
         svg {
             font-size: large;
         }
@@ -145,4 +157,19 @@
     100% {
         -webkit-transform: rotate(0) scale(1) skew(1deg);
     }
+}
+
+.Category {
+    width: 15%;
+    left: 8%;
+    z-index: 10;
+    transition: .2s;
+}
+
+.backCategory {
+    height: 100vh;
+    width: 100%;
+    background: rgba(0, 0, 0, .53);
+    z-index: 9;
+    transition: .2s;
 }
