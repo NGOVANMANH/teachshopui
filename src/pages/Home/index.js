@@ -1,4 +1,4 @@
-import { Col, Row, Carousel } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { Category, Slide, ProductCard, ProductCarousel } from '../../components';
 
 const Home = () => {

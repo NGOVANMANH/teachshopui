@@ -4,7 +4,7 @@ import styles from './ProductCard.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
     const data = slides[1];
     const handleClick = (event) => {
         event.preventDefault();
