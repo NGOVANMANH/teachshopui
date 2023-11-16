@@ -1,6 +1,6 @@
 const Products = () => {
     return (
-        <div>Products</div>
+        <div style={{ height: "200vh" }}>Products</div>
     )
 }
 

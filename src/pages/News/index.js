@@ -1,6 +1,6 @@
 const News = () => {
     return (
-        <div>
+        <div style={{ height: "200vh" }}>
             News
         </div>
     );

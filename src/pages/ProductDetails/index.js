@@ -1,6 +1,6 @@
 const ProductDetails = () => {
     return (
-        <div>ProductDetails</div>
+        <div style={{ height: "200vh" }}>ProductDetails</div>
     )
 }
 

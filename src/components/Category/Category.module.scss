@@ -1,0 +1,9 @@
+.Category {
+    border-radius: 1rem !important;
+
+    &:active {
+        -moz-box-shadow: 0 0 6px #ccc;
+        -webkit-box-shadow: 0 0 6px #ccc;
+        box-shadow: 0 0 6px #ccc;
+    }
+}

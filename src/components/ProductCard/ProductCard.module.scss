@@ -1,0 +1,41 @@
+.card {
+    width: 22rem;
+    min-height: 30rem;
+    border-radius: 1rem !important;
+
+    button {
+        background: var(--primary);
+        border: transparent;
+        width: 60%;
+        align-self: center;
+        transform: translateY(-10%);
+
+        &:hover {
+            background: green;
+        }
+    }
+}
+
+.cardImgContainer {
+    position: relative;
+    height: 0;
+    padding-top: 70%;
+    margin: 0.5rem;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.cardImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}

@@ -1,0 +1,11 @@
+.CategoryItem {
+    display: flex !important;
+    align-items: center !important;
+    height: 5rem;
+    border: transparent !important;
+
+    &:hover {
+        background: var(--primary) !important;
+        color: white !important;
+    }
+}

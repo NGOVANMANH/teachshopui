@@ -39,12 +39,6 @@ p {
     background: var(--primary);
 }
 
-.list-group-item.active {
-    background-color: var(--primary);
-    color: white;
-}
-
-.list-group-item:hover {
-    background-color: var(--primary);
-    color: white;
+.rounded-inherit {
+    border-radius: inherit !important;
 }

@@ -1,6 +1,6 @@
 const SearchResults = () => {
     return (
-        <div>
+        <div style={{ height: "200vh" }}>
             SearchResults
         </div>
     );
