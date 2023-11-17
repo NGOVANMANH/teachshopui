@@ -4,7 +4,7 @@ import ProductCard from "../ProductCard";
 import styles from './ProductCarousel.module.scss';
 import clsx from "clsx";
 
-const ProductCarousel = ({ products }) => {
+const ProductCarousel = ({ products, className }) => {
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -25,8 +25,16 @@ const ProductCarousel = ({ products }) => {
         }
     };
 
+    const carouselOptions = {
+        responsive: responsive,
+        autoPlay: true,
+        autoPlaySpeed: 3000, // Adjust the speed (in milliseconds) as needed
+        infinite: true,
+        containerClass: clsx(styles.ProductCarousel)
+    };
+
     return (
-        <Carousel responsive={responsive} className={clsx(styles.ProductCarousel)}>
+        <Carousel {...carouselOptions} className={clsx(styles.ProductCarousel, className)}>
             <ProductCard />
             <ProductCard />
             <ProductCard />

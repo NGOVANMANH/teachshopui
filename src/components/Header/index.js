@@ -7,20 +7,28 @@ import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
 import { Button } from "react-bootstrap";
-import logo from '../../assets/images/logo.svg';
-
-import styles from './Header.module.scss';
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Tippy from '@tippyjs/react';
+import TippyHeadless from '@tippyjs/react/headless';
+import 'tippy.js/dist/tippy.css';
+
+import logo from '../../assets/images/logo.svg';
+import styles from './Header.module.scss';
 import Category from "../Category";
+import PopperWrapper from "../PopperWrapper";
 
 const Header = () => {
     const usenavigate = useNavigate();
-    const [isShow, setIsShow] = useState(false)
+    const [isShow, setIsShow] = useState(false);
 
     const showCategory = () => {
         setIsShow(!isShow);
     }
+
+    const [visibleSearchResult, setVisibleSearchResult] = useState(false);
+    const show = () => setVisibleSearchResult(true);
+    const hide = () => setVisibleSearchResult(false);
 
     return (
         <div className={clsx("Header position-fixed", styles.Header)}>
@@ -86,19 +94,89 @@ const Header = () => {
 
                     <div className="row">
 
-                        <div className={clsx("col-md-auto")}>
-                            <Link to="/"><img src={logo} alt="logo" className={clsx(styles.logo)} /></Link>
-                        </div>
+                        <Tippy content="Back to home" placement="bottom">
+                            <div className={clsx("col-md-auto")}>
+                                <Link to="/"><img src={logo} alt="logo" className={clsx(styles.logo)} /></Link>
+                            </div>
+                        </Tippy>
 
                         <div className={clsx("col", styles.centerY)}>
                             <Button onClick={showCategory} className={clsx("bg-main d-flex justify-content-center align-items-center", styles.categoryButton)}><HiMenu /><span>DANH MỤC</span></Button>
                         </div>
 
                         <div className={clsx("col", styles.centerY)}>
-                            <div className={clsx("input-group", styles.search)}>
-                                <input type="search" className={clsx("form-control rounded")} placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                <button onClick={() => { usenavigate('/search') }} type="button" className={clsx("btn btn-outline-primary bg-main")}><FaSearch className="text-white" /></button>
-                            </div>
+                            <TippyHeadless
+                                interactive
+                                content="Search result"
+                                placement="bottom"
+                                visible={visibleSearchResult}
+                                render={attrs => (
+                                    <PopperWrapper>
+                                        <ul>
+                                            <li>HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                        </ul>
+                                    </PopperWrapper>
+                                )}
+                                onClickOutside={hide}
+                            >
+                                <div className={clsx("input-group", styles.search)}>
+                                    <input onClick={show} type="search" className={clsx("form-control rounded")} placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                    <Tippy content="Tìm kiếm" placement="bottom"><button onClick={() => { usenavigate('/search') }} type="button" className={clsx("btn btn-outline-primary bg-main")}><FaSearch className="text-white" /></button></Tippy>
+                                </div>
+                            </TippyHeadless>
                         </div>
 
                         <div className={clsx("col-md-auto d-flex justify-content-center align-items-center")}>
@@ -121,7 +199,72 @@ const Header = () => {
                         </div>
 
                         <div className={clsx("col-md-auto d-flex justify-content-center align-items-center")}>
-                            <Button onClick={() => { usenavigate('/cart') }} variant="outline-success" className={clsx("d-flex justify-content-center align-items-center", styles.categoryButton)}><AiOutlineShoppingCart /><span>GIỎ HÀNG</span></Button>
+                            <TippyHeadless
+                                interactive
+                                placement="bottom-end"
+                                render={attrs => (
+                                    <PopperWrapper>
+                                        <ul>
+                                            <li>HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                            <li>Hello</li>
+                                        </ul>
+                                    </PopperWrapper>
+                                )}
+                            >
+                                <Button onClick={() => { usenavigate('/cart') }} variant="outline-success" className={clsx("d-flex justify-content-center align-items-center", styles.categoryButton)}><AiOutlineShoppingCart /><span>GIỎ HÀNG</span></Button>
+                            </TippyHeadless>
                         </div>
 
                     </div>

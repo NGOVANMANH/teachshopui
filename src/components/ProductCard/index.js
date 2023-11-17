@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
-    const data = slides[1];
+    const data = slides[2];
     const handleClick = (event) => {
         event.preventDefault();
         alert("Thêm vào giỏ hàng")
@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
                     </Card.Text>
                 </Card.Body>
 
-                <Button onClick={handleClick} variant="primary">Thêm vào giỏ hàng</Button>
+                <Button onClick={handleClick} variant="primary" className='shadow'>Thêm vào giỏ hàng</Button>
             </Card>
         </Link>
     );

@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { Category, Slide, ProductCard, ProductCarousel } from '../../components';
+import { Category, Slide, ProductCarousel } from '../../components';
 
 const Home = () => {
   const products = [
@@ -65,11 +65,10 @@ const Home = () => {
           </Row>
         </Col>
       </Row>
+      <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
 
-      <ProductCard></ProductCard>
-      <div>
-        <ProductCarousel products={products}></ProductCarousel>
-      </div>
     </div>
   );
 }

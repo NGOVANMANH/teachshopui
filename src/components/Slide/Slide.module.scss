@@ -1,4 +1,8 @@
 .SlideItem {
-    height: 80vh;
+    height: 40rem;
     border-radius: 1rem !important;
+}
+
+.carousel-indicators {
+    display: none;
 }
