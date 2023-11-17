@@ -9,13 +9,13 @@ const Category = ({ className }) => {
             <Row>
                 <Col>
                     <ListGroup className={clsx(styles.Category, className)}>
-                        <CategoryItem href={"/#manh1"}>Category1</CategoryItem>
-                        <CategoryItem href={"/#manh2"}>Category2</CategoryItem>
-                        <CategoryItem href={"/#manh3"}>Category3</CategoryItem>
-                        <CategoryItem href={"/#manh4"}>Category4</CategoryItem>
-                        <CategoryItem href={"/#manh5"}>Category5</CategoryItem>
-                        <CategoryItem href={"/#manh6"}>Category6</CategoryItem>
-                        <CategoryItem href={"/#manh7"}>Category7</CategoryItem>
+                        <CategoryItem to={"/products"}>Category1</CategoryItem>
+                        <CategoryItem to={"/products"}>Category2</CategoryItem>
+                        <CategoryItem to={"/products"}>Category3</CategoryItem>
+                        <CategoryItem to={"/products"}>Category4</CategoryItem>
+                        <CategoryItem to={"/products"}>Category5</CategoryItem>
+                        <CategoryItem to={"/products"}>Category6</CategoryItem>
+                        <CategoryItem to={"/products"}>Category7</CategoryItem>
                     </ListGroup>
                 </Col>
             </Row>

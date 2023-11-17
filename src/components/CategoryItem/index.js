@@ -1,11 +1,13 @@
 import { ListGroup } from "react-bootstrap";
 import styles from './CategoryItem.module.scss';
 import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
 
-const CategoryItem = ({ children, href, className }) => {
+const CategoryItem = ({ children, to, className }) => {
+    const usenavigate = useNavigate();
 
     return (
-        <ListGroup.Item action active={false} href={href} className={clsx(className, styles.CategoryItem)}>
+        <ListGroup.Item onClick={to ? () => { usenavigate(to) } : undefined} active={false} className={clsx(className, styles.CategoryItem)}>
             {children}
         </ListGroup.Item>
     );

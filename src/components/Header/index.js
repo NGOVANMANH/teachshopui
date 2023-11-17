@@ -17,6 +17,7 @@ import logo from '../../assets/images/logo.svg';
 import styles from './Header.module.scss';
 import Category from "../Category";
 import PopperWrapper from "../PopperWrapper";
+import SearchProductItem from "../SearchProductItem";
 
 const Header = () => {
     const usenavigate = useNavigate();
@@ -112,62 +113,24 @@ const Header = () => {
                                 visible={visibleSearchResult}
                                 render={attrs => (
                                     <PopperWrapper>
-                                        <ul>
-                                            <li>HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                        </ul>
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
+                                        <SearchProductItem />
                                     </PopperWrapper>
                                 )}
                                 onClickOutside={hide}
