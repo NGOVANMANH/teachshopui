@@ -6,3 +6,5 @@ export { default as ProductCard } from './ProductCard';
 export { default as ProductCarousel } from './ProductCarousel';
 export { default as PopperWrapper } from './PopperWrapper';
 export { default as SearchProductItem } from './SearchProductItem';
+export { default as HorizontalLine } from './HorizontalLine';
+export { default as CategoryBlock } from './CategoryBlock';

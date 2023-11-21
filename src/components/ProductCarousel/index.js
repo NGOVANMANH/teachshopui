@@ -13,7 +13,7 @@ const ProductCarousel = ({ products, className }) => {
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 5
+            items: 6
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
@@ -35,20 +35,9 @@ const ProductCarousel = ({ products, className }) => {
 
     return (
         <Carousel {...carouselOptions} className={clsx(styles.ProductCarousel, className)}>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            {
+                products.map((product) => (<ProductCard key={product.id} product={product} />))
+            }
         </Carousel>
     );
 };
