@@ -9,7 +9,7 @@ import { BsCartCheckFill } from "react-icons/bs";
 const Cart = ({ cart }) => {
     cart = [1, 2, 3, 4, 5];
     return (
-        <Container className="mb-3" style={{ minHeight: "100vh" }}>
+        <Container className="mt-3 mb-3" style={{ minHeight: "100vh" }}>
             <Row>
                 <Col sm={8} className={clsx("bg-white", styles.Cart)}>
                     <Row>

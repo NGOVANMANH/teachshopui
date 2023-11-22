@@ -1,6 +1,10 @@
+import { Container } from "react-bootstrap";
+
 const Products = () => {
     return (
-        <div style={{ height: "200vh" }}>Products</div>
+        <Container>
+            Products
+        </Container>
     )
 }
 

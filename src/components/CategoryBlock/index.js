@@ -10,8 +10,8 @@ const CategoryBlock = ({ children, category, brands }) => {
                 <Col md='auto' className={clsx("d-flex align-items-center")}>
                     {
                         brands.map((brand, index) => (
-                            <Link to={'/#'} style={{ marginLeft: "0.5rem" }}>
-                                <Button key={index} variant="outline-secondary">{brand}</Button>
+                            <Link key={index} to={'/products'} style={{ marginLeft: "0.5rem" }}>
+                                <Button variant="outline-secondary">{brand}</Button>
                             </Link>
                         ))
                     }

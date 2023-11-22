@@ -17,11 +17,11 @@ const ProductCarousel = ({ products, className }) => {
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
-            items: 2
+            items: 3
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
-            items: 1
+            items: 2
         }
     };
 
@@ -34,7 +34,7 @@ const ProductCarousel = ({ products, className }) => {
     };
 
     return (
-        <Carousel {...carouselOptions} className={clsx(styles.ProductCarousel, className)}>
+        <Carousel {...carouselOptions} removeArrowOnDeviceType={["tablet", "mobile"]} className={clsx(styles.ProductCarousel, className)}>
             {
                 products.map((product) => (<ProductCard key={product.id} product={product} />))
             }

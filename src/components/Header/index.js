@@ -8,7 +8,8 @@ import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDebounce } from '../../hooks'
 import Tippy from '@tippyjs/react';
 import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -27,12 +28,53 @@ const Header = () => {
         setIsShow(!isShow);
     }
 
-    const [visibleSearchResult, setVisibleSearchResult] = useState(false);
-    const show = () => setVisibleSearchResult(true);
-    const hide = () => setVisibleSearchResult(false);
+    const [searchValue, setSearchValue] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    const [showResult, setShowResult] = useState(false);
+
+    const debouncedValue = useDebounce(searchValue, 500);
+
+    useEffect(() => {
+        if (!debouncedValue.trim()) {
+            setSearchResult([]);
+            return;
+        }
+
+        const fetchApi = async () => {
+            fetch(`http://localhost/restful_php_api/api/product/search.php?key=${searchValue}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Process the returned data
+                    // setSearchResult(data);
+                    setSearchResult(data.product)
+                })
+                .catch(error => {
+                    // Handle any errors that occurred during the request
+                    console.error('Error:', error);
+                });
+        };
+
+        fetchApi();
+    }, [debouncedValue]);
+
+    const handleHideResult = () => {
+        setShowResult(false);
+    };
+
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchValue(searchValue);
+        }
+    };
 
     return (
-        <div className={clsx("Header position-fixed", styles.Header)}>
+        <div className={clsx("Header", styles.Header, "position-sticky top-0")}>
             <div className={clsx("Header-1", "bg-main")}>
                 <div className={clsx("container")}>
 
@@ -89,10 +131,8 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            <div className="bg-white">
-                <div className={clsx("Header-2", "container ")}>
-
-
+            <div className={clsx("bg-white")}>
+                <div className={clsx("Header-2", "container")}>
                     <div className="row">
 
                         <Tippy content="Back to home" placement="bottom">
@@ -110,34 +150,37 @@ const Header = () => {
                                 interactive
                                 content="Search result"
                                 placement="bottom"
-                                visible={visibleSearchResult}
+                                visible={showResult && searchResult.length > 0}
                                 render={attrs => (
-                                    <PopperWrapper>
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
-                                        <SearchProductItem />
+                                    <PopperWrapper {...attrs}>
+                                        {searchResult.map(product => (
+                                            <SearchProductItem key={product.id} product={product} />
+                                        ))}
                                     </PopperWrapper>
                                 )}
-                                onClickOutside={hide}
+                                onClickOutside={handleHideResult}
                             >
                                 <div className={clsx("input-group", styles.search)}>
-                                    <input onClick={show} type="search" className={clsx("form-control rounded")} placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                    <Tippy content="Tìm kiếm" placement="bottom"><button onClick={() => { usenavigate('/search') }} type="button" className={clsx("btn btn-outline-primary bg-main")}><FaSearch className="text-white" /></button></Tippy>
+                                    <input
+                                        onFocus={() => setShowResult(true)}
+                                        onChange={handleChange} type="search"
+                                        className={clsx("form-control rounded")}
+                                        placeholder="Search" aria-label="Search"
+                                        aria-describedby="search-addon"
+                                        spellCheck={false}
+                                    />
+                                    <Tippy
+                                        content="Tìm kiếm"
+                                        placement="bottom"
+                                    >
+                                        <button
+                                            onClick={() => { usenavigate('/search') }}
+                                            type="button"
+                                            className={clsx("btn btn-outline-primary bg-main")}
+                                        >
+                                            <FaSearch className="text-white" />
+                                        </button>
+                                    </Tippy>
                                 </div>
                             </TippyHeadless>
                         </div>
