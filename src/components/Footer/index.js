@@ -2,6 +2,8 @@ import clsx from "clsx";
 import styles from './Footer.module.scss';
 import { Col, Container, Row } from "react-bootstrap";
 import { TbMailForward } from "react-icons/tb";
+import { BsArrowRightCircle } from 'react-icons/bs';
+import { Link } from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -9,16 +11,22 @@ const Footer = () => {
             <div className={clsx("bg-main")}>
                 <Container>
                     <Row>
-                        <Col className={clsx("d-flex flex-row-reverse")}>
-                            <TbMailForward />
+                        <Col md={3} className={clsx("d-flex flex-row-reverse align-items-center")}>
+                            <TbMailForward className={clsx(styles.mailIcon)} />
                         </Col>
-                        <Col md="auto">
-                            <h2>Nhận thông tin khuyến mãi</h2>
-                            <span>Bạn để lại thông tin để nhận thông tin</span>
-                            <br />
-                            <span> khuyến mãi từ TechShop</span>
+                        <Col md="auto" className="text-white">
+                            <div className="pt-3 pb-3">
+                                <span className="fs-2 fw-bold">Nhận thông tin khuyến mãi</span>
+                                <br />
+                                <span className="fs-5 font-weight-light">Bạn để lại thông tin để nhận thông tin <br />khuyến mãi từ TechShop</span>
+                            </div>
                         </Col>
-                        <Col>Col3</Col>
+                        <Col className="d-flex align-items-center">
+                            <form className={styles.emailInput}>
+                                <input type="email" placeholder='Nhập email đăng ký nhận tin khuyến mãi' />
+                                <button className={styles.arrowButtonWrap}><BsArrowRightCircle className={styles.arrowButton} /></button>
+                            </form>
+                        </Col>
                     </Row>
                 </Container>
             </div>
@@ -26,21 +34,42 @@ const Footer = () => {
                 <Container>
                     <Row>
                         <Col>
-                            Hỗ trợ khách hàng
+                            <Container className="mt-3 mb-3">
+                                <Row className={clsx(styles.footerTitle)}>Về chúng tôi</Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Địa chỉ</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>0987654321</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>abc@gmail.com</Link></Row>
+                            </Container>
                         </Col>
                         <Col>
-                            Chính sách
+                            <Container className="mt-3 mb-3">
+                                <Row className={clsx(styles.footerTitle)}>Hỗ trợ khách hàng</Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Hướng dẫn mua hàng trực tiếp</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Hướng dẫn thanh toán</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Góp ý, khiếu nại</Link></Row>
+                            </Container>
                         </Col>
                         <Col>
-                            Liên hệ
+                            <Container className="mt-3 mb-3">
+                                <Row className={clsx(styles.footerTitle)}>Chính sách</Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Chính sách, quy định chung</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Chính sách vận chuyển</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Chính sách bảo hành</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Chính sách đổi trả và hoàn tiền</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Chính sách xử lý khiếu nại</Link></Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>Bảo mật thông tin khách hàng</Link></Row>
+                            </Container>
                         </Col>
                         <Col>
-                            Về chúng tôi
+                            <Container className="mt-3 mb-3">
+                                <Row className={clsx(styles.footerTitle)}>Fanpage</Row>
+                                <Row><Link className={clsx(styles.footerLink)} to={"/#"}>This is fanpage</Link></Row>
+                            </Container>
                         </Col>
                     </Row>
                 </Container>
             </div>
-            <Container>
+            <Container style={{ color: "#555", fontSize: "1rem" }}>
                 Chủ sở hữu: Hoàng Vĩnh Phúc
                 <br />
                 Mã số thuế: 8714045794 do Chi cục Thuế Quận Thanh Xuân quản lý - Cấp ngày 07/10/2021

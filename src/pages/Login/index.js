@@ -1,21 +1,35 @@
 import { Form, Row, Col, Button, Container } from 'react-bootstrap';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../Signup/Signup.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [validated, setValidated] = useState(false);
+    const [user, setUser] = useState();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
+        event.preventDefault();
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
-
+        else {
+            const formData = new FormData(form);
+            setUser({
+                username: formData.get('email'),
+                password: formData.get('password')
+            })
+        }
         setValidated(true);
     };
+
+    useEffect(() => {
+        if (user) {
+            console.log(user)
+        }
+    }, [user]);
+
 
     const usenavigate = useNavigate();
     const toSignup = () => {
@@ -31,7 +45,8 @@ const Login = () => {
                             <Form.Group as={Col} md="4" controlId="validationEmail" className={clsx(styles.form)}>
                                 <Form.Label className='text-secondary'>Email đăng kí(*)</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    type="Email"
+                                    name='email'
                                     placeholder="Email..."
                                     aria-describedby="inputGroupPrepend"
                                     required
@@ -45,7 +60,11 @@ const Login = () => {
                         <Row className="justify-content-center m-2 fs-5">
                             <Form.Group as={Col} md="4" controlId="validationPassword" className={clsx(styles.form)}>
                                 <Form.Label className='text-secondary'>Mật khẩu(*)</Form.Label>
-                                <Form.Control type="password" placeholder="Password..." required />
+                                <Form.Control
+                                    type="password"
+                                    name='password'
+                                    placeholder="Password..."
+                                    required />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a Password.
                                 </Form.Control.Feedback>

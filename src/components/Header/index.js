@@ -6,7 +6,7 @@ import { HiOutlineSpeakerphone, HiMenu } from 'react-icons/hi';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDebounce } from '../../hooks'
@@ -196,6 +196,7 @@ const Header = () => {
                                     </a>
                                 </div>
                                 <div className={clsx("col-md-auto", styles.centerY, styles.helpCenter)}>
+                                    <div className="vr text-success"></div>
                                     <AiOutlineThunderbolt className={clsx(styles.icon)} />
                                     <a href="/" target='_blank'>
                                         <span>Tư vấn trực tiếp</span>
@@ -210,62 +211,9 @@ const Header = () => {
                                 placement="bottom-end"
                                 render={attrs => (
                                     <PopperWrapper>
-                                        <ul>
-                                            <li>HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                            <li>Hello</li>
-                                        </ul>
+                                        <Container>
+                                            Có 0 sản phẩm trong giỏ hàng
+                                        </Container>
                                     </PopperWrapper>
                                 )}
                             >

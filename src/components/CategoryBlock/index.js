@@ -2,11 +2,11 @@ import clsx from "clsx";
 import { Row, Col, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const CategoryBlock = ({ children, category, brands }) => {
+const CategoryBlock = ({ children, title, brands }) => {
     return (
         <Container>
             <Row>
-                <Col className={clsx("fs-2 fw-bold")}>{category}</Col>
+                <Col className={clsx("fs-2 fw-bold")}>{title}</Col>
                 <Col md='auto' className={clsx("d-flex align-items-center")}>
                     {
                         brands.map((brand, index) => (

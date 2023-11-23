@@ -1,3 +1,65 @@
 .Footer {
     box-shadow: 0 -1px 2px 0 rgba(60, 64, 67, .1), 0 -2px 6px 2px rgba(60, 64, 67, .15);
 }
+
+.mailIcon {
+    font-size: 8rem;
+    color: white;
+}
+
+.emailInput {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    color: var(--bs-white);
+    margin-left: 1rem;
+    margin-right: 1rem;
+
+    input {
+        border: none;
+        width: 100%;
+        border-top-left-radius: 3rem;
+        border-bottom-left-radius: 3rem;
+        font-size: 1.4rem;
+        padding: 2rem;
+        outline: none;
+    }
+
+    .arrowButtonWrap {
+        display: flex;
+        align-items: center;
+        background-color: var(--bs-white);
+        border-top-right-radius: 3rem;
+        border-bottom-right-radius: 3rem;
+        padding: 1rem;
+        border: none;
+        outline: none;
+    }
+}
+
+.arrowButton {
+    width: 4rem;
+    height: 4rem;
+    color: var(--primary);
+}
+
+.footerTitle {
+    font-weight: 600;
+}
+
+.footerLink {
+    display: block;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.4rem;
+
+    &:hover {
+        color: var(--primary);
+    }
+
+    &::before {
+        content: "•";
+        color: #999;
+        margin: 0 0.5rem;
+    }
+}

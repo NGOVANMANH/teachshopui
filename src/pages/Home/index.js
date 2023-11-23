@@ -59,23 +59,23 @@ const Home = () => {
         </Col>
       </Row>
 
-      <CategoryBlock category={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
 
-      <CategoryBlock category={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
 
-      <CategoryBlock category={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
 
-      <CategoryBlock category={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
 
-      <CategoryBlock category={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
 
