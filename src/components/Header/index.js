@@ -16,7 +16,7 @@ import 'tippy.js/dist/tippy.css';
 
 import logo from '../../assets/images/logo.svg';
 import styles from './Header.module.scss';
-import Category from "../Category";
+import Category from "../CategorySidebar";
 import PopperWrapper from "../PopperWrapper";
 import SearchProductItem from "../SearchProductItem";
 
