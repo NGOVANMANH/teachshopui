@@ -225,7 +225,7 @@ const Header = () => {
                 </div>
             </div>
             {isShow && (
-                <div className={clsx("position-fixed", styles.backCategory)}>
+                <div onClick={() => setIsShow(false)} className={clsx("position-fixed", styles.backCategory)}>
                     <Category className={clsx("position-absolute shadow mt-1", styles.Category)} />
                 </div>
             )}

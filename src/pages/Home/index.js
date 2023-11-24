@@ -6,7 +6,7 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    fetch('http://localhost/restful_php_api/api/product/show_by_category_brand.php?category=1?&brand=Apple')
+    fetch('http://localhost/restful_php_api/api/product/show_by_category_brand.php?category=1&brand=Samsung')
       .then(response => {
         return response.json();
       })

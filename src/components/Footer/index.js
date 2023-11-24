@@ -22,7 +22,7 @@ const Footer = () => {
                             </div>
                         </Col>
                         <Col className="d-flex align-items-center">
-                            <form className={styles.emailInput}>
+                            <form action="#" className={styles.emailInput}>
                                 <input type="email" placeholder='Nhập email đăng ký nhận tin khuyến mãi' />
                                 <button className={styles.arrowButtonWrap}><BsArrowRightCircle className={styles.arrowButton} /></button>
                             </form>
@@ -69,7 +69,7 @@ const Footer = () => {
                     </Row>
                 </Container>
             </div>
-            <Container style={{ color: "#555", fontSize: "1rem" }}>
+            <Container className="pt-3 pb-3" style={{ color: "#555", fontSize: "1.1rem" }}>
                 Chủ sở hữu: Hoàng Vĩnh Phúc
                 <br />
                 Mã số thuế: 8714045794 do Chi cục Thuế Quận Thanh Xuân quản lý - Cấp ngày 07/10/2021
