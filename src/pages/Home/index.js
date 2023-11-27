@@ -1,19 +1,26 @@
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
-import { Category, Slide, ProductCarousel, CategoryBlock } from '../../components';
+import { Category, Slide, ProductCarousel, CategoryBlock, HorizontalLine } from '../../components';
 import { useEffect, useState } from 'react';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    fetch('http://localhost/restful_php_api/api/product/show_by_category_brand.php?category=1&brand=Samsung')
+    fetch('http://localhost/restful_php_api/api/product/show_by_category_brand.php?categoryName=phone&brand=apple')
       .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
         return response.json();
       })
       .then(data => {
         setProducts(data.product);
         setIsLoading(false);
       })
+      .catch(error => {
+        console.error('Error occurred while fetching data:', error);
+        // Handle the error here
+      });
   }, []);
   return (isLoading
     ?
@@ -33,47 +40,36 @@ const Home = () => {
         <Col sm={2}>
           <Category />
         </Col>
-
-        <Col sm={8}>
-          <Row>
-            <Slide />
-          </Row>
-          <Row>
-            <Col>Hello</Col>
-            <Col>Hello</Col>
-            <Col>Hello</Col>
-            <Col>Hello</Col>
-          </Row>
-        </Col>
-
-        <Col sm={2}>
-          <Row>
-            Hello
-          </Row>
-          <Row>
-            Hello
-          </Row>
-          <Row>
-            Hello
-          </Row>
+        <Col>
+          <Slide />
         </Col>
       </Row>
 
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
-      </CategoryBlock>
+      <HorizontalLine className="mt-3 mb-3" />
 
       <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
 
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
-      </CategoryBlock>
+      <HorizontalLine className="mt-3 mb-3" />
 
       <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
       </CategoryBlock>
+
+      <HorizontalLine className="mt-3 mb-3" />
+
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      </CategoryBlock>
+
+      <HorizontalLine className="mt-3 mb-3" />
+
+      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      </CategoryBlock>
+
+      <HorizontalLine className="mt-3 mb-3" />
 
       <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
         <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
