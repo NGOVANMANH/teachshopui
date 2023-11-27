@@ -24,7 +24,7 @@ const Footer = () => {
                         <Col className="d-flex align-items-center">
                             <form action="#" className={styles.emailInput}>
                                 <input type="email" placeholder='Nhập email đăng ký nhận tin khuyến mãi' />
-                                <button className={styles.arrowButtonWrap}><BsArrowRightCircle className={styles.arrowButton} /></button>
+                                <button type="button" onClick={() => { alert("Sent email") }} className={styles.arrowButtonWrap}><BsArrowRightCircle className={styles.arrowButton} /></button>
                             </form>
                         </Col>
                     </Row>

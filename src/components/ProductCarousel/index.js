@@ -36,7 +36,7 @@ const ProductCarousel = ({ products, className }) => {
     return (
         <Carousel {...carouselOptions} removeArrowOnDeviceType={["tablet", "mobile"]} className={clsx(styles.ProductCarousel, className)}>
             {
-                products ? products.map((product) => (<ProductCard key={product.id} product={product} />)) : <></>
+                products && products.length > 0 ? products.map((product) => (<ProductCard key={product.id} product={product} />)) : <></>
             }
         </Carousel>
     );
