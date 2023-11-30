@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import ProductCard from "../ProductCard";
 import styles from './ProductCarousel.module.scss';
 import clsx from "clsx";
+import LoadingCard from "../LoadingCard";
 
 const ProductCarousel = ({ products, className }) => {
     const responsive = {
@@ -33,11 +34,18 @@ const ProductCarousel = ({ products, className }) => {
         containerClass: clsx(styles.ProductCarousel)
     };
 
+    const numOfLoadingCard = [1, 2, 3, 4, 5, 6, 7];
+
     return (
         <Carousel {...carouselOptions} removeArrowOnDeviceType={["tablet", "mobile"]} className={clsx(styles.ProductCarousel, className)}>
             {
-                products && products.length > 0 ? products.map((product) => (<ProductCard key={product.id} product={product} />)) : <></>
+                products && products.length > 0
+                    ?
+                    products.map((product) => (<ProductCard key={product.id} product={product} />))
+                    :
+                    numOfLoadingCard.map(item => <LoadingCard key={item} />)
             }
+
         </Carousel>
     );
 };

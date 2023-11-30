@@ -9,13 +9,10 @@ const Category = ({ className }) => {
             <Row>
                 <Col>
                     <ListGroup className={clsx(styles.Category, className)}>
-                        <CategoryItem to={"/products"}>Category1</CategoryItem>
-                        <CategoryItem to={"/products"}>Category2</CategoryItem>
-                        <CategoryItem to={"/products"}>Category3</CategoryItem>
-                        <CategoryItem to={"/products"}>Category4</CategoryItem>
-                        <CategoryItem to={"/products"}>Category5</CategoryItem>
-                        <CategoryItem to={"/products"}>Category6</CategoryItem>
-                        <CategoryItem to={"/products"}>Category7</CategoryItem>
+                        <CategoryItem to={"/products/phone"}>Điện thoại</CategoryItem>
+                        <CategoryItem to={"/products/cable"}>Dây sạc</CategoryItem>
+                        <CategoryItem to={"/products/backupcharger"}>Sạc dự phòng</CategoryItem>
+                        <CategoryItem to={"/products/adapter"}>Củ sạc</CategoryItem>
                     </ListGroup>
                 </Col>
             </Row>

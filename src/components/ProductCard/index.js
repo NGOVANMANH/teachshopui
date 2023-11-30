@@ -8,6 +8,7 @@ const ProductCard = ({ product }) => {
         event.preventDefault();
         alert("Thêm vào giỏ hàng")
     }
+
     return (
         <Link to={"/productdetails"}>
             <Card className={clsx(styles.card)}>
@@ -29,11 +30,9 @@ const ProductCard = ({ product }) => {
                 <Card.Body className='position-absolute bottom-0 mb-5'>
                     {
                         product.pre_discount === 0 ? <></> :
-                            <>
-                                <Card.Text>
-                                    <span className={clsx(styles.prePrice, "text-decoration-line-through text-secondary fs-5")}>{product.pre_discount.toLocaleString('en-US')} đ</span>
-                                </Card.Text>
-                            </>
+                            <Card.Text>
+                                <span className={clsx(styles.prePrice, "text-decoration-line-through text-secondary fs-5")}>{product.pre_discount.toLocaleString('en-US')} đ</span>
+                            </Card.Text>
                     }
                     <Card.Text>
                         <span className={clsx(styles.price, "text-success")}>{product.price.toLocaleString('en-US')} đ</span>

@@ -13,6 +13,7 @@ import { useDebounce } from '../../hooks'
 import Tippy from '@tippyjs/react';
 import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
+import { getSearchedProduct } from '../../services/productServices';
 
 import logo from '../../assets/images/logo.svg';
 import styles from './Header.module.scss';
@@ -35,31 +36,25 @@ const Header = () => {
     const debouncedValue = useDebounce(searchValue, 500);
 
     useEffect(() => {
-        if (!debouncedValue.trim()) {
-            setSearchResult([]);
-            return;
-        }
+        const fetchData = async () => {
 
-        const fetchApi = async () => {
-            fetch(`http://localhost/restful_php_api/api/product/search.php?key=${searchValue}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Process the returned data
-                    // setSearchResult(data);
-                    setSearchResult(data.product)
-                })
-                .catch(error => {
-                    // Handle any errors that occurred during the request
-                    console.error('Error:', error);
-                });
+            if (!debouncedValue.trim()) {
+                setSearchResult([]);
+                return;
+            }
+
+            const data = await getSearchedProduct(debouncedValue);
+
+            if (data === 404) {
+                console.log("Không tìm thấy sản phẩm");
+                setSearchResult([]);
+            }
+            else
+                setSearchResult(data);
         };
 
-        fetchApi();
+        fetchData();
+
     }, [debouncedValue]);
 
     const handleHideResult = () => {
@@ -72,6 +67,19 @@ const Header = () => {
             setSearchValue(searchValue);
         }
     };
+
+    const handleClickedSearch = () => {
+        if (searchValue) {
+            usenavigate(`/search/${searchValue}`);
+        }
+    }
+
+
+    const handleKeyDown = (e) => {
+        if (e.code === "Enter") {
+            handleClickedSearch();
+        }
+    }
 
     return (
         <div className={clsx("Header", styles.Header, "position-sticky top-0")}>
@@ -142,9 +150,10 @@ const Header = () => {
                         </Tippy>
 
                         <div className={clsx("col", styles.centerY)}>
-                            <Button onClick={showCategory} className={clsx("bg-main d-flex justify-content-center align-items-center", styles.categoryButton)}><HiMenu /><span>DANH MỤC</span></Button>
+                            <Tippy content="Danh mục" placement="bottom">
+                                <Button onClick={showCategory} className={clsx("bg-main d-flex justify-content-center align-items-center", styles.categoryButton)}><HiMenu /><span>DANH MỤC</span></Button>
+                            </Tippy>
                         </div>
-
                         <div className={clsx("col", styles.centerY)}>
                             <TippyHeadless
                                 interactive
@@ -168,13 +177,14 @@ const Header = () => {
                                         placeholder="Search" aria-label="Search"
                                         aria-describedby="search-addon"
                                         spellCheck={false}
+                                        onKeyDown={handleKeyDown}
                                     />
                                     <Tippy
                                         content="Tìm kiếm"
                                         placement="bottom"
                                     >
                                         <button
-                                            onClick={() => { usenavigate('/search') }}
+                                            onClick={handleClickedSearch}
                                             type="button"
                                             className={clsx("btn btn-outline-primary bg-main")}
                                         >

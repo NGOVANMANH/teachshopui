@@ -4,8 +4,26 @@ import { Col, Container, Row } from "react-bootstrap";
 import { TbMailForward } from "react-icons/tb";
 import { BsArrowRightCircle } from 'react-icons/bs';
 import { Link } from "react-router-dom";
+import { validateEmail } from '../../hooks';
 
 const Footer = () => {
+
+
+
+    const handldleSentEmail = (e) => {
+        let element = e.target.parentElement;
+        while (element.nodeName !== 'FORM') {
+            element = element.parentElement;
+        }
+        const inputElement = element.querySelector('input');
+        if (inputElement.value && inputElement.value.length !== 0 && validateEmail(inputElement.value)) {
+            console.log(inputElement.value);
+        }
+        else {
+            alert("Vui lòng nhập email...!")
+        }
+    }
+
     return (
         <div className={clsx("Footer", styles.Footer)}>
             <div className={clsx("bg-main")}>
@@ -24,7 +42,7 @@ const Footer = () => {
                         <Col className="d-flex align-items-center">
                             <form action="#" className={styles.emailInput}>
                                 <input type="email" placeholder='Nhập email đăng ký nhận tin khuyến mãi' />
-                                <button type="button" onClick={() => { alert("Sent email") }} className={styles.arrowButtonWrap}><BsArrowRightCircle className={styles.arrowButton} /></button>
+                                <button type="button" onClick={handldleSentEmail} className={styles.arrowButtonWrap}><BsArrowRightCircle className={styles.arrowButton} /></button>
                             </form>
                         </Col>
                     </Row>

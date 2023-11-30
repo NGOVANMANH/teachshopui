@@ -1,12 +1,34 @@
 import { Link } from "react-router-dom";
 import styles from './SearchProductItem.module.scss';
 import clsx from "clsx";
+import { Row, Col, Container } from "react-bootstrap";
 
 const SearchProductItem = ({ product }) => {
     return (
-        <Link to={"/productdetails"} className={clsx("container d-flex align-items-center", styles.SearchProductItem)}>
-            <img style={{ width: "2rem" }} src="https://cdn-v2.didongviet.vn/files/products/2023/3/18/1/1681793534301_apple_iphone_11_didongviet.png" alt="hehe" />
-            <span>{!product ? "ip11" : product.name}</span>
+        <Link to={"/productdetails"}>
+            <Container className={clsx("mt-1 mb-1", styles.container)}>
+                <Row>
+                    <Col md='auto'>
+                        <img className={clsx(styles.img)} src={product && `data:image/jpeg;base64, ${product.image}`} alt={product && product.name} />
+                    </Col>
+                    <Col>
+                        <Row>
+                            <Col className="fs-5 text-success">{!product ? "product" : product.name}</Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <span className="fs-4 text-danger"><span className="fs-5 text-dark">Giá:</span> {!product ? "price" : product.price.toLocaleString('en-US')} đ</span>
+                                {" "}
+                                {
+                                    product.pre_discount === 0 ? <></> :
+                                        <span className={clsx(styles.prePrice, "text-decoration-line-through text-secondary fs-6")}>{product.pre_discount.toLocaleString('en-US')} đ</span>
+
+                                }
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
         </Link>
     );
 }
