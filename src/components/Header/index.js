@@ -36,7 +36,7 @@ const Header = () => {
     const debouncedValue = useDebounce(searchValue, 500);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchApi = async () => {
 
             if (!debouncedValue.trim()) {
                 setSearchResult([]);
@@ -53,7 +53,7 @@ const Header = () => {
                 setSearchResult(data);
         };
 
-        fetchData();
+        fetchApi();
 
     }, [debouncedValue]);
 

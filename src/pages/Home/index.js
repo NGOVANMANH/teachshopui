@@ -42,16 +42,9 @@ const Home = () => {
 
   return (isLoading
     ?
-    <Container className='mt-3'>
-      <Spinner animation="grow" variant="primary" />
-      <Spinner animation="grow" variant="secondary" />
-      <Spinner animation="grow" variant="success" />
-      <Spinner animation="grow" variant="danger" />
-      <Spinner animation="grow" variant="warning" />
-      <Spinner animation="grow" variant="info" />
-      <Spinner animation="grow" variant="light" />
-      <Spinner animation="grow" variant="dark" />
-    </Container>
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
+      <Spinner size="lg" />
+    </div>
     :
     <Container className="Home mt-3">
       <Row>

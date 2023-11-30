@@ -1,13 +1,14 @@
 import { Form, Row, Col, Button, Container, Spinner } from 'react-bootstrap';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../Signup/Signup.module.scss';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../services/customizeAxios';
+import { login } from '../../services/userServices';
 
 const Login = () => {
     const [validated, setValidated] = useState(false);
     const [isLogining, setIsLogining] = useState(false);
+    const [userInfor, setUserInfor] = useState({});
     const usenavigate = useNavigate();
 
     const handleSubmit = (event) => {
@@ -18,7 +19,7 @@ const Login = () => {
         }
         else {
             const formData = new FormData(form);
-            login({
+            setUserInfor({
                 email: formData.get('email'),
                 password: formData.get('password')
             });
@@ -26,21 +27,28 @@ const Login = () => {
         setValidated(true);
     };
 
-    const login = (user) => {
-        if (user && user.email && user.password && !isLogining) {
-            setIsLogining(true);
-            axios.post('/api/customer/login.php', user)
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-                .finally(() => {
-                    setIsLogining(false);
-                });
+    useEffect(() => {
+        const fetchApi = async () => {
+            if (userInfor.email && userInfor.password) {
+                setIsLogining(true);
+                const response = await login(userInfor);
+
+                if (response !== 404) {
+                    if (response.status === 200) {
+                        localStorage.setItem("token", response.jwt);
+                        usenavigate("/");
+                    }
+                    else {
+                        alert(response.message);
+                    }
+                }
+
+                setIsLogining(false);
+            }
         }
-    };
+        fetchApi();
+    }, [userInfor, usenavigate]);
+
 
     const toSignup = () => {
         usenavigate('/signup');

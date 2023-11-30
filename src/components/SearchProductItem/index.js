@@ -5,7 +5,7 @@ import { Row, Col, Container } from "react-bootstrap";
 
 const SearchProductItem = ({ product }) => {
     return (
-        <Link to={"/productdetails"}>
+        <Link to={"/product"}>
             <Container className={clsx("mt-1 mb-1", styles.container)}>
                 <Row>
                     <Col md='auto'>

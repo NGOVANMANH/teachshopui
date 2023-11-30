@@ -1,6 +1,5 @@
 import axios from "./customizeAxios";
-
-const ERROR_CODE = 404;
+import { NOT_FOUND } from "./constant";
 
 export const getAllProduct = async () => {
     try {
@@ -9,7 +8,7 @@ export const getAllProduct = async () => {
             return response.data.product;
         }
     } catch (error) {
-        return ERROR_CODE;
+        return NOT_FOUND;
     }
 }
 
@@ -20,7 +19,7 @@ export const getProductByCategory = async (category) => {
             return response.data.product;
         }
     } catch (error) {
-        return ERROR_CODE;
+        return NOT_FOUND;
     }
 }
 
@@ -31,7 +30,7 @@ export const getProductById = async (id) => {
             return response.data.product;
         }
     } catch (error) {
-        return ERROR_CODE;
+        return NOT_FOUND;
     }
 }
 
@@ -42,7 +41,7 @@ export const getSearchedProduct = async (searchValue) => {
             return response.data.product;
         }
     } catch (error) {
-        return ERROR_CODE;
+        return NOT_FOUND;
     }
 }
 
