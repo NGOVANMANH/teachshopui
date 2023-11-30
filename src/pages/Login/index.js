@@ -1,13 +1,14 @@
 import { Form, Row, Col, Button, Container, Spinner } from 'react-bootstrap';
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from '../Signup/Signup.module.scss';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../services/customizeAxios';
 
 const Login = () => {
     const [validated, setValidated] = useState(false);
-    const [user, setUser] = useState({});
     const [isLogining, setIsLogining] = useState(false);
+    const usenavigate = useNavigate();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -17,75 +18,30 @@ const Login = () => {
         }
         else {
             const formData = new FormData(form);
-            setUser({
+            login({
                 email: formData.get('email'),
                 password: formData.get('password')
-            })
+            });
         }
         setValidated(true);
     };
 
-    useEffect(() => {
-        const login = async () => {
-            if (user && user.email && user.password) {
-                setIsLogining(true);
-                // try {
-                //     const res = await fetch(`http://localhost/restful_php_api/api/customer/login.php`, {
-                //         headers: {
-                //             'Accept': 'application/json',
-                //             'Content-Type': 'application/json'
-                //         },
-                //         method: "POST",
-                //         body: JSON.stringify(user)
-                //     });
-
-                //     // Handle the response here
-                //     // For example, you can check the response status and perform further actions
-                //     if (res.ok) {
-                //         const data = await res.json();
-                //         console.log('Login success', data);
-                //         // Perform actions for successful login
-                //     } else {
-                //         console.log('Login failed');
-                //         // Perform actions for failed login
-                //     }
-                // } catch (error) {
-                //     console.error('Error occurred during login:', error);
-                //     // Handle the error here
-                // }
-                // setIsLogining(false);
-                fetch(`http://localhost/restful_php_api/api/customer/login.php`, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: "POST",
-                    body: JSON.stringify(user)
+    const login = (user) => {
+        if (user && user.email && user.password && !isLogining) {
+            setIsLogining(true);
+            axios.post('/api/customer/login.php', user)
+                .then(function (response) {
+                    console.log(response);
                 })
-                    .then(res => {
-                        if (res && res.ok) {
-                            return res.json();
-                        }
-                    })
-                    .then(data => {
-                        if (data.status === 108) {
-                            alert(data.message)
-                        }
-                        else {
-                            usenavigate("/")
-                        }
-                        setIsLogining(false);
-                    })
-                    .catch(error => {
-                        console.error('Error occurred during login:', error);
-                    })
-            }
-        };
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => {
+                    setIsLogining(false);
+                });
+        }
+    };
 
-        login();
-    }, [user]);
-
-    const usenavigate = useNavigate();
     const toSignup = () => {
         usenavigate('/signup');
     }

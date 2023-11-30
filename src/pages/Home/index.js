@@ -1,30 +1,48 @@
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Category, Slide, ProductCarousel, CategoryBlock, HorizontalLine } from '../../components';
 import { useEffect, useState } from 'react';
+import { getProductByCategory } from '../../services/productServices';
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  const [phones, setPhones] = useState([]);
+  const [cables, setCables] = useState([]);
+  const [backupchargers, setBackupchargers] = useState([]);
+  const [adapters, setAdapters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    fetch('http://localhost/restful_php_api/api/product/show_by_category_brand.php?categoryName=phone&brand=apple')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setProducts(data.product);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error occurred while fetching data:', error);
-        // Handle the error here
-      });
+
+    fetchApi("phone");
+    fetchApi("cable");
+    fetchApi("backupcharger");
+    fetchApi("adapter");
+
   }, []);
+
+  const fetchApi = async (category) => {
+    const res = await getProductByCategory(category)
+    if (res !== 404) {
+      switch (category) {
+        case "phone":
+          setPhones(res);
+          break;
+        case "cable":
+          setCables(res);
+          break;
+        case "backupcharger":
+          setBackupchargers(res);
+          break;
+        case "adapter":
+          setAdapters(res);
+          break;
+        default: ;
+      }
+      setIsLoading(false);
+    }
+  }
+
   return (isLoading
     ?
-    <Container className='mt-3' style={{ minHeight: "100vh" }}>
+    <Container className='mt-3'>
       <Spinner animation="grow" variant="primary" />
       <Spinner animation="grow" variant="secondary" />
       <Spinner animation="grow" variant="success" />
@@ -48,32 +66,28 @@ const Home = () => {
       <HorizontalLine className="mt-3 mb-3" />
 
       <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+        <ProductCarousel className="pt-3 pb-3" products={phones}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      <CategoryBlock title={"Dây sạc"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+        <ProductCarousel className="pt-3 pb-3" products={cables}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      <CategoryBlock title={"Sạc dự phòng"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+        <ProductCarousel className="pt-3 pb-3" products={backupchargers}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
+      <CategoryBlock title={"Củ sạc"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+        <ProductCarousel className="pt-3 pb-3" products={adapters}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
-
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
-        <ProductCarousel className="pt-3 pb-3" products={products}></ProductCarousel>
-      </CategoryBlock>
 
     </Container>);
 }

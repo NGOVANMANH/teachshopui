@@ -1,4 +1,9 @@
-.SearchProductItem {
-    color: black;
-    padding: 1rem;
+.img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+}
+
+.container {
+    cursor: pointer;
 }

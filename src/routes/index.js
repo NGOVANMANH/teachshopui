@@ -1,4 +1,4 @@
-import { Home, Login, Cart, Signup, News, Products, ProductDetails, SearchResults } from '../pages';
+import { Home, Login, Cart, Signup, News, Products, ProductDetails, Search } from '../pages';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -7,8 +7,8 @@ const publicRoutes = [
     { path: '/signup', component: Signup },
     { path: '/news', component: News },
     { path: '/productDetails', component: ProductDetails },
-    { path: '/products', component: Products },
-    { path: '/search', component: SearchResults },
+    { path: '/products/:category', component: Products },
+    { path: '/search/:searchValue', component: Search },
 ];
 const privateRoutes = [];
 
