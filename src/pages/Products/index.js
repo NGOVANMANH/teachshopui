@@ -69,7 +69,7 @@ const Products = () => {
                     <Row>
                         <CardGroup className="justify-content-center">
                             {
-                                products.map(product => <ProductCard product={product} />)
+                                products.map(product => <ProductCard key={product.id} product={product} />)
                             }
                         </CardGroup>
                     </Row>

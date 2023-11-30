@@ -10,24 +10,29 @@ const Signup = () => {
         const form = event.currentTarget;
         event.preventDefault();
         if (form.checkValidity() === false) {
-            event.preventDefault();
             event.stopPropagation();
         }
-
         else {
             const formData = new FormData(form);
-            console.log(formData.get('email'));
-            console.log(formData.get('name'));
-            console.log(formData.get('phoneNumber'));
-            console.log(formData.get('sex'));
-            console.log(formData.get('date'));
-            console.log(formData.get('password'));
-            console.log(formData.get('confirmedPassword'));
-            console.log(formData.get('address'));
+            console.log({
+                email: formData.get('email'),
+                name: formData.get('name'),
+                sex: formData.get('sex'),
+                date: formData.get('date'),
+                password: formData.get('password'),
+                confirmedPassword: formData.get('confirmedPassword'),
+                address: formData.get('address')
+            })
         }
 
         setValidated(true);
     };
+
+    const signUp = () => {
+        if (validated) {
+            console.log("sign up");
+        }
+    }
 
     return (
         <Form className='container bg-white mt-3 mb-3 rounded' noValidate validated={validated} onSubmit={handleSubmit}>
@@ -118,7 +123,7 @@ const Signup = () => {
             </Row>
             <Row className='justify-content-center m-2 fs-5' >
                 <Col className='d-flex justify-content-center m-3'>
-                    <Button type="submit" size='lg' className='bg-main'>ĐĂNG KÍ</Button>
+                    <Button onClick={signUp} type="submit" size='lg' className='bg-main'>ĐĂNG KÍ</Button>
                 </Col>
             </Row>
         </Form>
