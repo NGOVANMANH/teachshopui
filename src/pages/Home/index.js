@@ -1,7 +1,7 @@
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Category, Slide, ProductCarousel, CategoryBlock, HorizontalLine } from '../../components';
 import { useEffect, useState } from 'react';
-import { getProductByCategory } from '../../services/productServices';
+import { useContextData } from '../../hooks';
 
 const Home = () => {
   const [phones, setPhones] = useState([]);
@@ -9,36 +9,30 @@ const Home = () => {
   const [backupchargers, setBackupchargers] = useState([]);
   const [adapters, setAdapters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { products } = useContextData();
+
   useEffect(() => {
 
-    fetchApi("phone");
-    fetchApi("cable");
-    fetchApi("backupcharger");
-    fetchApi("adapter");
+    if (products && products.length > 0) {
 
-  }, []);
+      setPhones(products.filter(item => item.category === 1));
 
-  const fetchApi = async (category) => {
-    const res = await getProductByCategory(category)
-    if (res !== 404) {
-      switch (category) {
-        case "phone":
-          setPhones(res);
-          break;
-        case "cable":
-          setCables(res);
-          break;
-        case "backupcharger":
-          setBackupchargers(res);
-          break;
-        case "adapter":
-          setAdapters(res);
-          break;
-        default: ;
-      }
+      setAdapters(products.filter(item => item.category === 2));
+
+      setCables(products.filter(item => item.category === 3));
+
+      setBackupchargers(products.filter(item => item.category === 4));
+
       setIsLoading(false);
     }
-  }
+    else {
+      setIsLoading(true);
+    }
+
+
+
+  }, [products]);
 
   return (isLoading
     ?

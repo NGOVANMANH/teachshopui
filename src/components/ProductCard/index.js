@@ -10,7 +10,7 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <Link to={"/product"}>
+        <Link to={`/product/${product.id}`}>
             <Card className={clsx(styles.card)}>
                 {
                     product.pre_discount !== 0

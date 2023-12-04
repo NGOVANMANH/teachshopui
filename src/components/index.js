@@ -9,3 +9,4 @@ export { default as PopperWrapper } from './PopperWrapper';
 export { default as SearchProductItem } from './SearchProductItem';
 export { default as HorizontalLine } from './HorizontalLine';
 export { default as CategoryBlock } from './CategoryBlock';
+export { default as CartItem } from './CartItem';

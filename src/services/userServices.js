@@ -1,5 +1,5 @@
 import axios from "./customizeAxios";
-import { NOT_FOUND } from "./constant";
+import { NOT_FOUND } from "./constants";
 
 export const login = async (userInfor) => {
     try {

@@ -1,0 +1,21 @@
+.thumnail {
+    max-width: 10rem;
+    max-height: 10rem;
+    object-fit: cover;
+}
+
+.quantityButton {
+    font-size: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    background: #eee;
+    color: black;
+    cursor: pointer;
+    user-select: none;
+}

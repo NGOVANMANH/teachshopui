@@ -1,11 +1,13 @@
-import { Col, Container, Row, Carousel, Button } from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
 import { CategoryBlock, HorizontalLine, ProductCarousel } from "../../components";
 
 const ProductDetails = () => {
     const [activeButton, setActiveButton] = useState(1);
+    const params = useParams();
 
     const handleButtonClick = (buttonIndex) => {
         setActiveButton(buttonIndex);
@@ -18,90 +20,7 @@ const ProductDetails = () => {
             <HorizontalLine className='mt-3 mb-3' />
             <Row>
                 <Col>
-                    <Carousel>
-                        <Carousel.Item>
-                            <div>Product img 1</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 2</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 3</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 4</div>
-                        </Carousel.Item>
-                    </Carousel>
-                    <Carousel>
-                        <Carousel.Item>
-                            <div>Product img 1</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 2</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 3</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 4</div>
-                        </Carousel.Item>
-                    </Carousel>
-                    <Carousel>
-                        <Carousel.Item>
-                            <div>Product img 1</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 2</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 3</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 4</div>
-                        </Carousel.Item>
-                    </Carousel>
-                    <Carousel>
-                        <Carousel.Item>
-                            <div>Product img 1</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 2</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 3</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 4</div>
-                        </Carousel.Item>
-                    </Carousel>
-                    <Carousel>
-                        <Carousel.Item>
-                            <div>Product img 1</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 2</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 3</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 4</div>
-                        </Carousel.Item>
-                    </Carousel>
-                    <Carousel>
-                        <Carousel.Item>
-                            <div>Product img 1</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 2</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 3</div>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <div>Product img 4</div>
-                        </Carousel.Item>
-                    </Carousel>
+                    <h1>{params.id}</h1>
                 </Col>
                 <Col>
                     <Row>
