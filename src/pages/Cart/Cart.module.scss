@@ -1,12 +1,11 @@
-.Cart {
-    margin-right: 0.5rem;
+.buttonDelete {
+    cursor: pointer;
 }
 
-.Total {
-    margin-left: 0.5rem;
-}
+.customer {
+    padding: 2rem;
 
-.Cart,
-.Total {
-    border-radius: 1rem;
+    .title {
+        font-weight: 600;
+    }
 }

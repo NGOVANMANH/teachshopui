@@ -7,7 +7,7 @@
 }
 
 html {
-    font-size: 65.5%;
+    font-size: 62.5%;
 }
 
 * {
@@ -27,6 +27,7 @@ body {
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 p {
@@ -41,6 +42,10 @@ p {
 
 .rounded-inherit {
     border-radius: inherit !important;
+}
+
+.rounded {
+    border-radius: 0.8rem !important;
 }
 
 .carousel-inner {

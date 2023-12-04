@@ -7,9 +7,6 @@ import { Link } from "react-router-dom";
 import { validateEmail } from '../../hooks';
 
 const Footer = () => {
-
-
-
     const handldleSentEmail = (e) => {
         let element = e.target.parentElement;
         while (element.nodeName !== 'FORM') {

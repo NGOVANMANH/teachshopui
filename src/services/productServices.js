@@ -1,9 +1,9 @@
 import axios from "./customizeAxios";
-import { NOT_FOUND } from "./constant";
+import { NOT_FOUND } from "./constants";
 
 export const getAllProduct = async () => {
     try {
-        const response = await axios.get(``);
+        const response = await axios.get(`/api/product/read.php`);
         if (response && response.data && response.data.product) {
             return response.data.product;
         }

@@ -76,13 +76,12 @@
 
 .search {
     height: 4rem;
-    border-radius: 1rem;
     width: 100%;
 
     input {
         font-size: 1.4rem;
-        border-top-left-radius: 1rem !important;
-        border-bottom-left-radius: 1rem !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
     }
 
     button {
