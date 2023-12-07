@@ -55,13 +55,25 @@ const Products = () => {
                 ?
                 <Container>
                     <Row>
-                        <Col className="fs-2">{getTitle()}</Col>
+                        <Container className="mt-3 mb-3 bg-white rounded">
+                            <div align="center" className="fs-1 fw-bolder text-secondary text-capitalize">{getTitle()}</div>
+                        </Container>
                     </Row>
                     <HorizontalLine className="mt-3 mb-3" />
                     <Row>
+                        <Col md="auto" className="fs-2 fw-bold text-secondary">Lọc theo:</Col>
                         <Col>
                             <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
-                                <Button variant="outline-secondary">{"wtf"}</Button>
+                                <Button variant="outline-secondary" size="lg">{"A-Z"}</Button>
+                            </Link>
+                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
+                                <Button variant="outline-secondary" size="lg">{"Z-A"}</Button>
+                            </Link>
+                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
+                                <Button variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
+                            </Link>
+                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
+                                <Button variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
                             </Link>
                         </Col>
                     </Row>
@@ -76,7 +88,7 @@ const Products = () => {
                 </Container>
                 :
                 <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
-                    "0 sản phẩm tồn tại"
+                    "Không có sản phẩm"
                 </div>
             :
             <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>

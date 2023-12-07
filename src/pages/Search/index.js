@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getSearchedProduct } from '../../services/productServices';
-import { Col, Row, Container, CardGroup, Spinner } from 'react-bootstrap';
+import { Col, Row, Container, CardGroup, Spinner, Button } from 'react-bootstrap';
+
 import { HorizontalLine, ProductCard } from '../../components';
 
 const SearchResults = () => {
@@ -34,9 +35,21 @@ const SearchResults = () => {
             ?
             <Container>
                 <Row>
-                    <Col>Kết quả tìm kiếm: {searchValue}</Col>
+                    <Container className="mt-3 mb-3 bg-white rounded">
+                        <div align="center" className="fs-1 fw-bolder text-secondary text-capitalize">Tìm kiếm: {searchValue}</div>
+                    </Container>
                 </Row>
-                <HorizontalLine />
+                <HorizontalLine className="mt-3 mb-3" />
+                <Row>
+                    <Col md="auto" className="fs-2 fw-bold text-secondary">Lọc theo:</Col>
+                    <Col>
+                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"A-Z"}</Button>
+                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Z-A"}</Button>
+                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
+                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
+                    </Col>
+                </Row>
+                <HorizontalLine className="mt-3 mb-3" />
                 <Row>
                     <CardGroup className="justify-content-center">
                         {

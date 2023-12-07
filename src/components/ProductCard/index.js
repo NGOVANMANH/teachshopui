@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
-    const handleClick = (event) => {
+    const handleAddToCart = (event) => {
         event.preventDefault();
         alert("Thêm vào giỏ hàng")
     }
@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
                 <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Subtitle className='mt-1'>Brand: {product.brand}</Card.Subtitle>
-                    <Card.Subtitle className='mt-1'>Màu sắc: {product.color}</Card.Subtitle>
+                    {/* <Card.Subtitle className='mt-1'>Mô tả: {product.name}</Card.Subtitle> */}
                 </Card.Body>
                 <Card.Body className='position-absolute bottom-0 mb-5'>
                     {
@@ -38,7 +38,7 @@ const ProductCard = ({ product }) => {
                         <span className={clsx(styles.price, "text-success")}>{product.price.toLocaleString('en-US')} đ</span>
                     </Card.Text>
                 </Card.Body>
-                <Button onClick={handleClick} variant="primary">Thêm vào giỏ hàng</Button>
+                <Button onClick={handleAddToCart} variant="primary">Thêm vào giỏ hàng</Button>
             </Card>
         </Link>
     );
