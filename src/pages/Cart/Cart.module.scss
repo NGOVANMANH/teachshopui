@@ -7,5 +7,39 @@
 
     .title {
         font-weight: 600;
+        margin-bottom: 1rem;
     }
+}
+
+.formInput {
+    font-size: 1.4rem !important;
+    margin: 0.5rem !important;
+    height: 4rem;
+}
+
+.formNote {
+    font-size: 1.4rem !important;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    height: calc(100% - 1rem);
+}
+
+.buttonPay {
+    position: absolute;
+    bottom: calc(2rem + 5px);
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    background: var(--primary) !important;
+    width: calc(100% - 4rem - 10px);
+    padding: 1rem !important;
+    border: transparent !important;
+
+    &:hover {
+        opacity: 0.9 !important;
+    }
+}
+
+.inValidMessage {
+    color: red;
+    font-size: 1.1rem;
+    margin-top: -0.5rem !important;
 }

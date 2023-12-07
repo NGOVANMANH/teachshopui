@@ -51,3 +51,9 @@ p {
 .carousel-inner {
     border-radius: 1rem;
 }
+
+.form-check-input {
+    &:checked {
+        background-color: var(--primary);
+    }
+}

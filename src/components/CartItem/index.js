@@ -39,9 +39,9 @@ const CartItem = () => {
                 </Col>
                 <Col className="d-flex align-items-center justify-content-center text-secondary">{productCart.price.toLocaleString('en-US')} đ</Col>
                 <Col className="d-flex align-items-center justify-content-center text-secondary">
-                    <span class={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(-1)}>-</span>
+                    <span className={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(-1)}>-</span>
                     {productCart.num}
-                    <span class={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(1)}>+</span>
+                    <span className={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(1)}>+</span>
                 </Col>
                 <Col className="d-flex align-items-center justify-content-center text-danger">{(productCart.num * productCart.price).toLocaleString('en-US')} đ</Col>
                 <Col className="d-flex align-items-center justify-content-center fs-1"><span onClick={handleDelete}><FaRegCircleXmark /></span></Col>
