@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getSearchedProduct } from '../../services/productServices';
 import { Col, Row, Container, CardGroup, Spinner, Button } from 'react-bootstrap';
 
@@ -29,6 +29,25 @@ const SearchResults = () => {
 
     }, [searchValue])
 
+    const handleSortName = () => {
+        const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
+        setProducts(sortedProducts);
+    }
+
+    const handleSortNameDesc = () => {
+        const sortedProducts = [...products].sort((a, b) => b.name.localeCompare(a.name));
+        setProducts(sortedProducts);
+    }
+
+    const handleSortPrice = () => {
+        const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+        setProducts(sortedProducts);
+    }
+
+    const handleSortPriceDesc = () => {
+        const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+        setProducts(sortedProducts);
+    }
 
     return (
         !isSearching
@@ -43,10 +62,10 @@ const SearchResults = () => {
                 <Row>
                     <Col md="auto" className="fs-2 fw-bold text-secondary">Lọc theo:</Col>
                     <Col>
-                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"A-Z"}</Button>
-                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Z-A"}</Button>
-                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
-                        <Button style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
+                        <Button onClick={handleSortName} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"A-Z"}</Button>
+                        <Button onClick={handleSortNameDesc} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Z-A"}</Button>
+                        <Button onClick={handleSortPrice} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
+                        <Button onClick={handleSortPriceDesc} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
                     </Col>
                 </Row>
                 <HorizontalLine className="mt-3 mb-3" />
