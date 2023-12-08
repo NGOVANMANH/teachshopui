@@ -3,7 +3,7 @@ import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import * as formik from 'formik';
 import * as yup from 'yup';
 import { useContextData } from '../../hooks';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signup } from '../../services/userServices';
 
 import styles from './Signup.module.scss';
@@ -20,6 +20,10 @@ import styles from './Signup.module.scss';
 // city
 
 const Signup = () => {
+
+    useEffect(() => {
+        document.title = "Signup - Techshop";
+    }, [])
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -45,7 +49,7 @@ const Signup = () => {
         <Formik
             validationSchema={schema}
             onSubmit={values => {
-                delete values.confirmPassword;
+                console.log(values)
 
                 const fetchApi = async () => {
                     const respone = await signup(values);

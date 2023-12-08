@@ -7,6 +7,11 @@ import { login } from '../../services/userServices';
 import { useContextData } from '../../hooks';
 
 const Login = () => {
+
+    useEffect(() => {
+        document.title = "Login - Techshop";
+    }, [])
+
     const [validated, setValidated] = useState(false);
     const [isLogining, setIsLogining] = useState(false);
     const [userInfor, setUserInfor] = useState({});

@@ -1,12 +1,31 @@
 import { Card, Button } from 'react-bootstrap';
-import styles from './ProductCard.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
+import { useContextData } from '../../hooks';
+import styles from './ProductCard.module.scss';
+
 const ProductCard = ({ product }) => {
+
+    const { cart, setCart } = useContextData();
+
     const handleAddToCart = (event) => {
         event.preventDefault();
-        alert("Thêm vào giỏ hàng")
+
+        const _cart = [...cart];
+
+        const existingProduct = _cart.find(item => item.id === product.id);
+
+        if (existingProduct) {
+            alert("Sản phẩm đã có trong giỏ hàng!");
+        }
+        else {
+            _cart.push({
+                ...product,
+                num: 1,
+            })
+        }
+        setCart(_cart);
     }
 
     return (

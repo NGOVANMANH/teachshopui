@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 import { useContextData } from '../../hooks';
 
 const Home = () => {
+
+  useEffect(() => {
+    document.title = "Home - Techshop";
+  }, [])
+
   const [phones, setPhones] = useState([]);
   const [cables, setCables] = useState([]);
   const [backupchargers, setBackupchargers] = useState([]);
@@ -30,9 +35,8 @@ const Home = () => {
       setIsLoading(true);
     }
 
-
-
   }, [products]);
+
 
   return (isLoading
     ?
