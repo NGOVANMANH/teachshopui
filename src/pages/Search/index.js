@@ -6,6 +6,11 @@ import { Col, Row, Container, CardGroup, Spinner, Button } from 'react-bootstrap
 import { HorizontalLine, ProductCard } from '../../components';
 
 const SearchResults = () => {
+
+    useEffect(() => {
+        document.title = "Search - Techshop";
+    }, [])
+
     const params = useParams();
     const [products, setProducts] = useState([]);
     const [isSearching, setIsSearching] = useState(true);

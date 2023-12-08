@@ -26,6 +26,8 @@ const Header = () => {
     const [isShow, setIsShow] = useState(false);
     const { user, setUser } = useContextData();
 
+    const { cart } = useContextData();
+
     const showCategory = () => {
         setIsShow(!isShow);
     }
@@ -257,7 +259,20 @@ const Header = () => {
                                     </PopperWrapper>
                                 )}
                             >
-                                <Button onClick={() => { navigate('/cart') }} variant="outline-success" className={clsx("d-flex justify-content-center align-items-center", styles.categoryButton)}><AiOutlineShoppingCart /><span>GIỎ HÀNG</span></Button>
+                                <Button
+                                    onClick={() => { navigate('/cart') }}
+                                    variant="outline-success"
+                                    className={clsx("d-flex justify-content-center align-items-center", styles.categoryButton)}>
+                                    <div className="position-relative">
+                                        <AiOutlineShoppingCart />
+                                        {cart && cart.length > 0 && <div className={clsx("position-absolute", styles.numOfCartItemBox)}>
+                                            {cart.reduce((total, item) => total + item.num, 0)}
+                                        </div>}
+                                    </div>
+                                    &nbsp;
+                                    &nbsp;
+                                    <span>GIỎ HÀNG</span>
+                                </Button>
                             </TippyHeadless>
                         </div>
 

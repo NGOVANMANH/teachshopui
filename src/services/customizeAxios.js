@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://localhost/restful_php_api'
+    baseURL: 'http://localhost/restful_php_api',
 });
 
 // Add a response interceptor

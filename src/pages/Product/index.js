@@ -1,11 +1,16 @@
 import { Col, Container, Row, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
 import { CategoryBlock, HorizontalLine, ProductCarousel } from "../../components";
 
 const ProductDetails = () => {
+
+    useEffect(() => {
+        document.title = "Product - Techshop";
+    }, [])
+
     const [activeButton, setActiveButton] = useState(1);
     const params = useParams();
 
@@ -68,7 +73,7 @@ const ProductDetails = () => {
                     <HorizontalLine className='mt-3 mb-3' />
                     <Row>
                         <Col>
-                            <Button className="w-100 fs-2" variant="secondary" size="lg" >Mua hàng</Button>
+                            <Button className="w-100 fs-2" variant="secondary" size="lg" >Thêm vào giỏ hàng</Button>
                         </Col>
                     </Row>
                 </Col>
