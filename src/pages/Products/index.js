@@ -1,10 +1,10 @@
 import { CardGroup, Col, Container, Row, Spinner, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from "react";
 
 import { HorizontalLine, ProductCard } from "../../components";
-import { getProductByCategory } from '../../services/productServices';
+import { useContextData } from "../../hooks";
+
 
 const Products = () => {
 
@@ -16,23 +16,26 @@ const Products = () => {
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const data = useContextData();
+
     useEffect(() => {
+        if (data && data.products.length > 0) {
 
-        const fetchApi = async () => {
-            setIsLoading(true);
-            const response = await getProductByCategory(category);
+            let categoryID = -1;
 
-            if (response !== 404) {
-                setProducts(response);
-            }
-            else {
-                setProducts([])
-            }
+            if (category === "phone") categoryID = 1;
+            else if (category === "adapter") categoryID = 2;
+            else if (category === "cable") categoryID = 3;
+            else if (category === "backupcharger") categoryID = 4;
+
+            setProducts(data.products.filter(item => item.category === categoryID));
+
             setIsLoading(false);
         }
-
-        fetchApi();
-    }, [category])
+        else {
+            setIsLoading(true);
+        }
+    }, [category, data])
 
     const getTitle = useCallback(() => {
         switch (category) {
@@ -47,6 +50,32 @@ const Products = () => {
             default: ;
         }
     }, [category]);
+
+    const handleSortName = () => {
+        const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
+        setProducts(sortedProducts);
+    }
+
+    const handleSortNameDesc = () => {
+        const sortedProducts = [...products].sort((a, b) => b.name.localeCompare(a.name));
+        setProducts(sortedProducts);
+    }
+
+    const handleSortPrice = () => {
+        const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+        setProducts(sortedProducts);
+    }
+
+    const handleSortPriceDesc = () => {
+        const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+        setProducts(sortedProducts);
+    }
+
+    // const handleFilterByBrand = (brandName) => {
+    //     brandName = brandName.toLocaleLowerCase();
+    //     const filtedProducts = [...products].filter(item => item.brand === brandName);
+    //     setProducts(filtedProducts);
+    // }
 
     return (
         !isLoading
@@ -63,18 +92,42 @@ const Products = () => {
                     <Row>
                         <Col md="auto" className="fs-2 fw-bold text-secondary">Lọc theo:</Col>
                         <Col>
-                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
-                                <Button variant="outline-secondary" size="lg">{"A-Z"}</Button>
-                            </Link>
-                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
-                                <Button variant="outline-secondary" size="lg">{"Z-A"}</Button>
-                            </Link>
-                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
-                                <Button variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
-                            </Link>
-                            <Link to={'/products'} style={{ marginRight: "0.5rem" }}>
-                                <Button variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
-                            </Link>
+                            <Button
+                                style={{ marginRight: "0.5rem" }}
+                                variant="outline-secondary"
+                                size="lg"
+                                onClick={handleSortName}
+                            >
+                                {"A-Z"}
+                            </Button>
+
+                            <Button
+                                style={{ marginRight: "0.5rem" }}
+                                variant="outline-secondary"
+                                size="lg"
+                                onClick={handleSortNameDesc}
+                            >
+                                {"Z-A"}
+                            </Button>
+
+                            <Button
+                                style={{ marginRight: "0.5rem" }}
+                                variant="outline-secondary"
+                                size="lg"
+                                onClick={handleSortPriceDesc}
+                            >
+                                {"Cao-Thấp"}
+                            </Button>
+
+                            <Button
+                                style={{ marginRight: "0.5rem" }}
+                                variant="outline-secondary"
+                                size="lg"
+                                onClick={handleSortPrice}
+                            >
+                                {"Thấp-Cao"}
+                            </Button>
+
                         </Col>
                     </Row>
                     <HorizontalLine className="mt-3 mb-3" />

@@ -8,7 +8,10 @@ const Provider = ({ children }) => {
 
     const [products, setProducts] = useState([]);
 
-    const [userStatus, setUserStatus] = useState({});
+    const [userStatus, setUserStatus] = useState({
+        auth: false,
+        jwt: '',
+    });
 
     useEffect(() => {
         const fetchApi = async () => {
