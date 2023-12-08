@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import styles from '../Signup/Signup.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../services/userServices';
+import { useContextData } from '../../hooks';
 
 const Login = () => {
     const [validated, setValidated] = useState(false);
     const [isLogining, setIsLogining] = useState(false);
     const [userInfor, setUserInfor] = useState({});
     const usenavigate = useNavigate();
+    const { setUser } = useContextData();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -36,6 +38,12 @@ const Login = () => {
                 if (response !== 404) {
                     if (response.status === 200) {
                         localStorage.setItem("token", response.jwt);
+                        setUser({
+                            auth: true,
+                            userInfor: {
+                                ...response.user,
+                            }
+                        })
                         usenavigate("/");
                     }
                     else {

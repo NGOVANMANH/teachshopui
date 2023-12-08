@@ -8,16 +8,19 @@ import * as Yup from 'yup';
 
 import { CartItem, HorizontalLine } from "../../components";
 import styles from './Cart.module.scss';
+import { useContextData } from "../../hooks";
 
 const Cart = () => {
     const cart = [1, 2, 3, 4, 5];
+
+    const { address } = useContextData();
 
     const formik = useFormik({
         initialValues: {
             name: '',
             email: '',
             phoneNumber: '',
-            province: '',
+            district: '',
             city: '',
             address: '',
             note: '',
@@ -31,7 +34,7 @@ const Cart = () => {
             name: Yup.string().min(3, 'Quá ngắn!').max(50, 'Quá dài!').required('Vui lòng nhập tên!'),
             email: Yup.string().email('Email không đúng định dạng!').required('Vui lòng nhập email!'),
             phoneNumber: Yup.string().min(10, 'Số điện thoại không hợp lệ!').max(12, 'Số điện thoại không hợp lệ!').required('Vui lòng nhập số điện thoại!'),
-            province: Yup.string().required('Vui lòng chọn Tỉnh thành!'),
+            district: Yup.string().required('Vui lòng chọn Quận huyện!'),
             city: Yup.string().required('Vui lòng chọn Thành phố!'),
             address: Yup.string().required('Vui lòng nhập địa chỉ!'),
             paymentMethod: Yup.string().required('Vui lòng chọn phương thức thanh toán!'),
@@ -120,29 +123,35 @@ const Cart = () => {
                                     <Row>
                                         <select
                                             className={clsx("col form-select text-secondary", styles.formInput)}
-                                            name="province"
+                                            name="city"
                                             onChange={formik.handleChange}
-                                            value={formik.values.province}
+                                            value={formik.values.city}
                                         >
-                                            <option value="TP HCM">TP HCM</option>
-                                            <option value="TP HCM2">TP HCM</option>
+                                            <option value="">Chọn tỉnh, thành phố</option>
+                                            {
+                                                address.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
+                                            }
                                         </select>
-                                        {formik.errors.province && formik.touched.province ? (
-                                            <div className={clsx(styles.inValidMessage)}>{formik.errors.province}</div>
+                                        {formik.errors.city && formik.touched.city ? (
+                                            <div className={clsx(styles.inValidMessage)}>{formik.errors.city}</div>
                                         ) : null}
                                     </Row>
                                     <Row>
                                         <select
                                             className={clsx("col form-select text-secondary", styles.formInput)}
-                                            name="city"
+                                            name="district"
                                             onChange={formik.handleChange}
-                                            value={formik.values.city}
+                                            value={formik.values.district}
                                         >
-                                            <option value="QN">Quảng ngãi</option>
-                                            <option value="QN2">Quảng ngãi</option>
+                                            <option value="">Chọn quận, huyện</option>
+                                            {
+                                                formik.values.city && formik.values.city.length > 0
+                                                &&
+                                                address.find(item => item.name === formik.values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                            }
                                         </select>
-                                        {formik.errors.city && formik.touched.city ? (
-                                            <div className={clsx(styles.inValidMessage)}>{formik.errors.city}</div>
+                                        {formik.errors.district && formik.touched.district ? (
+                                            <div className={clsx(styles.inValidMessage)}>{formik.errors.district}</div>
                                         ) : null}
                                     </Row>
                                     <Row>

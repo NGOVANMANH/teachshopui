@@ -14,7 +14,7 @@ export const login = async (userInfor) => {
 
 export const signup = async (userInfor) => {
     try {
-        const response = await axios.get(``);
+        const response = await axios.get(`/api/customer/signup.php`, userInfor);
         if (response && response.data) {
             return response.data;
         }

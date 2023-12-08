@@ -6,10 +6,10 @@ import { HiOutlineSpeakerphone, HiMenu } from 'react-icons/hi';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useDebounce } from '../../hooks'
+import { useContextData, useDebounce } from '../../hooks'
 import Tippy from '@tippyjs/react';
 import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
@@ -22,8 +22,9 @@ import PopperWrapper from "../PopperWrapper";
 import SearchProductItem from "../SearchProductItem";
 
 const Header = () => {
-    const usenavigate = useNavigate();
+    const navigate = useNavigate();
     const [isShow, setIsShow] = useState(false);
+    const { user, setUser } = useContextData();
 
     const showCategory = () => {
         setIsShow(!isShow);
@@ -70,7 +71,7 @@ const Header = () => {
 
     const handleClickedSearch = () => {
         if (searchValue) {
-            usenavigate(`/search/${searchValue}`);
+            navigate(`/search/${searchValue}`);
         }
     }
 
@@ -78,7 +79,21 @@ const Header = () => {
     const handleKeyDown = (e) => {
         if (e.code === "Enter") {
             handleClickedSearch();
+            setShowResult(false);
         }
+    }
+
+    const toProfile = () => {
+        navigate("/profile");
+    }
+
+    const handleLogout = () => {
+        setUser({
+            auth: false,
+            userInfor: {},
+        })
+        localStorage.removeItem("token");
+        navigate("/");
     }
 
     return (
@@ -131,9 +146,24 @@ const Header = () => {
                             </div>
                             <div className={clsx(styles.userDiv)}>
                                 <FaUserCircle className={clsx(styles.userDivIcon)} />
-                                <Link to="/login">Đăng nhập</Link>
-                                <span> / </span>
-                                <Link to="/signup">Đăng kí</Link>
+                                {
+                                    user && user.auth
+                                        ?
+                                        <>
+                                            Hello! Ngô Mạnh nhé!
+                                            <DropdownButton className={clsx(styles.dropDownUser)} id="dropdown-basic-button" title="" align={"end"}>
+                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Xem thông tin</Dropdown.Item>
+                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Tình trạng đơn hàng</Dropdown.Item>
+                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+                                            </DropdownButton>
+                                        </>
+                                        :
+                                        <>
+                                            <Link to="/login">Đăng nhập</Link>
+                                            <span> / </span>
+                                            <Link to="/signup">Đăng kí</Link>
+                                        </>
+                                }
                             </div>
                         </div>
                     </div>
@@ -227,7 +257,7 @@ const Header = () => {
                                     </PopperWrapper>
                                 )}
                             >
-                                <Button onClick={() => { usenavigate('/cart') }} variant="outline-success" className={clsx("d-flex justify-content-center align-items-center", styles.categoryButton)}><AiOutlineShoppingCart /><span>GIỎ HÀNG</span></Button>
+                                <Button onClick={() => { navigate('/cart') }} variant="outline-success" className={clsx("d-flex justify-content-center align-items-center", styles.categoryButton)}><AiOutlineShoppingCart /><span>GIỎ HÀNG</span></Button>
                             </TippyHeadless>
                         </div>
 
