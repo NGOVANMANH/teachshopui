@@ -148,7 +148,7 @@ const Header = () => {
                         <div className="col d-flex justify-content-end align-items-center">
                             <div className={clsx(styles.userDiv)}>
                                 <HiOutlineSpeakerphone className={clsx(styles.userDivIcon)} />
-                                <Link to="/news">Tin Tức</Link>
+                                <Link to="/news">Tin tức</Link>
                             </div>
                             <div className={clsx(styles.userDiv)}>
                                 <FaUserCircle className={clsx(styles.userDivIcon)} />
