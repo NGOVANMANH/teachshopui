@@ -15,8 +15,10 @@ const Login = () => {
     const [validated, setValidated] = useState(false);
     const [isLogining, setIsLogining] = useState(false);
     const [userInfor, setUserInfor] = useState({});
-    const usenavigate = useNavigate();
+
     const { setUser } = useContextData();
+
+    const usenavigate = useNavigate();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -34,7 +36,7 @@ const Login = () => {
         setValidated(true);
     };
 
-    useEffect(() => {
+    const handleLogin = () => {
         const fetchApi = async () => {
             if (userInfor.email && userInfor.password) {
                 setIsLogining(true);
@@ -45,9 +47,7 @@ const Login = () => {
                         localStorage.setItem("token", response.jwt);
                         setUser({
                             auth: true,
-                            userInfor: {
-                                ...response.user,
-                            }
+                            userInfor: response.data,
                         })
                         usenavigate("/");
                     }
@@ -59,9 +59,9 @@ const Login = () => {
                 setIsLogining(false);
             }
         }
-        fetchApi();
-    }, [userInfor, usenavigate]);
 
+        fetchApi();
+    }
 
     const toSignup = () => {
         usenavigate('/signup');
@@ -95,7 +95,8 @@ const Login = () => {
                                     type="password"
                                     name='password'
                                     placeholder="Password..."
-                                    required />
+                                    required
+                                />
                                 <Form.Control.Feedback type="invalid">
                                     Please provide a Password.
                                 </Form.Control.Feedback>
@@ -105,6 +106,7 @@ const Login = () => {
                         <Row className='justify-content-center m-2 fs-5' >
                             <Col className='d-flex justify-content-center m-2'>
                                 <Button type="submit" size='lg' className='bg-main'
+                                    onClick={handleLogin}
                                     disabled={isLogining}
                                 >
                                     {isLogining ? <Spinner /> : "Đăng nhập"}

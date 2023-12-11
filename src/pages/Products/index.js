@@ -16,14 +16,14 @@ const Products = () => {
 
     const category = params.category.toLocaleLowerCase();
 
-    const [products, setProducts] = useState([]);
+    const [_products, setProducts] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const data = useContextData();
+    const { products } = useContextData();
 
     useEffect(() => {
-        if (data && data.products.length > 0) {
+        if (products && products.length > 0) {
 
             let categoryID = -1;
 
@@ -32,14 +32,14 @@ const Products = () => {
             else if (category === "cable") categoryID = 3;
             else if (category === "backupcharger") categoryID = 4;
 
-            setProducts(data.products.filter(item => item.category === categoryID));
+            setProducts(products.filter(item => item.category === categoryID));
 
             setIsLoading(false);
         }
         else {
             setIsLoading(true);
         }
-    }, [category, data])
+    }, [category, products])
 
     const getTitle = useCallback(() => {
         switch (category) {
@@ -56,22 +56,22 @@ const Products = () => {
     }, [category]);
 
     const handleSortName = () => {
-        const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
+        const sortedProducts = [..._products].sort((a, b) => a.name.localeCompare(b.name));
         setProducts(sortedProducts);
     }
 
     const handleSortNameDesc = () => {
-        const sortedProducts = [...products].sort((a, b) => b.name.localeCompare(a.name));
+        const sortedProducts = [..._products].sort((a, b) => b.name.localeCompare(a.name));
         setProducts(sortedProducts);
     }
 
     const handleSortPrice = () => {
-        const sortedProducts = [...products].sort((a, b) => a.price - b.price);
+        const sortedProducts = [..._products].sort((a, b) => a.price - b.price);
         setProducts(sortedProducts);
     }
 
     const handleSortPriceDesc = () => {
-        const sortedProducts = [...products].sort((a, b) => b.price - a.price);
+        const sortedProducts = [..._products].sort((a, b) => b.price - a.price);
         setProducts(sortedProducts);
     }
 
@@ -84,7 +84,7 @@ const Products = () => {
     return (
         !isLoading
             ?
-            products && products.length > 0
+            _products && _products.length > 0
                 ?
                 <Container>
                     <Row>
@@ -138,7 +138,7 @@ const Products = () => {
                     <Row>
                         <CardGroup className="justify-content-center">
                             {
-                                products.map(product => <ProductCard key={product.id} product={product} />)
+                                _products.map(product => <ProductCard key={product.id} product={product} />)
                             }
                         </CardGroup>
                     </Row>

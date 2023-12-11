@@ -6,3 +6,4 @@ export { default as News } from './News';
 export { default as Products } from './Products';
 export { default as Product } from './Product';
 export { default as Search } from './Search';
+export { default as Profile } from './Profile';

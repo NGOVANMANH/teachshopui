@@ -24,17 +24,22 @@ import SearchProductItem from "../SearchProductItem";
 const Header = () => {
     const navigate = useNavigate();
     const [isShow, setIsShow] = useState(false);
-    const { user, setUser } = useContextData();
+    const [cartNum, setCartNum] = useState(0);
+    const [searchValue, setSearchValue] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
+    const [showResult, setShowResult] = useState(false);
+    const { user, setUser, cart } = useContextData();
 
-    const { cart } = useContextData();
+    useEffect(() => {
+        if (cart) {
+            const _cartNum = cart.reduce((total, item) => total + item.num, 0);
+            setCartNum(_cartNum);
+        }
+    }, [cart])
 
     const showCategory = () => {
         setIsShow(!isShow);
     }
-
-    const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState([]);
-    const [showResult, setShowResult] = useState(false);
 
     const debouncedValue = useDebounce(searchValue, 500);
 
@@ -76,7 +81,6 @@ const Header = () => {
             navigate(`/search/${searchValue}`);
         }
     }
-
 
     const handleKeyDown = (e) => {
         if (e.code === "Enter") {
@@ -152,7 +156,7 @@ const Header = () => {
                                     user && user.auth
                                         ?
                                         <>
-                                            Hello! Ngô Mạnh nhé!
+                                            <div className="text-capitalize">Hello! {user.userInfor.name ? user.userInfor.name : "user"} nhé!</div>
                                             <DropdownButton className={clsx(styles.dropDownUser)} id="dropdown-basic-button" title="" align={"end"}>
                                                 <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Xem thông tin</Dropdown.Item>
                                                 <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Tình trạng đơn hàng</Dropdown.Item>
@@ -266,7 +270,7 @@ const Header = () => {
                                     <div className="position-relative">
                                         <AiOutlineShoppingCart />
                                         {cart && cart.length > 0 && <div className={clsx("position-absolute", styles.numOfCartItemBox)}>
-                                            {cart.reduce((total, item) => total + item.num, 0)}
+                                            {cartNum}
                                         </div>}
                                     </div>
                                     &nbsp;
