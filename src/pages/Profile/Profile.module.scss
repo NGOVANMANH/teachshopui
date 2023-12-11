@@ -1,8 +1,61 @@
 .account_left {
-    line-height: 2.4;
+    padding: 1rem;
 
     .account_left_title {
         font-size: 1.4rem;
         font-weight: 800;
+        margin-bottom: 0.5rem;
     }
+
+    .account_button {
+        font-size: 1.6rem;
+        font-weight: 600;
+        padding: 0.8rem 0;
+        margin-bottom: 1rem;
+        border: transparent;
+    }
+
+    .account_button_logout:active {
+        background: red !important;
+        color: #fff; // Add text color for active state
+    }
+}
+
+.active {
+    background: var(--primary) !important;
+    color: #fff; // Add text color for active state
+}
+
+.account_right {
+    padding: 1rem;
+    font-size: 1.4rem;
+
+    .account_right_title {
+        font-size: 2.2rem;
+        font-weight: 500;
+    }
+}
+
+.table_title {
+    vertical-align: middle;
+}
+
+.account_button_update {
+    background: var(--primary) !important;
+    border: transparent !important;
+    font-size: 1.6rem !important;
+
+    &:hover {
+        background-color: var(--primary);
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
+.inValidMessage {
+    color: red;
+    font-size: 1.1rem;
 }
