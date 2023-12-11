@@ -12,8 +12,10 @@ const SearchResults = () => {
     }, [])
 
     const params = useParams();
+
     const [products, setProducts] = useState([]);
     const [isSearching, setIsSearching] = useState(true);
+
     const searchValue = params.searchValue.toLocaleLowerCase();
 
     useEffect(() => {

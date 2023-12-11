@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { CartItem, HorizontalLine } from "../../components";
 import styles from './Cart.module.scss';
@@ -17,9 +17,23 @@ const Cart = () => {
         document.title = "Cart - Techshop";
     }, [])
 
-    const { cart, setCart } = useContextData();
+    const { cart, setCart, address } = useContextData();
 
-    const { address } = useContextData();
+    const [cartItems, setCartItems] = useState([]);
+
+    const [province, setProvince] = useState([]);
+
+    useEffect(() => {
+        if (cart) {
+            setCartItems([...cart]);
+        }
+    }, [cart])
+
+    useEffect(() => {
+        if (address) {
+            setProvince([...address]);
+        }
+    }, [address])
 
     const formik = useFormik({
         initialValues: {
@@ -74,14 +88,14 @@ const Cart = () => {
                 </Row>
             </Container>
             {
-                cart && cart.length > 0
+                cartItems.length > 0
                     ?
-                    cart.map(item => (<CartItem key={item.id} data={item}></CartItem>))
+                    cartItems.map(item => (<CartItem key={item.id} data={item}></CartItem>))
                     :
                     <div className="d-flex justify-content-center align-items-center" style={{ height: "30vh" }}>"0 sản phẩm trong giỏ hàng"</div>
             }
             {
-                cart && cart.length > 0 &&
+                cartItems.length > 0 &&
                 <Container className="mt-3 mb-3 bg-white rounded">
                     <form className="row" onSubmit={formik.handleSubmit}>
                         <Col className={clsx(styles.customer)}>
@@ -141,7 +155,7 @@ const Cart = () => {
                                             >
                                                 <option value="">Chọn tỉnh, thành phố</option>
                                                 {
-                                                    address.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
+                                                    province.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
                                                 }
                                             </select>
                                             {formik.errors.city && formik.touched.city ? (
@@ -159,7 +173,7 @@ const Cart = () => {
                                                 {
                                                     formik.values.city && formik.values.city.length > 0
                                                     &&
-                                                    address.find(item => item.name === formik.values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                                    province.find(item => item.name === formik.values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
                                                 }
                                             </select>
                                             {formik.errors.district && formik.touched.district ? (

@@ -33,14 +33,14 @@ const Provider = ({ children }) => {
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
-            setUser({
-                auth: true,
-                userInfor: {
-                    ...user.userInfor,
+            setUser((prevUser) => {
+                return {
+                    ...prevUser,
+                    auth: true,
                 }
             })
         }
-    }, [user])
+    }, [])
 
     useEffect(() => {
 

@@ -27,9 +27,18 @@ const Signup = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [province, setProvince] = useState([]);
+
     const { Formik } = formik;
 
     const { address } = useContextData();
+
+
+    useEffect(() => {
+        if (address) {
+            setProvince([...address]);
+        }
+    }, [address])
 
     const schema = yup.object().shape({
         email: yup.string().email("Trường này phải là email!").required("Trường này bắt buộc!"),
@@ -209,7 +218,7 @@ const Signup = () => {
                             >
                                 <option value="">Chọn tỉnh, thành phố</option>
                                 {
-                                    address.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
+                                    province.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
                                 }
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
@@ -231,7 +240,7 @@ const Signup = () => {
                                 {
                                     values.city && values.city.length > 0
                                     &&
-                                    address.find(item => item.name === values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                    province.find(item => item.name === values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
                                 }
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
@@ -253,7 +262,7 @@ const Signup = () => {
                                 {
                                     values.district && values.district.length > 0
                                     &&
-                                    address.find(item => item.name === values.city)?.districts.find(district => district.name === values.district)?.wards.map(ward => <option key={ward.code} value={ward.name}>{ward.name}</option>)
+                                    province.find(item => item.name === values.city)?.districts.find(district => district.name === values.district)?.wards.map(ward => <option key={ward.code} value={ward.name}>{ward.name}</option>)
                                 }
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
