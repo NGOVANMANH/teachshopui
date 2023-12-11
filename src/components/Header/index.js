@@ -166,7 +166,7 @@ const Header = () => {
                                         :
                                         <>
                                             <Link to="/login">Đăng nhập</Link>
-                                            <span> / </span>
+                                            <span>&nbsp;/&nbsp;</span>
                                             <Link to="/signup">Đăng kí</Link>
                                         </>
                                 }
