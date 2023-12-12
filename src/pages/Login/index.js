@@ -1,7 +1,7 @@
 import { Form, Row, Col, Button, Container, Spinner } from 'react-bootstrap';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import * as formik from 'formik';
 import * as yup from 'yup';
 
@@ -114,6 +114,7 @@ const Login = () => {
                                         >
                                             {isLogining ? <Spinner /> : "Đăng nhập"}
                                         </Button>
+                                        <Link className='m-2' to={"/forget"}>Quên mật khẩu?</Link>
                                     </Col>
                                 </Row>
                             </Form>

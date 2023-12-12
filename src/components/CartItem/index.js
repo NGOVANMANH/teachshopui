@@ -45,7 +45,7 @@ const CartItem = ({ data }) => {
                     <span className={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(1)}>+</span>
                 </Col>
                 <Col className="d-flex align-items-center justify-content-center text-danger">{(data.num * data.price).toLocaleString('en-US')} đ</Col>
-                <Col className="d-flex align-items-center justify-content-center fs-1"><span onClick={handleDelete}><FaRegCircleXmark /></span></Col>
+                <Col className="d-flex align-items-center justify-content-center fs-1"><span onClick={handleDelete}><FaRegCircleXmark className="text-secondary" /></span></Col>
             </Row>
         </Container>
     );
