@@ -1,0 +1,40 @@
+.comment_area_user {
+    margin: 1rem 0.2rem !important;
+    padding: 1rem 0.5rem !important;
+
+    .user_avatar {
+        svg {
+            background: black;
+            color: white;
+            margin: 0.5rem;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+    }
+
+    .user_comment_time {
+        font-size: 1rem;
+    }
+
+    .user_name {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .user_comment_content {
+        padding-top: 0.5rem;
+        font-size: 1.4rem;
+        color: #4a4a4a;
+    }
+}
+
+.button_comment_service {
+    width: fit-content;
+    border: transparent;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    &:hover {
+        background: gainsboro;
+    }
+}

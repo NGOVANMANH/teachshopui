@@ -1,0 +1,14 @@
+.product_left {
+    display: flex;
+    flex-wrap: wrap;
+
+    .button_area {
+        width: 100%;
+        align-self: flex-end;
+    }
+}
+
+.bottom_title {
+    font-size: 2rem;
+    font-weight: 600;
+}

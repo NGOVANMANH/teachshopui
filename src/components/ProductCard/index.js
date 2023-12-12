@@ -1,6 +1,7 @@
 import { Card, Button } from 'react-bootstrap';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import { useContextData } from '../../hooks';
 import styles from './ProductCard.module.scss';
@@ -9,6 +10,17 @@ const ProductCard = ({ product }) => {
 
     const { cart, setCart } = useContextData();
 
+    const [isExist, setIsExist] = useState(false);
+
+    useEffect(() => {
+        const existingProduct = [...cart].find(item => item.id === product.id);
+
+        if (existingProduct) {
+            setIsExist(true);
+        }
+
+    }, [product, cart])
+
     const handleAddToCart = (event) => {
         event.preventDefault();
 
@@ -16,16 +28,13 @@ const ProductCard = ({ product }) => {
 
         const existingProduct = _cart.find(item => item.id === product.id);
 
-        if (existingProduct) {
-            alert("Sản phẩm đã có trong giỏ hàng!");
-        }
-        else {
+        if (!existingProduct) {
             _cart.push({
                 ...product,
                 num: 1,
             })
+            setCart(_cart);
         }
-        setCart(_cart);
     }
 
     return (
@@ -57,7 +66,9 @@ const ProductCard = ({ product }) => {
                         <span className={clsx(styles.price, "text-success")}>{product.price.toLocaleString('en-US')} đ</span>
                     </Card.Text>
                 </Card.Body>
-                <Button onClick={handleAddToCart} variant="primary">Thêm vào giỏ hàng</Button>
+                <Button onClick={handleAddToCart} variant="primary" disabled={isExist}>
+                    {isExist ? "Trong giỏ hàng" : "Thêm vào giỏ hàng"}
+                </Button>
             </Card>
         </Link>
     );

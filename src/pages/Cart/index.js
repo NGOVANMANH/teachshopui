@@ -76,7 +76,7 @@ const Cart = () => {
                     <Col md="auto">THÔNG TIN GIỎ HÀNG</Col>
                     <Col></Col>
                     <Col md="auto"><Link to={"/"} className="d-flex align-items-center"><BiLeftArrowAlt />CHỌN TIẾP SẢN PHẨM KHÁC</Link></Col>
-                    <Col md="auto"><span className={clsx(styles.buttonDelete)} onClick={handleDeleteCart}>XÓA GIỎ HÀNG</span></Col>
+                    <Col md="auto"><span className={clsx(styles.buttonDelete, "text-danger")} onClick={handleDeleteCart}>XÓA GIỎ HÀNG</span></Col>
                 </Row>
                 <Row><HorizontalLine className="opacity-25" /></Row>
                 <Row className="p-3 fs-4">
@@ -90,7 +90,7 @@ const Cart = () => {
             {
                 cartItems.length > 0
                     ?
-                    cartItems.map(item => (<CartItem key={item.id} data={item}></CartItem>))
+                    cartItems.map(item => (<CartItem key={item.id} data={item} />))
                     :
                     <div className="d-flex justify-content-center align-items-center" style={{ height: "30vh" }}>"0 sản phẩm trong giỏ hàng"</div>
             }
@@ -245,6 +245,19 @@ const Cart = () => {
                                 {formik.errors.paymentMethod && formik.touched.paymentMethod ? (
                                     <div className={clsx(styles.inValidMessage)}>{formik.errors.paymentMethod}</div>
                                 ) : null}
+                                {
+                                    cart.length > 0 &&
+                                    <Row>
+                                        <Col align='end' className="fs-3">
+                                            <span className="text-secondary">Số lượng: </span>
+                                            <span className="text-danger">{cart.length}</span>
+                                            <span className="text-secondary"> sản phẩm</span>
+                                            <br />
+                                            <span className="text-secondary">Tổng tiền: </span>
+                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.num * item.price, 0)).toLocaleString('en-US')} đ</span>
+                                        </Col>
+                                    </Row>
+                                }
                                 <Button className={clsx(styles.buttonPay)} type="submit">
                                     Đặt mua ngay
                                 </Button>

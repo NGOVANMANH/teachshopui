@@ -2,7 +2,7 @@ import { Card, Placeholder } from "react-bootstrap";
 
 const LoadingCard = () => {
     return (
-        <Card style={{ width: '18rem', height: "20rem" }}>
+        <Card style={{ width: '18rem', height: "25rem" }} className="my-shadow rounded">
             <Card.Img variant="top" src="holder.js/100px180" />
             <Card.Body>
                 <Placeholder as={Card.Title} animation="glow">
