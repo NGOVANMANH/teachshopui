@@ -165,13 +165,25 @@ const Profile = () => {
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td className={clsx(styles.table_title, "text-secondary w-25")}>Tỉnh/Thành phố</td>
+                                                <td className={clsx(styles.table_title, "text-secondary w-25")}>Tỉnh / Thành phố</td>
                                                 <td>
                                                     <select name='city' className="form-select form-select-lg" required>
                                                         <option value="">Chọn Tỉnh / Thành phố</option>
                                                         {
                                                             address && address.length > 0 &&
                                                             address.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                                        }
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className={clsx(styles.table_title, "text-secondary w-25")}>Quận / Huyện</td>
+                                                <td>
+                                                    <select name='city' className="form-select form-select-lg" required>
+                                                        <option value="">Chọn Quận / Huyện</option>
+                                                        {
+                                                            address && address.length > 0 &&
+                                                            address.find(item => item.name === "Tỉnh Quảng Ngãi")?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
                                                         }
                                                     </select>
                                                 </td>
