@@ -19,6 +19,8 @@ const Cart = () => {
 
     const { cart, setCart, address } = useContextData();
 
+    console.log(cart);
+
     const [cartItems, setCartItems] = useState([]);
 
     const [province, setProvince] = useState([]);
@@ -42,6 +44,7 @@ const Cart = () => {
             phoneNumber: '',
             district: '',
             city: '',
+            ward: '',
             address: '',
             note: '',
             paymentMethod: '',
@@ -56,6 +59,7 @@ const Cart = () => {
             phoneNumber: Yup.string().min(10, 'Số điện thoại không hợp lệ!').max(12, 'Số điện thoại không hợp lệ!').required('Vui lòng nhập số điện thoại!'),
             district: Yup.string().required('Vui lòng chọn Quận huyện!'),
             city: Yup.string().required('Vui lòng chọn Thành phố!'),
+            ward: Yup.string().required('Vui lòng chọn Xã, Phường!'),
             address: Yup.string().required('Vui lòng nhập địa chỉ!'),
             paymentMethod: Yup.string().required('Vui lòng chọn phương thức thanh toán!'),
         })
@@ -181,6 +185,24 @@ const Cart = () => {
                                             ) : null}
                                         </Row>
                                         <Row>
+                                            <select
+                                                className={clsx("col form-select text-secondary", styles.formInput)}
+                                                name="ward"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.ward}
+                                            >
+                                                <option value="">Chọn xã, phường</option>
+                                                {
+                                                    formik.values.city && formik.values.city.length > 0
+                                                    &&
+                                                    province.find(item => item.name === formik.values.city)?.districts.find(item => item.name === formik.values.district)?.wards.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                                }
+                                            </select>
+                                            {formik.errors.ward && formik.touched.ward ? (
+                                                <div className={clsx(styles.inValidMessage)}>{formik.errors.ward}</div>
+                                            ) : null}
+                                        </Row>
+                                        <Row>
                                             <input
                                                 className={clsx("col form-control", styles.formInput)}
                                                 type="text"
@@ -250,7 +272,7 @@ const Cart = () => {
                                     <Row>
                                         <Col align='end' className="fs-3">
                                             <span className="text-secondary">Số lượng: </span>
-                                            <span className="text-danger">{cart.length}</span>
+                                            <span className="text-danger">{cart.reduce((total, item) => total + item.num, 0)}</span>
                                             <span className="text-secondary"> sản phẩm</span>
                                             <br />
                                             <span className="text-secondary">Tổng tiền: </span>

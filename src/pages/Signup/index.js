@@ -4,22 +4,28 @@ import * as formik from 'formik';
 import * as yup from 'yup';
 import { useContextData } from '../../hooks';
 import { useState, useEffect } from 'react';
-import { signup } from '../../services/userServices';
+import { useNavigate } from 'react-router-dom';
 
+import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
+import { signup } from '../../services/userServices';
 import styles from './Signup.module.scss';
 
-// email
-// name
-// password
-// phone
-// gender
-// birthday
-// address
-// ward
-// district
-// city
+// {
+//     "email": "vanmanh0888@gmail.com",
+//     "name": "Ngô Văn Mạnh",
+//     "password": "123123123",
+//     "phone": "+84705288268",
+//     "gender": "Nam",
+//     "birthday": "29-11-2023",
+//     "address": "Đội 1 an thiết",
+//     "ward": "Linh Trung",
+//     "district": "Huyện Văn Chấn",
+//     "city": "Tỉnh Yên Bái"
+//   }
 
 const Signup = () => {
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         document.title = "Signup - Techshop";
@@ -27,18 +33,9 @@ const Signup = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const [province, setProvince] = useState([]);
-
     const { Formik } = formik;
 
     const { address } = useContextData();
-
-
-    useEffect(() => {
-        if (address) {
-            setProvince([...address]);
-        }
-    }, [address])
 
     const schema = yup.object().shape({
         email: yup.string().email("Trường này phải là email!").required("Trường này bắt buộc!"),
@@ -58,11 +55,37 @@ const Signup = () => {
         <Formik
             validationSchema={schema}
             onSubmit={values => {
-                console.log(values)
+                const userInfor = { ...values };
 
-                const fetchApi = async () => {
-                    const respone = await signup(values);
-                    // handle status;
+                function formatDate(inputDate) {
+                    const parts = inputDate.split("-");
+                    const formattedDate = parts[2] + "-" + parts[1] + "-" + parts[0];
+                    return formattedDate;
+                }
+
+                const fetchApi = async (user) => {
+                    setIsLoading(true);
+                    const respone = await signup(user);
+                    if (respone === NOT_FOUND) {
+                        alert("Lỗi! Vui lòng kiểm tra lại mạng!")
+                    }
+                    else {
+                        if (respone.status === SUCCESS_RESPONSE && respone.message !== "Email already Exists") {
+                            alert(respone.message);
+                            navigate("/login");
+                        }
+                        else {
+                            alert(respone.message);
+                        }
+                    }
+                    setIsLoading(false);
+                }
+
+                if (userInfor.confirmPassword === userInfor.password) {
+                    userInfor.birthday = formatDate(userInfor.birthday);
+                    delete userInfor.confirmPassword;
+
+                    fetchApi(userInfor);
                 }
             }}
             initialValues={{
@@ -162,6 +185,7 @@ const Signup = () => {
                         <Form.Group as={Col} md="4" controlId="validationDateOfBirth" className={clsx(styles.form)}>
                             <Form.Label className='text-secondary'>Ngày sinh(*)</Form.Label>
                             <Form.Control name='birthday' type="date"
+                                min="1997-01-01" max="2030-12-31"
                                 value={values.birthday}
                                 onChange={handleChange}
                                 isValid={touched.birthday && !errors.birthday}
@@ -218,7 +242,7 @@ const Signup = () => {
                             >
                                 <option value="">Chọn tỉnh, thành phố</option>
                                 {
-                                    province.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
+                                    address.map(city => <option key={city.code} value={city.name}>{city.name}</option>)
                                 }
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
@@ -240,7 +264,7 @@ const Signup = () => {
                                 {
                                     values.city && values.city.length > 0
                                     &&
-                                    province.find(item => item.name === values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                    address.find(item => item.name === values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
                                 }
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">
@@ -262,7 +286,7 @@ const Signup = () => {
                                 {
                                     values.district && values.district.length > 0
                                     &&
-                                    province.find(item => item.name === values.city)?.districts.find(district => district.name === values.district)?.wards.map(ward => <option key={ward.code} value={ward.name}>{ward.name}</option>)
+                                    address.find(item => item.name === values.city)?.districts.find(district => district.name === values.district)?.wards.map(ward => <option key={ward.code} value={ward.name}>{ward.name}</option>)
                                 }
                             </Form.Select>
                             <Form.Control.Feedback type="invalid">

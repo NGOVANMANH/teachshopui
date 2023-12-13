@@ -3,7 +3,8 @@ import Context from "./Context";
 import { useEffect } from "react";
 import { getAllProduct } from '../services/productServices';
 import getAddress from '../services/addressServices';
-import { NOT_FOUND } from '../services/constants';
+import { NOT_FOUND, SUCCESS_RESPONSE } from '../services/constants';
+import { checkToken } from "../services/userServices";
 
 const Provider = ({ children }) => {
 
@@ -33,12 +34,26 @@ const Provider = ({ children }) => {
 
     useEffect(() => {
         if (localStorage.getItem("token")) {
-            setUser((prevUser) => {
-                return {
-                    ...prevUser,
-                    auth: true,
+            const token = localStorage.getItem("token");
+            const fetchApi = async () => {
+                const respone = await checkToken(token);
+                if (respone === NOT_FOUND) {
+                    localStorage.removeItem("token");
                 }
-            })
+                else {
+                    if (respone.status === SUCCESS_RESPONSE) {
+                        setUser((prevUser) => {
+                            return {
+                                ...prevUser,
+                                auth: true,
+                                userInfor: respone.data,
+                            }
+                        })
+                    }
+                }
+            }
+
+            fetchApi();
         }
     }, [])
 

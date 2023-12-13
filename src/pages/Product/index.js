@@ -1,4 +1,4 @@
-import { Col, Container, Row, Button, Carousel } from "react-bootstrap";
+import { Col, Container, Row, Button, Carousel, Image } from "react-bootstrap";
 import { useEffect, useState } from "react";
 // import { useParams } from "react-router-dom";
 import clsx from "clsx";
@@ -26,16 +26,16 @@ const ProductDetails = () => {
                     <Col>
                         <Carousel>
                             <Carousel.Item>
-                                <img src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
+                                <Image thumbnail src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
+                                <Image thumbnail src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
+                                <Image thumbnail src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
                             </Carousel.Item>
                             <Carousel.Item>
-                                <img src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
+                                <Image thumbnail src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
                             </Carousel.Item>
                         </Carousel>
                     </Col>

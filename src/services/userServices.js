@@ -14,11 +14,21 @@ export const login = async (userInfor) => {
 
 export const signup = async (userInfor) => {
     try {
-        const response = await axios.get(`/api/customer/signup.php`, userInfor);
+        const response = await axios.post(`/api/customer/signup.php`, userInfor);
         if (response && response.data) {
             return response.data;
         }
     } catch (error) {
+        return NOT_FOUND;
+    }
+}
+
+export const checkToken = async (token) => {
+    try {
+        const respone = await axios.get('/api/customer/read.php', { headers: { Authorization: token } })
+        return respone.data;
+    }
+    catch (error) {
         return NOT_FOUND;
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductParameterTable = () => {
     return (
-        <table class="table table-striped">
+        <table className="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -26,7 +26,7 @@ const ProductParameterTable = () => {
                 </tr>
                 <tr>
                     <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
+                    <td colSpan="2">Larry the Bird</td>
                     <td>@twitter</td>
                 </tr>
             </tbody>
