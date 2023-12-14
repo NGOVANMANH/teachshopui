@@ -1,12 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Spinner, Table } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import styles from './Profile.module.scss';
 import clsx from 'clsx';
 import { useContextData } from '../../hooks';
+import { updateInfor } from '../../services/userServices';
+import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
 
 const Profile = () => {
 
@@ -16,14 +18,20 @@ const Profile = () => {
         document.title = `${!user.userInfor.name ? "Customer Profile" : user.userInfor.name} - TechShop`;
     }, [user]);
 
-    const navigate = useNavigate();
-
-    // const params = useParams();
-    // console.log(params)
-
     const [selectedButton, setSelectedButton] = useState(-1);
 
-    const formik = useFormik({
+    const [isUpdatingInfor, setIsUpdatingInfor] = useState(false);
+
+    const navigate = useNavigate();
+
+    const { activeKey } = useParams();
+
+    useEffect(() => {
+        setSelectedButton(+activeKey);
+    }, [activeKey])
+
+
+    const formikUpdatePassword = useFormik({
         initialValues: {
             oldPassword: '',
             newPassword: '',
@@ -34,6 +42,49 @@ const Profile = () => {
             oldPassword: Yup.string().min(8, "Trường này ít nhất 8 kí tự!").required("Vui lòng nhập trường này!"),
             newPassword: Yup.string().min(8, "Trường này ít nhất 8 kí tự!").max(30, "Quá dài!").required("Vui lòng nhập trường này!"),
             confirmPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], "Password không khớp!").required("Vui lòng nhập trường này!"),
+        })
+    })
+
+
+    const formikUpdateInfor = useFormik({
+        initialValues: {
+            name: user.userInfor.name,
+            email: user.userInfor.email,
+            address: user.userInfor.address,
+            city: user.userInfor.city,
+            district: user.userInfor.district,
+            ward: user.userInfor.ward,
+            phone: user.userInfor.phone,
+        },
+        onSubmit: values => {
+            const fetchApi = async () => {
+                setIsUpdatingInfor(true);
+                const respone = await updateInfor(localStorage.getItem("token"), values)
+                if (respone === NOT_FOUND) {
+                    alert("Cập nhật không thành công!");
+                }
+                else {
+                    if (respone.status === SUCCESS_RESPONSE) {
+                        alert("Cập nhật thành công!");
+                        window.location.reload();
+                    }
+                    else {
+                        alert(respone.message);
+                    }
+                }
+                setIsUpdatingInfor(false);
+            }
+
+            fetchApi();
+        },
+        validationSchema: Yup.object({
+            name: Yup.string().required("Required!"),
+            email: Yup.string().email().required("Required!"),
+            address: Yup.string().required("Required!"),
+            city: Yup.string().required("Required!"),
+            district: Yup.string().required("Required!"),
+            ward: Yup.string().required("Required!"),
+            phone: Yup.string().required("Required!"),
         })
     })
 
@@ -50,12 +101,6 @@ const Profile = () => {
         localStorage.removeItem("token");
 
         navigate("/");
-    }
-
-    const handleUpdate = (e) => {
-        e.preventDefault();
-
-        alert("Update Thành công!");
     }
 
     return (
@@ -129,7 +174,7 @@ const Profile = () => {
                         <>
                             <h3 className={clsx(styles.account_right_title)}>Cập nhật thông tin cá nhân</h3>
                             <div className={clsx(styles.account_right_content)}>
-                                <form onSubmit={handleUpdate}>
+                                <form onSubmit={formikUpdateInfor.handleSubmit}>
                                     <Table responsive borderless>
                                         <tbody>
                                             <tr>
@@ -139,7 +184,8 @@ const Profile = () => {
                                                         name='name'
                                                         type='text'
                                                         className="form form-control form-control-lg"
-                                                        required
+                                                        value={formikUpdateInfor.values.name}
+                                                        onChange={formikUpdateInfor.handleChange}
                                                     />
                                                 </td>
                                             </tr>
@@ -150,7 +196,8 @@ const Profile = () => {
                                                         name='email'
                                                         type='email'
                                                         className="form form-control form-control-lg"
-                                                        required
+                                                        value={formikUpdateInfor.values.email}
+                                                        onChange={formikUpdateInfor.handleChange}
                                                     />
                                                 </td>
                                             </tr>
@@ -160,14 +207,20 @@ const Profile = () => {
                                                     <input
                                                         name='address'
                                                         className="form form-control form-control-lg"
-                                                        required
+                                                        value={formikUpdateInfor.values.address}
+                                                        onChange={formikUpdateInfor.handleChange}
                                                     />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td className={clsx(styles.table_title, "text-secondary w-25")}>Tỉnh / Thành phố</td>
                                                 <td>
-                                                    <select name='city' className="form-select form-select-lg" required>
+                                                    <select
+                                                        name='city'
+                                                        className="form-select form-select-lg"
+                                                        value={formikUpdateInfor.values.city}
+                                                        onChange={formikUpdateInfor.handleChange}
+                                                    >
                                                         <option value="">Chọn Tỉnh / Thành phố</option>
                                                         {
                                                             address && address.length > 0 &&
@@ -179,11 +232,33 @@ const Profile = () => {
                                             <tr>
                                                 <td className={clsx(styles.table_title, "text-secondary w-25")}>Quận / Huyện</td>
                                                 <td>
-                                                    <select name='city' className="form-select form-select-lg" required>
+                                                    <select
+                                                        name='district'
+                                                        className="form-select form-select-lg"
+                                                        value={formikUpdateInfor.values.district}
+                                                        onChange={formikUpdateInfor.handleChange}
+                                                    >
                                                         <option value="">Chọn Quận / Huyện</option>
                                                         {
                                                             address && address.length > 0 &&
-                                                            address.find(item => item.name === "Tỉnh Quảng Ngãi")?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                                            address.find(item => item.name === formikUpdateInfor.values.city)?.districts.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
+                                                        }
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td className={clsx(styles.table_title, "text-secondary w-25")}>Xã / Phường</td>
+                                                <td>
+                                                    <select
+                                                        name='ward'
+                                                        className="form-select form-select-lg"
+                                                        value={formikUpdateInfor.values.ward}
+                                                        onChange={formikUpdateInfor.handleChange}
+                                                    >
+                                                        <option value="">Chọn Xã / Phường</option>
+                                                        {
+                                                            address && address.length > 0 &&
+                                                            address.find(item => item.name === formikUpdateInfor.values.city)?.districts.find(item => item.name === formikUpdateInfor.values.district)?.wards.map(item => <option key={item.code} value={item.name}>{item.name}</option>)
                                                         }
                                                     </select>
                                                 </td>
@@ -194,13 +269,17 @@ const Profile = () => {
                                                     <input
                                                         name='phone'
                                                         className="form form-control form-control-lg"
-                                                        required
+                                                        value={formikUpdateInfor.values.phone}
+                                                        onChange={formikUpdateInfor.handleChange}
                                                     />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan={2}>
-                                                    <Button type='submit' size='lg' className={clsx(styles.account_button_update)}>Update</Button>
+                                                    <Button type='submit' size='lg' className={clsx(styles.account_button_update)}
+                                                    >
+                                                        {isUpdatingInfor ? <Spinner /> : "Update"}
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -213,7 +292,7 @@ const Profile = () => {
                         <>
                             <h3 className={clsx(styles.account_right_title)}>Thay đổi mật khẩu</h3>
                             <div className={clsx(styles.account_right_content)}>
-                                <form onSubmit={formik.handleSubmit}>
+                                <form onSubmit={formikUpdatePassword.handleSubmit}>
                                     <Table responsive borderless>
                                         <tbody>
                                             <tr>
@@ -223,12 +302,12 @@ const Profile = () => {
                                                         name='oldPassword'
                                                         type='password'
                                                         className="form form-control form-control-lg"
-                                                        value={formik.values.oldPassword}
-                                                        onChange={formik.handleChange}
+                                                        value={formikUpdatePassword.values.oldPassword}
+                                                        onChange={formikUpdatePassword.handleChange}
                                                     />
                                                     {
-                                                        formik.errors.oldPassword && formik.touched.oldPassword &&
-                                                        <div className={clsx(styles.inValidMessage)}>{formik.errors.oldPassword}</div>
+                                                        formikUpdatePassword.errors.oldPassword && formikUpdatePassword.touched.oldPassword &&
+                                                        <div className={clsx(styles.inValidMessage)}>{formikUpdatePassword.errors.oldPassword}</div>
                                                     }
                                                 </td>
                                             </tr>
@@ -239,12 +318,12 @@ const Profile = () => {
                                                         name='newPassword'
                                                         type='password'
                                                         className="form form-control form-control-lg"
-                                                        value={formik.values.newPassword}
-                                                        onChange={formik.handleChange}
+                                                        value={formikUpdatePassword.values.newPassword}
+                                                        onChange={formikUpdatePassword.handleChange}
                                                     />
                                                     {
-                                                        formik.errors.newPassword && formik.touched.newPassword &&
-                                                        <div className={clsx(styles.inValidMessage)}>{formik.errors.newPassword}</div>
+                                                        formikUpdatePassword.errors.newPassword && formikUpdatePassword.touched.newPassword &&
+                                                        <div className={clsx(styles.inValidMessage)}>{formikUpdatePassword.errors.newPassword}</div>
                                                     }
                                                 </td>
                                             </tr>
@@ -255,12 +334,12 @@ const Profile = () => {
                                                         name='confirmPassword'
                                                         type='password'
                                                         className="form form-control form-control-lg"
-                                                        value={formik.values.confirmPassword}
-                                                        onChange={formik.handleChange}
+                                                        value={formikUpdatePassword.values.confirmPassword}
+                                                        onChange={formikUpdatePassword.handleChange}
                                                     />
                                                     {
-                                                        formik.errors.confirmPassword && formik.touched.confirmPassword &&
-                                                        <div className={clsx(styles.inValidMessage)}>{formik.errors.confirmPassword}</div>
+                                                        formikUpdatePassword.errors.confirmPassword && formikUpdatePassword.touched.confirmPassword &&
+                                                        <div className={clsx(styles.inValidMessage)}>{formikUpdatePassword.errors.confirmPassword}</div>
                                                     }
                                                 </td>
                                             </tr>

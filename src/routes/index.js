@@ -19,6 +19,7 @@ const privateRoutes = [
     { path: '/products/:category', component: Products },
     { path: '/search/:searchValue', component: Search },
     { path: '/profile', component: Profile },
+    { path: '/profile/:activeKey', component: Profile },
 ];
 
 export { publicRoutes, privateRoutes };

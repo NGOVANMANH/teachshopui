@@ -6,20 +6,22 @@ import { HiOutlineSpeakerphone, HiMenu } from 'react-icons/hi';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
-import { Button, Container, Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useContextData, useDebounce } from '../../hooks'
 import Tippy from '@tippyjs/react';
 import TippyHeadless from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
-import { getSearchedProduct } from '../../services/productServices';
 
+import { getSearchedProduct } from '../../services/productServices';
 import logo from '../../assets/images/logo.svg';
 import styles from './Header.module.scss';
 import Category from "../Category";
 import PopperWrapper from "../PopperWrapper";
 import SearchProductItem from "../SearchProductItem";
+import { NOT_FOUND } from "../../services/constants";
+import CartHover from "../CartHover";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -53,8 +55,7 @@ const Header = () => {
 
             const data = await getSearchedProduct(debouncedValue);
 
-            if (data === 404) {
-                console.log("Không tìm thấy sản phẩm");
+            if (data === NOT_FOUND) {
                 setSearchResult([]);
             }
             else
@@ -91,6 +92,10 @@ const Header = () => {
 
     const toProfile = () => {
         navigate("/profile");
+    }
+
+    const toProfileActive = () => {
+        navigate("/profile/0");
     }
 
     const handleLogout = () => {
@@ -159,7 +164,7 @@ const Header = () => {
                                             <div className="text-capitalize">Hello! {user.userInfor.name ? user.userInfor.name : "user"} nhé!</div>
                                             <DropdownButton className={clsx(styles.dropDownUser)} id="dropdown-basic-button" title="" align={"end"}>
                                                 <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Xem thông tin</Dropdown.Item>
-                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Tình trạng đơn hàng</Dropdown.Item>
+                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfileActive}>Tình trạng đơn hàng</Dropdown.Item>
                                                 <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                             </DropdownButton>
                                         </>
@@ -256,10 +261,19 @@ const Header = () => {
                                 interactive
                                 placement="bottom-end"
                                 render={attrs => (
-                                    <PopperWrapper>
-                                        <Container>
-                                            Có 0 sản phẩm trong giỏ hàng
-                                        </Container>
+                                    <PopperWrapper className="position-relative">
+                                        <div className={clsx(styles.cart_hover_title)}>Giỏ hàng</div>
+                                        <CartHover />
+                                        <div className="mb-5"></div>
+                                        <div className="mb-5"></div>
+                                        <div className="my-shadow d-flex position-absolute bottom-0 w-100 rounded p-2">
+                                            <Button className={clsx(styles.cart_hover_button)}>
+                                                Thanh toán ngay
+                                                {
+                                                    cart.length > 0 && <>{` (${cart.length}) sản phẩm`}</>
+                                                }
+                                            </Button>
+                                        </div>
                                     </PopperWrapper>
                                 )}
                             >

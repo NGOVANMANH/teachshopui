@@ -33,3 +33,23 @@ export const checkToken = async (token) => {
     }
 }
 
+export const updateInfor = async (token, infor) => {
+    try {
+        const respone = await axios.put('/api/customer/update.php', infor, { headers: { Authorization: token } })
+        return respone.data;
+    }
+    catch (error) {
+        return NOT_FOUND;
+    }
+}
+
+export const checkEmail = async (email) => {
+    try {
+        const respone = await axios.post('/api/customer/validate_email/send_validate_email.php', email)
+        return respone.data;
+    }
+    catch (error) {
+        return NOT_FOUND;
+    }
+}
+

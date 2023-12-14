@@ -19,8 +19,6 @@ const Cart = () => {
 
     const { cart, setCart, address } = useContextData();
 
-    console.log(cart);
-
     const [cartItems, setCartItems] = useState([]);
 
     const [province, setProvince] = useState([]);
