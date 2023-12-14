@@ -45,3 +45,24 @@ export const getSearchedProduct = async (searchValue) => {
     }
 }
 
+
+export const getProductParameters = async (id) => {
+    try {
+        const respone = await axios.get(`/api/product/get_param.php?id=${id}`)
+        return respone.data;
+    }
+    catch (error) {
+        return NOT_FOUND;
+    }
+}
+
+export const getProductColors = async (id) => {
+    try {
+        const respone = await axios.get(`/api/product/show_color.php?id=${id}`);
+        return respone.data;
+    }
+    catch (error) {
+        return NOT_FOUND;
+    }
+}
+

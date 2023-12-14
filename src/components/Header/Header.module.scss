@@ -43,7 +43,7 @@
     font-size: 1.4rem;
     font-weight: 600;
     color: #f5f5f5;
-    display: flex;
+    display: block;
     align-items: center;
 
     a {
@@ -201,4 +201,25 @@
     top: -6px;
     right: -8px;
     font-size: 8px;
+}
+
+.cart_hover_title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: gray;
+    user-select: none;
+}
+
+.cart_hover_button {
+    border: none !important;
+    width: 100%;
+    align-self: center;
+    background: var(--primary) !important;
+    font-size: 1.6rem !important;
+
+    &:hover {
+        background: var(--primary) !important;
+        opacity: 0.9;
+    }
 }

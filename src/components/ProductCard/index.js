@@ -1,41 +1,41 @@
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
-import { useContextData } from '../../hooks';
+// import { useContextData } from '../../hooks';
 import styles from './ProductCard.module.scss';
 
 const ProductCard = ({ product }) => {
 
-    const { cart, setCart } = useContextData();
+    // const { cart, setCart } = useContextData();
 
-    const [isExist, setIsExist] = useState(false);
+    // const [isExist, setIsExist] = useState(false);
 
-    useEffect(() => {
-        const existingProduct = [...cart].find(item => item.id === product.id);
+    // useEffect(() => {
+    //     const existingProduct = [...cart].find(item => item.id === product.id);
 
-        if (existingProduct) {
-            setIsExist(true);
-        }
+    //     if (existingProduct) {
+    //         setIsExist(true);
+    //     }
 
-    }, [product, cart])
+    // }, [product, cart])
 
-    const handleAddToCart = (event) => {
-        event.preventDefault();
+    // const handleAddToCart = (event) => {
+    //     event.preventDefault();
 
-        const _cart = [...cart];
+    //     const _cart = [...cart];
 
-        const existingProduct = _cart.find(item => item.id === product.id);
+    //     const existingProduct = _cart.find(item => item.id === product.id);
 
-        if (!existingProduct) {
-            _cart.push({
-                ...product,
-                num: 1,
-            })
-            setCart(_cart);
-        }
-    }
+    //     if (!existingProduct) {
+    //         _cart.push({
+    //             ...product,
+    //             num: 1,
+    //         })
+    //         setCart(_cart);
+    //     }
+    // }
 
     return (
         <Link to={`/product/${product.id}`}>
@@ -55,7 +55,7 @@ const ProductCard = ({ product }) => {
                     <Card.Subtitle className='mt-1'>Brand: {product.brand}</Card.Subtitle>
                     {/* <Card.Subtitle className='mt-1'>Mô tả: {product.name}</Card.Subtitle> */}
                 </Card.Body>
-                <Card.Body className='position-absolute bottom-0 mb-5'>
+                <Card.Body className='position-absolute bottom-0'>
                     {
                         product.pre_discount === 0 ? <></> :
                             <Card.Text>
@@ -66,9 +66,9 @@ const ProductCard = ({ product }) => {
                         <span className={clsx(styles.price, "text-success")}>{product.price.toLocaleString('en-US')} đ</span>
                     </Card.Text>
                 </Card.Body>
-                <Button onClick={handleAddToCart} variant="primary" disabled={isExist}>
+                {/* <Button onClick={handleAddToCart} variant="primary" disabled={isExist}>
                     {isExist ? "Trong giỏ hàng" : "Thêm vào giỏ hàng"}
-                </Button>
+                </Button> */}
             </Card>
         </Link>
     );

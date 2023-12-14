@@ -48,7 +48,7 @@ const Login = () => {
                                         auth: true,
                                         userInfor: response.data,
                                     })
-                                    usenavigate("/");
+                                    usenavigate("/profile");
                                 }
                                 else {
                                     alert(response.message);
@@ -109,7 +109,7 @@ const Login = () => {
 
                                 <Row className='justify-content-center m-2 fs-5' >
                                     <Col className='d-flex justify-content-center m-2'>
-                                        <Button type="submit" size='lg' className='bg-main'
+                                        <Button type="submit" size='lg' className='bg-main w-content'
                                             disabled={isLogining}
                                         >
                                             {isLogining ? <Spinner /> : "Đăng nhập"}
@@ -126,9 +126,12 @@ const Login = () => {
                                 <Col>
                                     Đăng ký là thành viên để hưởng nhiều lợi ích và đặt mua hàng dễ dàng hơn.
                                 </Col>
-                                <Col className='d-flex justify-content-center m-2'>
+                            </Row>
+                            <Row>
+                                <Col className='m-2'>
                                     <Button
-                                        onClick={toSignup} size='lg' type="button" className='bg-main'
+                                        onClick={toSignup} size='lg' type="button" className='bg-main w-content'
+                                        style={{ marginLeft: "1rem" }}
                                     >
                                         Đăng kí ngay
                                     </Button>

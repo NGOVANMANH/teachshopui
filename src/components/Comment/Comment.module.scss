@@ -50,14 +50,14 @@
 }
 
 .button_comment {
-    width: fit-content;
+    width: fit-content !important;
     border: transparent;
     font-size: 1.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0.5rem 1rem;
-    padding-left: 0;
+    padding-left: 0 !important;
     background: transparent;
     color: black;
 

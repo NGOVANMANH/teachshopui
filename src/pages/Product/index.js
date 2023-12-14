@@ -1,11 +1,12 @@
 import { Col, Container, Row, Button, Carousel, Image } from "react-bootstrap";
 import { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
 import { CategoryBlock, HorizontalLine, ProductCarousel, Comment, ProductParameterTable } from "../../components";
 import testProduct from '../../services/testProduct.json';
 import styles from './Product.module.scss';
+import { getProductColors, getProductParameters } from "../../services/productServices";
 
 const ProductDetails = () => {
 
@@ -13,17 +14,33 @@ const ProductDetails = () => {
         document.title = "Product - Techshop";
     }, [])
 
-    const [activeButton, setActiveButton] = useState(1);
-    // const params = useParams();
+    const [productColors, setProductColors] = useState([]);
 
-    const handleButtonClick = (buttonIndex) => {
-        setActiveButton(buttonIndex);
-    };
+    // const [productParameters, setProductParameters] = useState([]);
+
+    const { id } = useParams();
+
+    console.log(+id)
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const responeColors = await getProductColors(+id);
+            const responeParams = await getProductParameters(+id);
+
+            console.log(">>>>> check: ", responeParams)
+
+            if (responeColors.color) {
+                setProductColors(responeColors.color)
+            }
+        }
+
+        fetchApi();
+    }, [id])
     return (
         <>
             <Container className="mt-3 mb-3 bg-white p-3 rounded my-shadow">
                 <Row>
-                    <Col>
+                    <Col md={5}>
                         <Carousel>
                             <Carousel.Item>
                                 <Image thumbnail src={`data:image/jpeg;base64, ${testProduct.image}`} alt="img" />
@@ -47,46 +64,20 @@ const ProductDetails = () => {
                         </Row>
                         <div className={clsx(styles.button_area)}>
                             <Row>
-                                <Col md={3}>
-                                    <Button
-                                        className={clsx('w-100 fs-3', { active: activeButton === 1 })}
-                                        variant="outline-secondary"
-                                        size="lg"
-                                        onClick={() => handleButtonClick(1)}
-                                    >
-                                        Color
-                                    </Button>
-                                </Col>
-                                <Col md={3}>
-                                    <Button
-                                        className={clsx('w-100 fs-3', { active: activeButton === 2 })}
-                                        variant="outline-secondary"
-                                        size="lg"
-                                        onClick={() => handleButtonClick(2)}
-                                    >
-                                        Color
-                                    </Button>
-                                </Col>
-                                <Col md={3}>
-                                    <Button
-                                        className={clsx('w-100 fs-3', { active: activeButton === 3 })}
-                                        variant="outline-secondary"
-                                        size="lg"
-                                        onClick={() => handleButtonClick(3)}
-                                    >
-                                        Color
-                                    </Button>
-                                </Col>
-                                <Col md={3}>
-                                    <Button
-                                        className={clsx('w-100 fs-3', { active: activeButton === 4 })}
-                                        variant="outline-secondary"
-                                        size="lg"
-                                        onClick={() => handleButtonClick(4)}
-                                    >
-                                        Color
-                                    </Button>
-                                </Col>
+                                {
+                                    productColors.length > 0 &&
+                                    productColors.map((item, index) =>
+                                        <Col md={3} key={index}>
+                                            <Button
+                                                className={clsx('w-100 fs-3')}
+                                                variant="outline-secondary"
+                                                size="lg"
+                                            >
+                                                {item}
+                                            </Button>
+                                        </Col>
+                                    )
+                                }
                             </Row>
                             <HorizontalLine className='mt-3 mb-3' />
                             <Row>
@@ -120,7 +111,7 @@ const ProductDetails = () => {
                     <Col className="bg-white rounded my-shadow p-3" style={{ marginLeft: "0.5rem" }}>
                         <div className={clsx(styles.bottom_title)}>Thông số kĩ thuật</div>
                         <div>
-                            <ProductParameterTable></ProductParameterTable>
+                            <ProductParameterTable />
                         </div>
                     </Col>
                 </Row>
