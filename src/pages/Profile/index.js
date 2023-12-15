@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import styles from './Profile.module.scss';
 import clsx from 'clsx';
 import { useContextData } from '../../hooks';
-import { updateInfor } from '../../services/userServices';
+import { updateInfor, updatePassword } from '../../services/userServices';
 import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
 
 const Profile = () => {
@@ -21,6 +21,8 @@ const Profile = () => {
     const [selectedButton, setSelectedButton] = useState(-1);
 
     const [isUpdatingInfor, setIsUpdatingInfor] = useState(false);
+
+    const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -37,7 +39,20 @@ const Profile = () => {
             newPassword: '',
             confirmPassword: '',
         },
-        onSubmit: values => { console.log(values) },
+        onSubmit: values => {
+            setIsUpdatingPassword(true);
+            const fetchApi = async () => {
+                const res = await updatePassword(localStorage.getItem("token"), values.oldPassword, values.newPassword);
+                if (res === NOT_FOUND) {
+                    alert("Update lỗi!");
+                }
+                else {
+                    alert(res.message);
+                }
+                setIsUpdatingPassword(false);
+            }
+            fetchApi();
+        },
         validationSchema: Yup.object({
             oldPassword: Yup.string().min(8, "Trường này ít nhất 8 kí tự!").required("Vui lòng nhập trường này!"),
             newPassword: Yup.string().min(8, "Trường này ít nhất 8 kí tự!").max(30, "Quá dài!").required("Vui lòng nhập trường này!"),
@@ -345,7 +360,12 @@ const Profile = () => {
                                             </tr>
                                             <tr>
                                                 <td colSpan={2}>
-                                                    <Button type='submit' size='lg' className={clsx(styles.account_button_update)}>Update</Button>
+                                                    <Button
+                                                        type='submit' size='lg'
+                                                        className={clsx(styles.account_button_update)}
+                                                    >
+                                                        {isUpdatingPassword ? <Spinner /> : "Update"}
+                                                    </Button>
                                                 </td>
                                             </tr>
                                         </tbody>
