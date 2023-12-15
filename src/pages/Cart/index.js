@@ -65,6 +65,7 @@ const Cart = () => {
 
 
     const handleDeleteCart = () => {
+        localStorage.setItem("cart", JSON.stringify([]))
         setCart([]);
     }
     return (
@@ -270,11 +271,11 @@ const Cart = () => {
                                     <Row>
                                         <Col align='end' className="fs-3">
                                             <span className="text-secondary">Số lượng: </span>
-                                            <span className="text-danger">{cart.reduce((total, item) => total + item.num, 0)}</span>
+                                            <span className="text-danger">{cart.reduce((total, item) => total + item.quantity, 0)}</span>
                                             <span className="text-secondary"> sản phẩm</span>
                                             <br />
                                             <span className="text-secondary">Tổng tiền: </span>
-                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.num * item.price, 0)).toLocaleString('en-US')} đ</span>
+                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0)).toLocaleString('en-US')} đ</span>
                                         </Col>
                                     </Row>
                                 }

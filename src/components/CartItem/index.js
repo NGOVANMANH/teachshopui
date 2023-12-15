@@ -14,14 +14,14 @@ const CartItem = ({ data }) => {
         setCart(_cart.filter(item => item.id !== data.id));
     }
     const handleQuantityChange = (value) => {
-        if (data.num + value === 0) {
+        if (data.quantity + value === 0) {
             handleDelete();
         }
         else {
             const _cart = [...cart];
             const thisProduct = _cart.find(item => item.id === data.id);
             if (thisProduct) {
-                thisProduct.num += value;
+                thisProduct.quantity += value;
                 setCart(_cart);
             }
         }
@@ -41,10 +41,10 @@ const CartItem = ({ data }) => {
                 <Col className="d-flex align-items-center justify-content-center text-secondary">{data.price.toLocaleString('en-US')} đ</Col>
                 <Col className="d-flex align-items-center justify-content-center text-secondary">
                     <span className={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(-1)}>-</span>
-                    {data.num}
+                    {data.quantity}
                     <span className={clsx(styles.quantityButton)} onClick={() => handleQuantityChange(1)}>+</span>
                 </Col>
-                <Col className="d-flex align-items-center justify-content-center text-danger">{(data.num * data.price).toLocaleString('en-US')} đ</Col>
+                <Col className="d-flex align-items-center justify-content-center text-danger">{(data.quantity * data.price).toLocaleString('en-US')} đ</Col>
                 <Col className="d-flex align-items-center justify-content-center fs-1"><span onClick={handleDelete}><FaRegCircleXmark className="text-secondary" /></span></Col>
             </Row>
         </Container>

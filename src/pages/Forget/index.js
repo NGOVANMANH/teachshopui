@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import clsx from "clsx";
 
 import styles from './Forget.module.scss';
+import { resetPassword } from "../../services/userServices";
+import { Spinner } from "react-bootstrap";
 
 const Forgot = () => {
 
@@ -11,12 +13,21 @@ const Forgot = () => {
         document.title = "Quên mật khẩu";
     }, [])
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const formik = useFormik({
         initialValues: {
             email: '',
         },
         onSubmit: values => {
-            console.log(values);
+            const fetchApi = async () => {
+                setIsLoading(true);
+                const res = await resetPassword(values.email);
+                alert(res.message);
+                setIsLoading(false);
+            }
+
+            fetchApi();
         },
         validationSchema: Yup.object({
             email: Yup.string().email("Trường này phải là email!").required("Trường này bắt buộc!"),
@@ -44,7 +55,10 @@ const Forgot = () => {
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit" className="btn btn-primary btn-lg bg-main">Lấy mật khẩu</button>
+                                <button type="submit" className="btn btn-primary btn-lg bg-main"
+                                >
+                                    {isLoading ? <Spinner /> : "Lấy mật khẩu"}
+                                </button>
                             </td>
                         </tr>
                     </tbody>

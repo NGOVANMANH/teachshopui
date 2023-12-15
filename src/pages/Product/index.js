@@ -7,12 +7,15 @@ import { CategoryBlock, HorizontalLine, ProductCarousel, Comment, ProductParamet
 import testProduct from '../../services/testProduct.json';
 import styles from './Product.module.scss';
 import { getProductColors, getProductParameters } from "../../services/productServices";
+import { useContextData } from "../../hooks";
 
 const ProductDetails = () => {
 
     useEffect(() => {
         document.title = "Product - Techshop";
     }, [])
+
+    const { products, cart, addToCart } = useContextData();
 
     const [productColors, setProductColors] = useState([]);
 
@@ -27,7 +30,7 @@ const ProductDetails = () => {
             const responeColors = await getProductColors(+id);
             const responeParams = await getProductParameters(+id);
 
-            console.log(">>>>> check: ", responeParams)
+            console.log(">>>>> check response Params", responeParams)
 
             if (responeColors.color) {
                 setProductColors(responeColors.color)
@@ -36,6 +39,19 @@ const ProductDetails = () => {
 
         fetchApi();
     }, [id])
+
+    const handleAddToCart = () => {
+        const thisProduct = [...products].find(product => product.id === +id);
+        const productInCart = [...cart].find(product => product.id === +id);
+
+        if (thisProduct && !productInCart) {
+            addToCart(thisProduct);
+        }
+        else {
+            alert("Sản phẩm đã có trong giỏ hàng!")
+        }
+    }
+
     return (
         <>
             <Container className="mt-3 mb-3 bg-white p-3 rounded my-shadow">
@@ -56,9 +72,9 @@ const ProductDetails = () => {
                             </Carousel.Item>
                         </Carousel>
                     </Col>
-                    <Col className={clsx(styles.product_left)}>
+                    <Col className={clsx(styles.product_left, "p-5")}>
                         <Row>
-                            <Col className="fs-1">
+                            <Col className="fs-1 fw-bold">
                                 {testProduct.name}
                             </Col>
                         </Row>
@@ -67,9 +83,9 @@ const ProductDetails = () => {
                                 {
                                     productColors.length > 0 &&
                                     productColors.map((item, index) =>
-                                        <Col md={3} key={index}>
+                                        <Col md="auto" key={index}>
                                             <Button
-                                                className={clsx('w-100 fs-3')}
+                                                className={clsx('w-100 fs-3 mb-3')}
                                                 variant="outline-secondary"
                                                 size="lg"
                                             >
@@ -79,10 +95,13 @@ const ProductDetails = () => {
                                     )
                                 }
                             </Row>
-                            <HorizontalLine className='mt-3 mb-3' />
+                            <HorizontalLine className='mb-3' />
                             <Row>
                                 <Col>
-                                    <Button className="w-100 fs-2" variant="secondary" size="lg" >Thêm vào giỏ hàng</Button>
+                                    <Button className="w-100 fs-2" variant="secondary" size="lg"
+                                        onClick={handleAddToCart}
+                                    >
+                                        Thêm vào giỏ hàng</Button>
                                 </Col>
                             </Row>
                         </div>

@@ -34,7 +34,7 @@ const Header = () => {
 
     useEffect(() => {
         if (cart) {
-            const _cartNum = cart.reduce((total, item) => total + item.num, 0);
+            const _cartNum = cart.reduce((total, item) => total + item.quantity, 0);
             setCartNum(_cartNum);
         }
     }, [cart])
