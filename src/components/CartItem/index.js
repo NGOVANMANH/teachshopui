@@ -11,7 +11,14 @@ const CartItem = ({ data }) => {
 
     const handleDelete = () => {
         const _cart = [...cart];
-        setCart(_cart.filter(item => item.id !== data.id));
+        const cartAfter = _cart.filter(item => item.id !== data.id)
+        if (cartAfter.length > 0) {
+            setCart(cartAfter);
+        }
+        else {
+            localStorage.setItem("cart", JSON.stringify([]));
+            setCart([]);
+        }
     }
     const handleQuantityChange = (value) => {
         if (data.quantity + value === 0) {
