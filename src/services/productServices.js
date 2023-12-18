@@ -66,3 +66,12 @@ export const getProductColors = async (id) => {
     }
 }
 
+export const getProductImages = async (id) => {
+    try {
+        const respone = await axios.get(`/api/image_detail/show_by_productid.php?productid=${id}`);
+        return respone.data;
+    }
+    catch (error) {
+        return NOT_FOUND;
+    }
+}

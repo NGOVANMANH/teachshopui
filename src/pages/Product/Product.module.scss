@@ -2,6 +2,12 @@
     display: flex;
     flex-wrap: wrap;
 
+    .product_left_title {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
     .button_area {
         width: 100%;
         align-self: flex-end;

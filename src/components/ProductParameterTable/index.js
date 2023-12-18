@@ -1,36 +1,61 @@
-import React from 'react';
+import { useEffect, useState } from "react";
+import { getProductParameters } from "../../services/productServices";
+import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
+import { Spinner } from "react-bootstrap";
+import clsx from "clsx";
 
-const ProductParameterTable = () => {
+const ProductParameterTable = ({ productID, striped, borderless }) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(true);
+    const [params, setParams] = useState({});
+
+    useEffect(() => {
+        if (productID) {
+            const fetchApi = async () => {
+                setIsLoading(true);
+                const response = await getProductParameters(productID);
+                if (response !== NOT_FOUND) {
+                    if (response.status === SUCCESS_RESPONSE) {
+                        const _params = response.data[0];
+                        delete _params.product_id;
+                        setParams(_params);
+                        setIsSuccess(true);
+                    }
+                    setIsLoading(false);
+                }
+                else setIsSuccess(false);
+            }
+
+            fetchApi();
+        }
+        else setIsSuccess(false);
+    }, [productID])
+
     return (
-        <table className="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
+        isSuccess
+            ?
+            !isLoading
+                ?
+                <table className={clsx("table", {
+                    "table-striped": striped,
+                    "table-borderless": borderless,
+                })}>
+                    <tbody>
+                        {
+                            Object.keys(params).map((item, index) =>
+                                <tr key={index}>
+                                    <th className="text-capitalize">{item}</th>
+                                    <td>{params[item]}</td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                </table>
+                :
+                <Spinner size="lg" />
+            :
+            <div className="text-danger fs-1">NOT_FOUND</div>
     );
 }
 
