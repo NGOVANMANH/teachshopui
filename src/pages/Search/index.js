@@ -71,8 +71,8 @@ const SearchResults = () => {
                     <Col>
                         <Button onClick={handleSortName} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"A-Z"}</Button>
                         <Button onClick={handleSortNameDesc} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Z-A"}</Button>
-                        <Button onClick={handleSortPrice} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
-                        <Button onClick={handleSortPriceDesc} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
+                        <Button onClick={handleSortPriceDesc} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Cao-Thấp"}</Button>
+                        <Button onClick={handleSortPrice} style={{ marginRight: "0.5rem" }} variant="outline-secondary" size="lg">{"Thấp-Cao"}</Button>
                     </Col>
                 </Row>
                 <HorizontalLine className="mt-3 mb-3" />
