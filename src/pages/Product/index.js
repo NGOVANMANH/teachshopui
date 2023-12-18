@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 import { CategoryBlock, HorizontalLine, ProductCarousel, Comment, ProductParameterTable } from "../../components";
 import styles from './Product.module.scss';
-import { getProductColors, getProductParameters, getProductImages } from "../../services/productServices";
+import { getProductColors, getProductImages } from "../../services/productServices";
 import { useContextData } from "../../hooks";
 
 const ProductDetails = () => {
@@ -26,8 +26,6 @@ const ProductDetails = () => {
 
     const [productColors, setProductColors] = useState([]);
 
-    const [productParameters, setProductParameters] = useState([]);
-
     const [productImages, setProductImages] = useState([]);
 
     const [similarProducts, setSimilarProducts] = useState([]);
@@ -42,21 +40,12 @@ const ProductDetails = () => {
         }
     }, [thisProduct, products])
 
-    // console.log(">>>>>check: ", productColors, productImages, productParameters);
-
     useEffect(() => {
         const fetchProductColors = async () => {
             const responeColors = await getProductColors(+id);
 
             if (responeColors.color) {
                 setProductColors(responeColors.color)
-            }
-        }
-
-        const fetchProductParameters = async () => {
-            const responeParams = await getProductParameters(+id);
-            if (responeParams.data) {
-                setProductParameters(responeParams.data);
             }
         }
 
@@ -68,7 +57,6 @@ const ProductDetails = () => {
         }
 
         fetchProductColors();
-        fetchProductParameters();
         fetchProductImages();
     }, [id])
 
