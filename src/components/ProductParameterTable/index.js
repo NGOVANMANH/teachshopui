@@ -43,10 +43,10 @@ const ProductParameterTable = ({ productID, striped, borderless }) => {
                 })}>
                     <tbody>
                         {
-                            Object.keys(params).map((item, index) =>
+                            Object.keys(params).map((key, index) =>
                                 <tr key={index}>
-                                    <th className="text-capitalize">{item}</th>
-                                    <td>{params[item]}</td>
+                                    <th className="text-capitalize w-50">{key.replace(/_/g, ' ')}</th>
+                                    <td>{params[key]}</td>
                                 </tr>
                             )
                         }

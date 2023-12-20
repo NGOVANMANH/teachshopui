@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    .button_more {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 2rem;
+        border-radius: 50%;
+        border: transparent;
+
+        &:hover {
+            background-color: gray;
+            color: white;
+            opacity: 90%;
+        }
+    }
+
+    .avatar {
+        width: fit-content;
+        margin-right: 0.5rem;
+
+        svg {
+            font-size: 2rem;
+        }
+    }
+
+    .wrapper_left {
+
+        .name {
+            font-weight: bold;
+        }
+    }
+}
+
+.active {
+    background-color: gray;
+    color: white;
+    opacity: 90%;
+}

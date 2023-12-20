@@ -10,6 +10,6 @@ export { default as SearchProductItem } from './SearchProductItem';
 export { default as HorizontalLine } from './HorizontalLine';
 export { default as CategoryBlock } from './CategoryBlock';
 export { default as CartItem } from './CartItem';
-export { default as Comment } from './Comment';
 export { default as ProductParameterTable } from './ProductParameterTable';
 export { default as CartHover } from './CartHover';
+export { default as Comment } from './Comments';

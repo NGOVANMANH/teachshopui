@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
-import { CategoryBlock, HorizontalLine, ProductCarousel, Comment, ProductParameterTable } from "../../components";
+import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable } from "../../components";
 import styles from './Product.module.scss';
 import { getProductColors, getProductImages } from "../../services/productServices";
 import { useContextData } from "../../hooks";
+import Comments from "../../components/Comments";
 
 const ProductDetails = () => {
 
@@ -141,11 +142,9 @@ const ProductDetails = () => {
                 <div className="col-md-8">
                     <Col className="bg-white rounded my-shadow p-3" style={{ marginRight: "1rem" }}>
                         <div className={clsx(styles.bottom_title)}>Đánh giá</div>
-                        <div className={clsx(styles.comment_area)}>
-                            {
-                                [1, 2, 3, 4, 5, 6].map((item, index) => <Comment key={index} />)
-                            }
-                        </div>
+                        <Comments>
+
+                        </Comments>
                     </Col>
                 </div>
                 <div className="col">
