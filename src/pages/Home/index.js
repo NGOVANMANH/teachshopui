@@ -37,7 +37,6 @@ const Home = () => {
 
   }, [products]);
 
-
   return (isLoading
     ?
     <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
@@ -56,25 +55,25 @@ const Home = () => {
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Điện thoại"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Điện thoại"} products={phones}>
         <ProductCarousel className="pt-3 pb-3" products={phones}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Dây sạc"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Dây sạc"} products={cables}>
         <ProductCarousel className="pt-3 pb-3" products={cables}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Sạc dự phòng"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Sạc dự phòng"} products={backupchargers}>
         <ProductCarousel className="pt-3 pb-3" products={backupchargers}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Củ sạc"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+      <CategoryBlock title={"Củ sạc"} products={adapters}>
         <ProductCarousel className="pt-3 pb-3" products={adapters}></ProductCarousel>
       </CategoryBlock>
 

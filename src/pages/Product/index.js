@@ -5,71 +5,81 @@ import clsx from "clsx";
 
 import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable } from "../../components";
 import styles from './Product.module.scss';
-import { getProductColors, getProductImages } from "../../services/productServices";
 import { useContextData } from "../../hooks";
+import { getColorsAndImages } from "../../services/productServices";
 import Comments from "../../components/Comments";
+import { NOT_FOUND } from "../../services/constants";
 
 const ProductDetails = () => {
 
     const { id } = useParams();
 
-    const { products, cart, addToCart } = useContextData();
+    const { products, cart, addToCart, setCart } = useContextData();
 
-    const [thisProduct, setThisProduct] = useState({});
-
-    useEffect(() => {
-
-        const thisProduct = [...products].find(item => item.id === +id);
-        setThisProduct(thisProduct);
-
-        document.title = `${thisProduct ? thisProduct.name : "Product - Techshop"}`;
-    }, [id, products])
-
-    const [productColors, setProductColors] = useState([]);
+    const [thisProduct, setThisProduct] = useState();
 
     const [productImages, setProductImages] = useState([]);
 
+    const [productColors, setProductColors] = useState([]);
+
+    const [colorPicked, setColorPicked] = useState("");
+
     const [similarProducts, setSimilarProducts] = useState([]);
 
-    useEffect(() => {
-        if (thisProduct) {
-            const _similarProducts = [...products].filter(item => item.category === thisProduct.category);
+    const [productResponse, setProductResponse] = useState();
 
-            if (_similarProducts) {
-                setSimilarProducts(_similarProducts);
-            }
-        }
-    }, [thisProduct, products])
+    const [isLoadingPResponse, setIsLoadingPResponse] = useState(false);
 
     useEffect(() => {
-        const fetchProductColors = async () => {
-            const responeColors = await getProductColors(+id);
-
-            if (responeColors.color) {
-                setProductColors(responeColors.color)
+        if (products && products.length > 0) {
+            const thisProduct = [...products].find(item => item.id === +id);
+            if (thisProduct) {
+                setThisProduct(thisProduct);
+                setSimilarProducts([...products].filter(item => item.category === thisProduct.category));
             }
         }
 
-        const fetchProductImages = async () => {
-            const responeImages = await getProductImages(+id);
-            if (responeImages.image) {
-                setProductImages(responeImages.image);
+        document.title = `${thisProduct ? thisProduct.name : "Product - Techshop"}`;
+    }, [id, products, thisProduct])
+
+    useEffect(() => {
+        const fetchColorsAndImages = async () => {
+            setIsLoadingPResponse(true);
+            const response = await getColorsAndImages(+id);
+            if (response !== NOT_FOUND) {
+                setProductResponse(response);
+                setProductColors(Object.keys(response.color));
+                setColorPicked(Object.keys(response.color)[0]);
+                setProductImages(response.color[Object.keys(response.color)[0]].images);
             }
+            else alert("Lỗi mạng!");
+            setIsLoadingPResponse(false);
         }
 
-        fetchProductColors();
-        fetchProductImages();
+        fetchColorsAndImages();
     }, [id])
 
     const handleAddToCart = () => {
+        if (isLoadingPResponse) return;
         const productInCart = [...cart].find(product => product.id === +id);
 
         if (thisProduct && !productInCart) {
-            addToCart(thisProduct);
+            addToCart({
+                ...thisProduct,
+                color: colorPicked,
+                image: productResponse.color[colorPicked].thumbnail,
+            });
         }
         else {
-            alert("Sản phẩm đã có trong giỏ hàng!")
+            productInCart.quantity++;
+            setCart([...cart]);
         }
+    }
+
+    const handleChosseColor = (event) => {
+        const _colorPicked = event.target.value;
+        setColorPicked(_colorPicked);
+        setProductImages(productResponse.color[_colorPicked].images);
     }
 
     return (
@@ -83,7 +93,7 @@ const ProductDetails = () => {
                                     {
                                         productImages.map((item, index) => (
                                             <Carousel.Item key={index}>
-                                                <Image thumbnail src={`data:image/jpeg;base64, ${item.image}`} alt="img" style={{ width: "100%" }} />
+                                                <Image thumbnail src={`data:image/jpeg;base64, ${item}`} alt="img" style={{ width: "100%" }} />
                                             </Carousel.Item>
                                         ))
                                     }
@@ -96,6 +106,14 @@ const ProductDetails = () => {
                             {thisProduct ? thisProduct.name : "Product name"}
                             <div className={clsx("fs-3 fw-normal mt-3")}>
                                 <ProductParameterTable borderless productID={+id} />
+                                {
+                                    thisProduct &&
+                                    <>
+                                        {thisProduct.pre_discount !== 0 && <span className={clsx(styles.prePrice, "text-decoration-line-through text-secondary fs-4")}>{thisProduct.pre_discount.toLocaleString('en-US')} đ</span>}
+                                        <br />
+                                        <span className={clsx(styles.price, "text-success fs-2 fw-bold")}>{thisProduct.price.toLocaleString('en-US')} đ</span>
+                                    </>
+                                }
                             </div>
                         </div>
                         <div className={clsx(styles.button_area)}>
@@ -108,6 +126,9 @@ const ProductDetails = () => {
                                                     className={clsx('w-100 fs-3 mb-3 mt-3')}
                                                     variant="outline-secondary"
                                                     size="lg"
+                                                    value={item}
+                                                    active={colorPicked === item}
+                                                    onClick={handleChosseColor}
                                                 >
                                                     {item}
                                                 </Button>
@@ -121,8 +142,10 @@ const ProductDetails = () => {
                                 <Col>
                                     <Button className="w-100 fs-2" variant="secondary" size="lg"
                                         onClick={handleAddToCart}
+                                        disabled={isLoadingPResponse}
                                     >
-                                        Thêm vào giỏ hàng</Button>
+                                        {isLoadingPResponse ? <Spinner size="lg" /> : "Thêm vào giỏ hàng"}
+                                    </Button>
                                 </Col>
                             </Row>
                         </div>
@@ -132,7 +155,7 @@ const ProductDetails = () => {
             <Container className="bg-white rounded my-shadow mt-3 mb-3 p-3">
                 <Row>
                     <Col>
-                        <CategoryBlock title={"Sản phẩm tương tự"} brands={["Samsung", "apple", "oppo", "redmi"]}>
+                        <CategoryBlock title={"Sản phẩm tương tự"} products={similarProducts}>
                             <ProductCarousel className="pt-3 pb-3" products={similarProducts.length > 0 ? similarProducts : null}></ProductCarousel>
                         </CategoryBlock>
                     </Col>

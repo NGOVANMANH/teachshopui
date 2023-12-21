@@ -84,7 +84,7 @@ const Provider = ({ children }) => {
             // fetchCart
             const fetchCart = async () => {
                 const res = await getCart();
-                if (res && res.product_cart.length > 0) {
+                if (res && res.product_cart && res.product_cart.length > 0) {
                     setCart([
                         ...res.product_cart,
                     ]);
@@ -110,6 +110,7 @@ const Provider = ({ children }) => {
     }, [cart, user])
 
     const addToCart = (product) => {
+        console.log(product)
         if (user.auth === false) {
             const cartJson = JSON.parse(localStorage.getItem("cart"));
             cartJson.push({

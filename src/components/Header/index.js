@@ -94,8 +94,8 @@ const Header = () => {
         navigate("/profile");
     }
 
-    const toProfileActive = () => {
-        navigate("/profile/0");
+    const toProfileActive = (id) => {
+        navigate(`/profile/${id}`);
     }
 
     const handleLogout = () => {
@@ -105,6 +105,7 @@ const Header = () => {
         })
         localStorage.removeItem("token");
         navigate("/");
+        window.location.reload();
     }
 
     return (
@@ -161,10 +162,10 @@ const Header = () => {
                                     user && user.auth
                                         ?
                                         <>
-                                            <div className="text-capitalize">Hello! {user.userInfor.name ? user.userInfor.name : "user"} nhé!</div>
+                                            <div className="text-capitalize" style={{ cursor: "pointer" }} onClick={toProfile}>Hello! {user.userInfor.name ? user.userInfor.name : "user"} nhé!</div>
                                             <DropdownButton className={clsx(styles.dropDownUser)} id="dropdown-basic-button" title="" align={"end"}>
-                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfile}>Xem thông tin</Dropdown.Item>
-                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={toProfileActive}>Tình trạng đơn hàng</Dropdown.Item>
+                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={() => toProfileActive("1")}>Xem thông tin</Dropdown.Item>
+                                                <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={() => toProfileActive("0")}>Tình trạng đơn hàng</Dropdown.Item>
                                                 <Dropdown.Item className={clsx(styles.dropDownUserItem)} onClick={handleLogout}>Đăng xuất</Dropdown.Item>
                                             </DropdownButton>
                                         </>
@@ -240,16 +241,16 @@ const Header = () => {
                             <div className="row">
                                 <div className={clsx("col-md-auto", styles.centerY, styles.helpCenter)}>
                                     <BiPhoneCall className={clsx(styles.icon, styles.ring)} />
-                                    <a href="/" target='_blank'>
+                                    <a href="tel:+84705288268">
                                         <span>Hotline</span>
                                         <br />
-                                        <b>0349.296.461</b>
+                                        <b>0705.288.268</b>
                                     </a>
                                 </div>
                                 <div className={clsx("col-md-auto", styles.centerY, styles.helpCenter)}>
                                     <div className="vr text-success"></div>
                                     <AiOutlineThunderbolt className={clsx(styles.icon)} />
-                                    <a href="/" target='_blank'>
+                                    <a href="tel:+84705288268">
                                         <span>Tư vấn trực tiếp</span>
                                     </a>
                                 </div>

@@ -75,12 +75,6 @@ const Products = () => {
         setProducts(sortedProducts);
     }
 
-    // const handleFilterByBrand = (brandName) => {
-    //     brandName = brandName.toLocaleLowerCase();
-    //     const filtedProducts = [...products].filter(item => item.brand === brandName);
-    //     setProducts(filtedProducts);
-    // }
-
     return (
         !isLoading
             ?
@@ -92,12 +86,13 @@ const Products = () => {
                             <div align="center" className="fs-1 fw-bolder text-secondary text-capitalize">{getTitle()}</div>
                         </Container>
                     </Row>
-                    <HorizontalLine className="mt-3 mb-3" />
+                    <HorizontalLine className="mt-3" />
                     <Row>
                         <Col md="auto" className="fs-2 fw-bold text-secondary">Lọc theo:</Col>
                         <Col>
                             <Button
                                 style={{ marginRight: "0.5rem" }}
+                                className="mt-3"
                                 variant="outline-secondary"
                                 size="lg"
                                 onClick={handleSortName}
@@ -107,6 +102,7 @@ const Products = () => {
 
                             <Button
                                 style={{ marginRight: "0.5rem" }}
+                                className="mt-3"
                                 variant="outline-secondary"
                                 size="lg"
                                 onClick={handleSortNameDesc}
@@ -116,6 +112,7 @@ const Products = () => {
 
                             <Button
                                 style={{ marginRight: "0.5rem" }}
+                                className="mt-3"
                                 variant="outline-secondary"
                                 size="lg"
                                 onClick={handleSortPriceDesc}
@@ -125,13 +122,13 @@ const Products = () => {
 
                             <Button
                                 style={{ marginRight: "0.5rem" }}
+                                className="mt-3"
                                 variant="outline-secondary"
                                 size="lg"
                                 onClick={handleSortPrice}
                             >
                                 {"Thấp-Cao"}
                             </Button>
-
                         </Col>
                     </Row>
                     <HorizontalLine className="mt-3 mb-3" />

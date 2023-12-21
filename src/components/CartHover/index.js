@@ -10,7 +10,7 @@ const CartHover = () => {
             {
                 cart && cart.length > 0
                     ?
-                    cart.map(item => <CartItem key={item.id} data={item} />)
+                    cart.map(item => <CartItem key={`${item.id}+${item.color}`} data={item} />)
                     :
                     <div className="text-center text-secondary mt-3 mb-3">Không có sản phẩm trong giỏ hàng</div>
             }

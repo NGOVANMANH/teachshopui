@@ -48,7 +48,8 @@ const Login = () => {
                                         auth: true,
                                         userInfor: response.data,
                                     })
-                                    usenavigate("/profile");
+                                    usenavigate("/profile/1");
+                                    window.location.reload();
                                 }
                                 else {
                                     alert(response.message);
