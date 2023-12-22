@@ -102,7 +102,6 @@ const Cart = () => {
 
 
     const handleDeleteCart = () => {
-        localStorage.setItem("cart", JSON.stringify([]))
         setCart([]);
     }
 

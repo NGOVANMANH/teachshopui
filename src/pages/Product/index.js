@@ -14,7 +14,7 @@ const ProductDetails = () => {
 
     const { id } = useParams();
 
-    const { products, cart, addToCart, setCart } = useContextData();
+    const { products, addToCart } = useContextData();
 
     const [thisProduct, setThisProduct] = useState();
 
@@ -67,24 +67,11 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         if (isLoadingPResponse) return;
-        const productsInCart = [...cart].filter(product => product.id === +id);
-
-        const productsInCartColor = productsInCart.find(item => item.color === colorPicked);
-
-        if (thisProduct) {
-            if (!productsInCartColor) {
-                addToCart({
-                    ...thisProduct,
-                    color: colorPicked,
-                    image: productResponse.color[colorPicked].thumbnail,
-                    quantity: 1,
-                });
-            }
-            else {
-                productsInCartColor.quantity++;
-                setCart([...cart]);
-            }
-        }
+        addToCart({
+            ...thisProduct,
+            color: colorPicked,
+            image: productResponse.color[colorPicked].thumbnail,
+        })
     }
 
     const handleChosseColor = (event) => {

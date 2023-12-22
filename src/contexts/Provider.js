@@ -5,7 +5,7 @@ import { getAllProduct } from '../services/productServices';
 import getAddress from '../services/addressServices';
 import { NOT_FOUND, SUCCESS_RESPONSE } from '../services/constants';
 import { checkToken } from "../services/userServices";
-import { getCart } from '../services/cartServices'
+import { getCart, addCart, updateProductQuantity, deleteProduct } from '../services/cartServices'
 
 const Provider = ({ children }) => {
 
@@ -22,6 +22,7 @@ const Provider = ({ children }) => {
 
     const [address, setAddress] = useState([]);
 
+    // Fetch Products
     useEffect(() => {
         const fetchApi = async () => {
             const response = await getAllProduct();
@@ -33,6 +34,7 @@ const Provider = ({ children }) => {
         fetchApi();
     }, []);
 
+    // Check user token
     useEffect(() => {
         if (localStorage.getItem("token")) {
             const token = localStorage.getItem("token");
@@ -58,6 +60,7 @@ const Provider = ({ children }) => {
         }
     }, [])
 
+    // get api province
     useEffect(() => {
         const fetchApi = async () => {
             const respone = await getAddress();
@@ -69,6 +72,7 @@ const Provider = ({ children }) => {
         fetchApi();
     }, [])
 
+    // khi user thay đổi => giỏ hàng ứng với từng user
     useEffect(() => {
         if (user.auth === false) {
             if (!localStorage.getItem("cart")) {
@@ -98,43 +102,75 @@ const Provider = ({ children }) => {
         }
     }, [user])
 
-    useEffect(() => {
-        if (user.auth === false) {
-            if (cart.length > 0) {
-                localStorage.setItem("cart", JSON.stringify(cart));
-            }
-        }
-        else {
-            // fetchApi
-        }
-    }, [cart, user])
-
     const addToCart = (product) => {
-        if (user.auth === false) {
-            const cartJson = JSON.parse(localStorage.getItem("cart"));
-            cartJson.push({
-                ...product,
-                quantity: 1,
-            });
-            console.log(">>> Check cartJson: ", cartJson);
-            setCart([
-                ...cartJson,
-            ])
-            localStorage.setItem("cart", JSON.stringify(cartJson));
+        const cartPrev = [...cart];
+        const existingProduct = cartPrev.find(item => (item.id === product.id && item.color === product.color));
+        if (existingProduct) {
+            existingProduct.quantity++;
         }
         else {
-            // fetchAPI
-            const cartPrev = [...cart];
             cartPrev.push({
                 ...product,
                 quantity: 1,
             })
-            setCart(cartPrev);
+        }
+        setCart(cartPrev);
+        if (user.auth === false) {
+            localStorage.setItem("cart", JSON.stringify(cartPrev));
+        }
+        else {
+            if (existingProduct) {
+                updateQuantity(product.id, product.color, 1)
+            }
+            else {
+                addCart({
+                    ...product,
+                    quantity: 1,
+                })
+            }
+        }
+    }
+
+    const deleteCartItem = (productID, productColor) => {
+        const cartAfter = cart.filter(item => !(item.id === productID && item.color === productColor));
+        setCart(cartAfter);
+        if (user.auth === false) {
+            localStorage.setItem("cart", JSON.stringify(cartAfter));
+        }
+        else {
+            deleteProduct({
+                id: productID,
+                color: productColor,
+            })
+        }
+    }
+
+    const updateQuantity = (productID, productColor, value) => {
+        const cartAfter = [...cart];
+        const foundProduct = cartAfter.find(item => (item.id === productID && item.color === productColor));
+        if (foundProduct) {
+            foundProduct.quantity += value;
+            if (foundProduct.quantity <= 0) {
+                deleteCartItem(productID, productColor);
+            }
+            else {
+                setCart(cartAfter);
+                if (user.auth === false) {
+                    localStorage.setItem("cart", JSON.stringify(cartAfter));
+                }
+                else {
+                    updateProductQuantity({
+                        id: productID,
+                        color: productColor,
+                        quantity: foundProduct.quantity,
+                    })
+                }
+            }
         }
     }
 
     return (
-        <Context.Provider value={{ products, user, setUser, cart, setCart, addToCart, address }}>
+        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, address }}>
             {children}
         </Context.Provider>
     );

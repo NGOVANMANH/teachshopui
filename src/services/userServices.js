@@ -45,7 +45,10 @@ export const updateInfor = async (token, infor) => {
 
 export const updatePassword = async (token, oldPass, newPass) => {
     try {
-        const respone = await axios.put('/api/customer/update.php', { old_password: oldPass, new_password: newPass }, { headers: { Authorization: token } })
+        const respone = await axios.put('/api/customer/update.php', {
+            old_password: oldPass,
+            new_password: newPass
+        }, { headers: { Authorization: token } })
         return respone.data;
     }
     catch (error) {

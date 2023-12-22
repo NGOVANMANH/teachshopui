@@ -110,7 +110,7 @@ const Header = () => {
 
     const handleCheckOut = () => {
         if (user.auth) {
-            // thanh toans luon voi thong tin cua user
+            navigate("/checkout");
         }
         else {
             alert("Kéo xuống dưới, vui lòng nhập chính thông tin vào các trường!");

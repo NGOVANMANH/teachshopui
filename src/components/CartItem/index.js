@@ -7,33 +7,13 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 
 const CartItem = ({ data }) => {
 
-    const { cart, setCart } = useContextData();
+    const { updateQuantity, deleteCartItem } = useContextData();
 
     const handleDelete = () => {
-        let cartAfter = [...cart];
-
-        cartAfter = cartAfter.filter(item => !(item.id === data.id && item.color === data.color));
-
-        if (cartAfter.length > 0) {
-            setCart(cartAfter);
-        }
-        else {
-            localStorage.setItem("cart", JSON.stringify([]));
-            setCart([]);
-        }
+        deleteCartItem(data.id, data.color);
     }
     const handleQuantityChange = (value) => {
-        if (data.quantity + value === 0) {
-            handleDelete();
-        }
-        else {
-            const _cart = [...cart];
-            const thisProduct = _cart.find(item => (item.id === data.id && item.color === data.color));
-            if (thisProduct) {
-                thisProduct.quantity += value;
-                setCart(_cart);
-            }
-        }
+        updateQuantity(data.id, data.color, value);
     }
 
     return (
