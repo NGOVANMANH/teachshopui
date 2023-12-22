@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { FaMapMarkedAlt, FaCreditCard } from "react-icons/fa";
 import clsx from "clsx";
@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { CartItem, HorizontalLine } from "../../components";
 import styles from './Cart.module.scss';
 import { useContextData } from "../../hooks";
+import { getShippingFee } from '../../services/shippingServices'
+import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
 
 const Cart = () => {
 
@@ -17,11 +19,18 @@ const Cart = () => {
         document.title = "Cart - Techshop";
     }, [])
 
-    const { cart, setCart, address } = useContextData();
+    const { cart, setCart, address, user } = useContextData();
 
     const [cartItems, setCartItems] = useState([]);
 
     const [province, setProvince] = useState([]);
+
+    const [shippingFee, setShippingFee] = useState(0);
+
+    const [gettingFee, setGettingFee] = useState(false);
+    const [isGetFeeSuccess, setIsGetFeeSuccess] = useState(true);
+    const [isGettedFee, setIsGettedFee] = useState(false);
+
 
     useEffect(() => {
         if (cart) {
@@ -37,15 +46,16 @@ const Cart = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
-            email: '',
-            phoneNumber: '',
-            district: '',
-            city: '',
-            ward: '',
-            address: '',
+            name: user.auth ? user.userInfor.name : '',
+            email: user.auth ? user.userInfor.email : '',
+            phoneNumber: user.auth ? user.userInfor.phone : '',
+            district: user.auth ? user.userInfor.district : '',
+            city: user.auth ? user.userInfor.city : '',
+            ward: user.auth ? user.userInfor.ward : '',
+            address: user.auth ? user.userInfor.address : '',
             note: '',
             paymentMethod: '',
+            discount: '',
         },
         onSubmit: values => {
             alert("submit")
@@ -60,14 +70,42 @@ const Cart = () => {
             ward: Yup.string().required('Vui lòng chọn Xã, Phường!'),
             address: Yup.string().required('Vui lòng nhập địa chỉ!'),
             paymentMethod: Yup.string().required('Vui lòng chọn phương thức thanh toán!'),
+            discount: Yup.string(),
         })
     });
+
+    useEffect(() => {
+        const city = formik.values.city;
+        const district = formik.values.district;
+        const ward = formik.values.ward;
+
+        if (city.length > 0 && ward.length > 0 && district.length > 0 && !isGettedFee) {
+            const fetchShippingFee = async () => {
+                setGettingFee(true);
+                const response = await getShippingFee(city, district, ward);
+
+                if (response !== NOT_FOUND) {
+                    if (response.status === SUCCESS_RESPONSE) {
+                        setShippingFee(response.data.total_fee);
+                        setIsGetFeeSuccess(true);
+                    }
+                    else {
+                        setIsGetFeeSuccess(false);
+                    }
+                }
+                setGettingFee(false);
+            }
+            fetchShippingFee();
+            setIsGettedFee(true);
+        }
+    }, [formik.values, isGettedFee])
 
 
     const handleDeleteCart = () => {
         localStorage.setItem("cart", JSON.stringify([]))
         setCart([]);
     }
+
     return (
         <>
             <Container className="mt-3 mb-3 bg-white rounded">
@@ -93,7 +131,7 @@ const Cart = () => {
             {
                 cartItems.length > 0
                     ?
-                    cartItems.map(item => (<CartItem key={item.id} data={item} />))
+                    cartItems.map(item => (<CartItem key={`${item.id}-${item.color}`} data={item} />))
                     :
                     <div className="d-flex justify-content-center align-items-center" style={{ height: "30vh" }}>"0 sản phẩm trong giỏ hàng"</div>
             }
@@ -136,7 +174,8 @@ const Cart = () => {
                                             {formik.errors.email && formik.touched.email ? (
                                                 <div className={clsx(styles.inValidMessage)}>{formik.errors.email}</div>
                                             ) : null}
-
+                                        </Row>
+                                        <Row>
                                             <input
                                                 className={clsx("col form-control", styles.formInput)}
                                                 type="text"
@@ -153,7 +192,12 @@ const Cart = () => {
                                             <select
                                                 className={clsx("col form-select text-secondary", styles.formInput)}
                                                 name="city"
-                                                onChange={formik.handleChange}
+                                                onChange={(e) => {
+                                                    formik.handleChange(e);
+                                                    formik.setFieldValue('district', '');
+                                                    formik.setFieldValue('ward', '');
+                                                    setIsGettedFee(false);
+                                                }}
                                                 value={formik.values.city}
                                             >
                                                 <option value="">Chọn tỉnh, thành phố</option>
@@ -169,7 +213,11 @@ const Cart = () => {
                                             <select
                                                 className={clsx("col form-select text-secondary", styles.formInput)}
                                                 name="district"
-                                                onChange={formik.handleChange}
+                                                onChange={(e) => {
+                                                    formik.handleChange(e);
+                                                    formik.setFieldValue('ward', '');
+                                                    setIsGettedFee(false);
+                                                }}
                                                 value={formik.values.district}
                                             >
                                                 <option value="">Chọn quận, huyện</option>
@@ -187,7 +235,10 @@ const Cart = () => {
                                             <select
                                                 className={clsx("col form-select text-secondary", styles.formInput)}
                                                 name="ward"
-                                                onChange={formik.handleChange}
+                                                onChange={(e) => {
+                                                    formik.handleChange(e);
+                                                    setIsGettedFee(false);
+                                                }}
                                                 value={formik.values.ward}
                                             >
                                                 <option value="">Chọn xã, phường</option>
@@ -240,6 +291,7 @@ const Cart = () => {
                                     <Col>
                                         <input
                                             className="form-check-input"
+                                            id="cash"
                                             type="radio"
                                             name="paymentMethod"
                                             value={"cash"}
@@ -254,6 +306,7 @@ const Cart = () => {
                                     <Col>
                                         <input
                                             className="form-check-input"
+                                            id="tranfer"
                                             type="radio"
                                             name="paymentMethod"
                                             value={"tranfer"}
@@ -266,16 +319,66 @@ const Cart = () => {
                                 {formik.errors.paymentMethod && formik.touched.paymentMethod ? (
                                     <div className={clsx(styles.inValidMessage)}>{formik.errors.paymentMethod}</div>
                                 ) : null}
+
+                                <Row>
+                                    <input
+                                        className={clsx("col form-control mt-3", styles.formInput)}
+                                        type="text"
+                                        name="discount"
+                                        placeholder="Mã giảm giá..."
+                                        onChange={formik.handleChange}
+                                        value={formik.values.discount}
+                                    />
+                                </Row>
+
                                 {
                                     cart.length > 0 &&
                                     <Row>
                                         <Col align='end' className="fs-3">
-                                            <span className="text-secondary">Số lượng: </span>
-                                            <span className="text-danger">{cart.reduce((total, item) => total + item.quantity, 0)}</span>
-                                            <span className="text-secondary"> sản phẩm</span>
-                                            <br />
-                                            <span className="text-secondary">Tổng tiền: </span>
-                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0)).toLocaleString('en-US')} đ</span>
+                                            <table className="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <th><span className="text-secondary">Số lượng: </span></th>
+                                                        <td><span className="text-danger">{cart.reduce((total, item) => total + item.quantity, 0)}</span>
+                                                            <span className="text-secondary"> sản phẩm</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span className="text-secondary">Phí giao hàng: </span></th>
+                                                        <td>
+                                                            {
+                                                                gettingFee ?
+                                                                    <Spinner size="sm" />
+                                                                    :
+                                                                    isGetFeeSuccess ?
+                                                                        <span className="text-danger fs-2">{(shippingFee).toLocaleString('en-US')} đ</span>
+                                                                        : <span className="text-danger fs-5">Không tính được</span>
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th><span className="text-secondary">Tổng giá: </span></th>
+                                                        <td>
+                                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0)).toLocaleString('en-US')} đ</span>
+                                                        </td>
+                                                    </tr>
+                                                    {
+                                                        formik.values.discount.length > 0 &&
+                                                        <tr>
+                                                            <th><span className="text-secondary">Giảm giá: </span></th>
+                                                            <td>
+                                                                <span className="text-danger fs-2">{(0).toLocaleString('en-US')} đ</span>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    <tr>
+                                                        <th><span className="text-secondary">Tổng tiền: </span></th>
+                                                        <td>
+                                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0) + shippingFee).toLocaleString('en-US')} đ</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
                                         </Col>
                                     </Row>
                                 }

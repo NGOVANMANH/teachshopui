@@ -1,6 +1,6 @@
 .wrapper {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     position: relative;
 
     .button_more {
@@ -9,6 +9,7 @@
         right: 0;
         font-size: 2rem;
         border-radius: 50%;
+        padding: 0.2rem;
         border: transparent;
 
         &:hover {
@@ -32,6 +33,13 @@
         .name {
             font-weight: bold;
         }
+
+        .time {
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
     }
 }
 
@@ -39,4 +47,69 @@
     background-color: gray;
     color: white;
     opacity: 90%;
+}
+
+
+.rotate-90deg {
+    transform: rotate(-90deg);
+}
+
+.rotate-90deg {
+    transform: rotate(90deg);
+}
+
+.rotate_90deg {
+    transform: rotate(-90deg);
+}
+
+@keyframes rotate_-90 {
+    from {
+        transform: rotate(90deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes rotate_90 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(90deg);
+    }
+}
+
+.rotate_-90 {
+    animation: rotate_-90 0.3s ease;
+}
+
+.rotate_90 {
+    animation: rotate_90 0.3s ease;
+}
+
+.review_wrapper {
+    padding: 1rem;
+
+    textarea {
+        font-size: 1.6rem;
+    }
+
+    button {
+        height: fit-content;
+        margin-left: 0.5rem;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        color: var(--primary);
+        border: transparent;
+
+        &:hover {
+            color: green;
+        }
+    }
 }

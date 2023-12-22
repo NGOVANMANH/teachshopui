@@ -1,4 +1,4 @@
-import { Home, Login, Cart, Signup, News, Products, Product, Search, Profile, Forget } from '../pages';
+import { Home, Login, Cart, Signup, News, Products, Product, Search, Profile, Forget, Checkout } from '../pages';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -10,6 +10,7 @@ const publicRoutes = [
     { path: '/products/:category', component: Products },
     { path: '/search/:searchValue', component: Search },
     { path: '/forget', component: Forget },
+    { path: '/checkout', component: Checkout },
 ];
 const privateRoutes = [
     { path: '/', component: Home },
@@ -20,6 +21,7 @@ const privateRoutes = [
     { path: '/search/:searchValue', component: Search },
     { path: '/profile', component: Profile },
     { path: '/profile/:activeKey', component: Profile },
+    { path: '/checkout', component: Checkout },
 ];
 
 export { publicRoutes, privateRoutes };

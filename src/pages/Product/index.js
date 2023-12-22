@@ -30,6 +30,12 @@ const ProductDetails = () => {
 
     const [isLoadingPResponse, setIsLoadingPResponse] = useState(false);
 
+    const [keyCarousel, setKeyCarousel] = useState(0);
+
+    useEffect(() => {
+        setKeyCarousel((prevKey) => prevKey + 1);
+    }, [productImages]);
+
     useEffect(() => {
         if (products && products.length > 0) {
             const thisProduct = [...products].find(item => item.id === +id);
@@ -61,18 +67,23 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         if (isLoadingPResponse) return;
-        const productInCart = [...cart].find(product => product.id === +id);
+        const productsInCart = [...cart].filter(product => product.id === +id);
 
-        if (thisProduct && !productInCart) {
-            addToCart({
-                ...thisProduct,
-                color: colorPicked,
-                image: productResponse.color[colorPicked].thumbnail,
-            });
-        }
-        else {
-            productInCart.quantity++;
-            setCart([...cart]);
+        const productsInCartColor = productsInCart.find(item => item.color === colorPicked);
+
+        if (thisProduct) {
+            if (!productsInCartColor) {
+                addToCart({
+                    ...thisProduct,
+                    color: colorPicked,
+                    image: productResponse.color[colorPicked].thumbnail,
+                    quantity: 1,
+                });
+            }
+            else {
+                productsInCartColor.quantity++;
+                setCart([...cart]);
+            }
         }
     }
 
@@ -89,7 +100,7 @@ const ProductDetails = () => {
                     <Col md={5}>
                         {
                             productImages && productImages.length > 0 ?
-                                <Carousel style={{ height: "100%" }} className="d-flex align-items-center">
+                                <Carousel key={keyCarousel} style={{ height: "100%" }} interval={null} className="d-flex align-items-center">
                                     {
                                         productImages.map((item, index) => (
                                             <Carousel.Item key={index}>

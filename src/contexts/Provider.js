@@ -110,7 +110,6 @@ const Provider = ({ children }) => {
     }, [cart, user])
 
     const addToCart = (product) => {
-        console.log(product)
         if (user.auth === false) {
             const cartJson = JSON.parse(localStorage.getItem("cart"));
             cartJson.push({

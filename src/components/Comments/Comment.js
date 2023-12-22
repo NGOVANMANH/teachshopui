@@ -1,4 +1,4 @@
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaRegClock } from "react-icons/fa";
 import { MdExpandMore } from "react-icons/md";
 
 import clsx from "clsx";
@@ -16,7 +16,10 @@ const Comment = ({ children, content }) => {
     return (
         <div className={clsx(styles.wrapper)}>
             <MdExpandMore className={clsx(styles.button_more, {
-                [styles.active]: isShowMore
+                [styles.active]: isShowMore,
+                [styles["rotate_-90"]]: isShowMore,
+                [styles["rotate-90deg"]]: !isShowMore,
+                [styles["rotate_90"]]: !isShowMore,
             })} onClick={handleShowMore} />
             <div className={clsx(styles.avatar)}>
                 <FaRegUserCircle />
@@ -25,11 +28,16 @@ const Comment = ({ children, content }) => {
                 <div className={clsx(styles.name)}>
                     Mạnh
                 </div>
-                <div>30/10/2003 19:01</div>
+                <div className={clsx(styles.time)}>
+                    <FaRegClock />
+                    30/10/2003 19:01
+                </div>
                 <div className={clsx(styles.content)}>
                     {content}
                 </div>
-                {isShowMore && children}
+                {
+                    isShowMore && children
+                }
             </div>
         </div>
     );

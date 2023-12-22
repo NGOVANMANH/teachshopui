@@ -17,8 +17,9 @@ const CartItem = ({ data }) => {
             </div>
             <div className="col">
                 <div className={clsx(styles.title)}>{data.name}</div>
-                <div className="mt-3 d-flex">
-                    <div className={clsx("col", styles.num)}>x{data.quantity}</div>
+                <div className="fs-5 text-secondary">Color: {data.color}</div>
+                <div className="d-flex mt-2">
+                    <div className={clsx("col fs-5", styles.num)}>SL: {data.quantity}</div>
                     <div className={clsx("col-md-auto text-danger", styles.price)}>{(data.price * data.quantity).toLocaleString('en-US')} đ</div>
                 </div>
             </div>

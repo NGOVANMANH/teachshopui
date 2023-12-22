@@ -108,6 +108,16 @@ const Header = () => {
         window.location.reload();
     }
 
+    const handleCheckOut = () => {
+        if (user.auth) {
+            // thanh toans luon voi thong tin cua user
+        }
+        else {
+            alert("Kéo xuống dưới, vui lòng nhập chính thông tin vào các trường!");
+            navigate("/cart");
+        }
+    }
+
     return (
         <div className={clsx("Header", styles.Header, "position-sticky top-0")}>
             <div className={clsx("Header-1", "bg-main")}>
@@ -131,22 +141,22 @@ const Header = () => {
                         <div className={clsx("col-md-auto", styles.centerY)}>
                             <div className="row">
                                 <div className={clsx("col", styles.socialMedia)}>
-                                    <a href="null" target='_blank'>Shopee</a>
+                                    <a href="https://shopee.vn/">Shopee</a>
                                 </div>
                                 <div className={clsx("col", styles.socialMedia)}>
-                                    <a href="null" target='_blank'>Lazada</a>
+                                    <a href="https://www.lazada.vn/">Lazada</a>
                                 </div>
                                 <div className={clsx("col", styles.socialMedia)}>
-                                    <a href="null" target='_blank'>Instagram</a>
+                                    <a href="https://www.instagram.com/">Instagram</a>
                                 </div>
                                 <div className={clsx("col", styles.socialMedia)}>
-                                    <a href="null" target='_blank'>Tiktok</a>
+                                    <a href="https://www.tiktok.com/">Tiktok</a>
                                 </div>
                                 <div className={clsx("col", styles.socialMedia)}>
-                                    <a href="null" target='_blank'>Youtube</a>
+                                    <a href="https://www.youtube.com/">Youtube</a>
                                 </div>
                                 <div className={clsx("col", styles.socialMedia)}>
-                                    <a href="null" target='_blank'>Facebook</a>
+                                    <a href="https://www.facebook.com/">Facebook</a>
                                 </div>
                             </div>
                         </div>
@@ -268,7 +278,9 @@ const Header = () => {
                                         <div className="mb-5"></div>
                                         <div className="mb-5"></div>
                                         <div className="my-shadow d-flex position-absolute bottom-0 w-100 rounded p-2">
-                                            <Button className={clsx(styles.cart_hover_button)}>
+                                            <Button className={clsx(styles.cart_hover_button)}
+                                                onClick={handleCheckOut}
+                                            >
                                                 Thanh toán ngay
                                                 {
                                                     cart.length > 0 && <>{` (${cart.length}) sản phẩm`}</>
