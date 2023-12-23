@@ -5,7 +5,7 @@ import { getAllProduct } from '../services/productServices';
 import getAddress from '../services/addressServices';
 import { NOT_FOUND, SUCCESS_RESPONSE } from '../services/constants';
 import { checkToken } from "../services/userServices";
-import { getCart, addCart, updateProductQuantity, deleteProduct } from '../services/cartServices'
+import { getCart, addCart, updateProductQuantity, deleteProduct, deleteCart } from '../services/cartServices'
 
 const Provider = ({ children }) => {
 
@@ -169,8 +169,19 @@ const Provider = ({ children }) => {
         }
     }
 
+    const emptyCart = () => {
+        const cartAfter = [];
+        if (user.auth === false) {
+            localStorage.setItem("cart", JSON.stringify(cartAfter));
+        }
+        else {
+            deleteCart();
+        }
+        setCart(cartAfter);
+    }
+
     return (
-        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, address }}>
+        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, emptyCart, address }}>
             {children}
         </Context.Provider>
     );

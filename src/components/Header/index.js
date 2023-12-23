@@ -109,12 +109,12 @@ const Header = () => {
     }
 
     const handleCheckOut = () => {
-        if (user.auth) {
-            navigate("/checkout");
+        if (cart.length > 0) {
+            navigate("/cart");
+            alert("Kéo xuống dưới, vui lòng nhập chính thông tin vào các trường!");
         }
         else {
-            alert("Kéo xuống dưới, vui lòng nhập chính thông tin vào các trường!");
-            navigate("/cart");
+            alert("Giỏ hàng rỗng!")
         }
     }
 

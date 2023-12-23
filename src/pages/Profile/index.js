@@ -8,7 +8,9 @@ import styles from './Profile.module.scss';
 import clsx from 'clsx';
 import { useContextData } from '../../hooks';
 import { updateInfor, updatePassword } from '../../services/userServices';
+import { getOrders } from '../../services/orderServices';
 import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
+import { Order } from '../../components';
 
 const Profile = () => {
 
@@ -24,6 +26,10 @@ const Profile = () => {
 
     const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
 
+    const [isLoadingOrders, setIsLoadingOrders] = useState(false);
+
+    const [orders, setOrders] = useState([]);
+
     const navigate = useNavigate();
 
     const { activeKey } = useParams();
@@ -32,6 +38,18 @@ const Profile = () => {
         setSelectedButton(+activeKey);
     }, [activeKey])
 
+    useEffect(() => {
+        const fetchOrders = async () => {
+            setIsLoadingOrders(true);
+            const res = await getOrders();
+            if (res !== NOT_FOUND) {
+                setOrders(res.orders);
+            }
+            setIsLoadingOrders(false);
+        }
+
+        fetchOrders();
+    }, [])
 
     const formikUpdatePassword = useFormik({
         initialValues: {
@@ -181,9 +199,17 @@ const Profile = () => {
                     {selectedButton === 0 &&
                         <>
                             <h3 className={clsx(styles.account_right_title)}>Danh sách đơn hàng</h3>
-                            <div className={clsx(styles.account_right_content)}>
-                                Bạn chưa mua đơn hàng nào
-                            </div>
+                            {
+                                isLoadingOrders ?
+                                    <Spinner /> :
+                                    orders.length > 0 ?
+                                        <>
+                                            {orders.map(item => <Order key={item.id} data={item} />)}
+                                        </> :
+                                        <div className={clsx(styles.account_right_content)}>
+                                            Bạn chưa mua đơn hàng nào
+                                        </div>
+                            }
                         </>
                     }
                     {selectedButton === 1 &&

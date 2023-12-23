@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
-import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable } from "../../components";
+import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable, Comments } from "../../components";
 import styles from './Product.module.scss';
 import { useContextData } from "../../hooks";
 import { getColorsAndImages } from "../../services/productServices";
-import Comments from "../../components/Comments";
 import { NOT_FOUND } from "../../services/constants";
 
 const ProductDetails = () => {
@@ -70,7 +69,7 @@ const ProductDetails = () => {
         addToCart({
             ...thisProduct,
             color: colorPicked,
-            image: productResponse.color[colorPicked].thumbnail,
+            image: productResponse.color[colorPicked].thumbnail[0],
         })
     }
 

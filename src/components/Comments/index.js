@@ -8,7 +8,7 @@ const Comments = () => {
     return (
         <div>
             <div className={clsx(styles.review_wrapper, "row")}>
-                <textarea name="myReviews" id="myReviews" rows="6"
+                <textarea name="myReviews" id="myReviews" rows="3"
                     className="col form-control"
                     placeholder="Đánh giá của bạn..."
                 >

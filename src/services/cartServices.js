@@ -62,3 +62,17 @@ export const deleteProduct = async (product) => {
         }
     }
 }
+
+export const deleteCart = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        try {
+            const response = await axios.delete('/api/cart/deleteAll.php', {
+                headers: { Authorization: token }
+            })
+            return response.data;
+        } catch (error) {
+            return NOT_FOUND;
+        }
+    }
+}

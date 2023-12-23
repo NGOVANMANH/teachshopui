@@ -12,4 +12,5 @@ export { default as CategoryBlock } from './CategoryBlock';
 export { default as CartItem } from './CartItem';
 export { default as ProductParameterTable } from './ProductParameterTable';
 export { default as CartHover } from './CartHover';
-export { default as Comment } from './Comments';
+export { default as Comments } from './Comments';
+export { default as Order } from './Order';

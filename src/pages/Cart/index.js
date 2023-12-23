@@ -2,24 +2,28 @@ import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { FaMapMarkedAlt, FaCreditCard } from "react-icons/fa";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from "react";
 
 import { CartItem, HorizontalLine } from "../../components";
 import styles from './Cart.module.scss';
-import { useContextData } from "../../hooks";
+import { useContextData, useDebounce } from "../../hooks";
 import { getShippingFee } from '../../services/shippingServices'
+import { getDiscount } from "../../services/discountService";
+import { addOrder } from "../../services/orderServices";
 import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
 
 const Cart = () => {
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         document.title = "Cart - Techshop";
     }, [])
 
-    const { cart, setCart, address, user } = useContextData();
+    const { cart, address, user, emptyCart } = useContextData();
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -30,6 +34,9 @@ const Cart = () => {
     const [gettingFee, setGettingFee] = useState(false);
     const [isGetFeeSuccess, setIsGetFeeSuccess] = useState(true);
     const [isGettedFee, setIsGettedFee] = useState(false);
+    const [discountCode, setDiscountCode] = useState("");
+    const [discountValue, setDiscountValue] = useState(0);
+    const [isOrdering, setIsOrdering] = useState(false);
 
 
     useEffect(() => {
@@ -55,11 +62,9 @@ const Cart = () => {
             address: user.auth ? user.userInfor.address : '',
             note: '',
             paymentMethod: '',
-            discount: '',
         },
         onSubmit: values => {
-            alert("submit")
-            console.log(values)
+            handleOrder(values);
         },
         validationSchema: Yup.object({
             name: Yup.string().min(3, 'Quá ngắn!').max(50, 'Quá dài!').required('Vui lòng nhập tên!'),
@@ -70,7 +75,6 @@ const Cart = () => {
             ward: Yup.string().required('Vui lòng chọn Xã, Phường!'),
             address: Yup.string().required('Vui lòng nhập địa chỉ!'),
             paymentMethod: Yup.string().required('Vui lòng chọn phương thức thanh toán!'),
-            discount: Yup.string(),
         })
     });
 
@@ -100,11 +104,88 @@ const Cart = () => {
         }
     }, [formik.values, isGettedFee])
 
+    const debouncedValue = useDebounce(discountCode, 500);
+
+    useEffect(() => {
+        if (!debouncedValue.trim()) {
+            return;
+        }
+
+        const total = [...cart].reduce((total, item) => total + item.price * item.quantity, 0);
+
+        const fetchDiscount = async () => {
+            const response = await getDiscount(debouncedValue, total);
+            if (response !== NOT_FOUND) {
+                if (response.status === SUCCESS_RESPONSE) {
+                    setDiscountValue(response.data.discount_value);
+                }
+                else setDiscountValue(0);
+            }
+        }
+
+        fetchDiscount();
+
+    }, [debouncedValue, cart]);
 
     const handleDeleteCart = () => {
-        setCart([]);
+        if (cart.length > 0) {
+            emptyCart();
+        }
     }
 
+    const handleOrder = (formValues) => {
+        const cartProducts = [];
+
+        [...cart].forEach(item => {
+            cartProducts.push({
+                id: item.id,
+                color: item.color,
+                quantity: item.quantity,
+                price: item.price,
+            });
+        });
+
+        const data = {
+            infor: {
+                email: formValues.email,
+                name: formValues.name,
+                address: formValues.address,
+                ward: formValues.ward,
+                district: formValues.district,
+                city: formValues.city,
+                phone: formValues.phoneNumber,
+                shipping_fee: shippingFee,
+                discount_code: discountValue === 0 ? null : discountCode,
+                total_price: [...cart].reduce((total, item) => total + item.price * item.quantity, 0),
+                note: formValues.note,
+                delivery_type: "Standard",
+                payment_type: formValues.paymentMethod
+            },
+            product: cartProducts
+        }
+
+        const fetchAddOrder = async () => {
+            setIsOrdering(true);
+            const res = await addOrder(data);
+            if (res !== NOT_FOUND) {
+                if (res.status === SUCCESS_RESPONSE) {
+                    emptyCart();
+                    alert("Order thành công!");
+                    if (formik.values.paymentMethod === "tranfer") {
+                        navigate("/checkout");
+                    }
+                    else {
+                        navigate("/profile/0");
+                    }
+                }
+                else alert(res.message);
+            }
+            else alert("Lỗi!");
+            setIsOrdering(false);
+        }
+
+        fetchAddOrder();
+    }
     return (
         <>
             <Container className="mt-3 mb-3 bg-white rounded">
@@ -325,8 +406,7 @@ const Cart = () => {
                                         type="text"
                                         name="discount"
                                         placeholder="Mã giảm giá..."
-                                        onChange={formik.handleChange}
-                                        value={formik.values.discount}
+                                        onChange={(e) => setDiscountCode(e.target.value.trim())}
                                     />
                                 </Row>
 
@@ -361,11 +441,11 @@ const Cart = () => {
                                                         </td>
                                                     </tr>
                                                     {
-                                                        formik.values.discount.length > 0 &&
+                                                        discountValue !== 0 &&
                                                         <tr>
                                                             <th><span className="text-secondary">Giảm giá: </span></th>
                                                             <td>
-                                                                <span className="text-danger fs-2">{(0).toLocaleString('en-US')} đ</span>
+                                                                <span className="text-danger fs-2">{(discountValue).toLocaleString('en-US')} đ</span>
                                                             </td>
                                                         </tr>
                                                     }
@@ -381,8 +461,8 @@ const Cart = () => {
                                         </Col>
                                     </Row>
                                 }
-                                <Button className={clsx(styles.buttonPay)} type="submit">
-                                    Đặt mua ngay
+                                <Button className={clsx(styles.buttonPay)} type="submit" disabled={isOrdering}>
+                                    {isOrdering ? <Spinner /> : "Đặt mua ngay"}
                                 </Button>
                             </Container>
                         </Col>
