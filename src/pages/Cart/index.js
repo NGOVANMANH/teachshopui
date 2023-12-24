@@ -23,7 +23,7 @@ const Cart = () => {
         document.title = "Cart - Techshop";
     }, [])
 
-    const { cart, address, user, emptyCart } = useContextData();
+    const { cart, address, user, emptyCart, setFee, setDiscount } = useContextData();
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -91,10 +91,13 @@ const Cart = () => {
                 if (response !== NOT_FOUND) {
                     if (response.status === SUCCESS_RESPONSE) {
                         setShippingFee(response.data.total_fee);
+                        setFee(response.data.total_fee);
                         setIsGetFeeSuccess(true);
                     }
                     else {
                         setIsGetFeeSuccess(false);
+                        setShippingFee(0);
+                        setFee(0);
                     }
                 }
                 setGettingFee(false);
@@ -102,7 +105,7 @@ const Cart = () => {
             fetchShippingFee();
             setIsGettedFee(true);
         }
-    }, [formik.values, isGettedFee])
+    }, [formik.values, isGettedFee, setFee])
 
     const debouncedValue = useDebounce(discountCode, 500);
 
@@ -118,14 +121,18 @@ const Cart = () => {
             if (response !== NOT_FOUND) {
                 if (response.status === SUCCESS_RESPONSE) {
                     setDiscountValue(response.data.discount_value);
+                    setDiscount(response.data.discount_value);
                 }
-                else setDiscountValue(0);
+                else {
+                    setDiscountValue(0);
+                    setDiscount(0);
+                }
             }
         }
 
         fetchDiscount();
 
-    }, [debouncedValue, cart]);
+    }, [debouncedValue, cart, setDiscount]);
 
     const handleDeleteCart = () => {
         if (cart.length > 0) {
@@ -156,7 +163,7 @@ const Cart = () => {
                 phone: formValues.phoneNumber,
                 shipping_fee: shippingFee,
                 discount_code: discountValue === 0 ? null : discountCode,
-                total_price: [...cart].reduce((total, item) => total + item.price * item.quantity, 0),
+                total_price: [...cart].reduce((total, item) => total + item.price * item.quantity, 0) + shippingFee - discountValue,
                 note: formValues.note,
                 delivery_type: "Standard",
                 payment_type: formValues.paymentMethod
@@ -167,20 +174,20 @@ const Cart = () => {
         const fetchAddOrder = async () => {
             setIsOrdering(true);
             const res = await addOrder(data);
-            if (res !== NOT_FOUND) {
-                if (res.status === SUCCESS_RESPONSE) {
-                    emptyCart();
+            if (res && res !== NOT_FOUND) {
+                if (res.status && res.status === SUCCESS_RESPONSE) {
                     alert("Order thành công!");
                     if (formik.values.paymentMethod === "tranfer") {
                         navigate("/checkout");
                     }
                     else {
+                        emptyCart();
                         navigate("/profile/0");
                     }
                 }
                 else alert(res.message);
             }
-            else alert("Lỗi!");
+            else alert("Lỗi! Không thể thêm order! Vui tạo tài khoản (đăng nhập) để tiếp tục");
             setIsOrdering(false);
         }
 
@@ -452,7 +459,7 @@ const Cart = () => {
                                                     <tr>
                                                         <th><span className="text-secondary">Tổng tiền: </span></th>
                                                         <td>
-                                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0) + shippingFee).toLocaleString('en-US')} đ</span>
+                                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0) + shippingFee - discountValue).toLocaleString('en-US')} đ</span>
                                                         </td>
                                                     </tr>
                                                 </tbody>

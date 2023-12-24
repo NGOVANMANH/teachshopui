@@ -14,7 +14,7 @@ const Page404 = () => {
                             <span className="inner-detail">
                                 We can not find the page you're looking for.
                                 <br />
-                                <Link to="/" className="btn btn-success mtl"><i className="fa fa-home"></i>&nbsp;
+                                <Link to="/" className="btn btn-success mtl" style={{ fontSize: "1.6rem" }}><i className="fa fa-home"></i>&nbsp;
                                     Return home
                                 </Link>
                             </span>

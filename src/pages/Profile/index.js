@@ -203,9 +203,21 @@ const Profile = () => {
                                 isLoadingOrders ?
                                     <Spinner /> :
                                     orders.length > 0 ?
-                                        <>
-                                            {orders.map(item => <Order key={item.id} data={item} />)}
-                                        </> :
+                                        <table className="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Người nhận</th>
+                                                    <th>Địa chỉ nhận hàng</th>
+                                                    <th>Ngày đặt hàng</th>
+                                                    <th>Phương thức thanh toán</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Tổng tiền</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {orders.map(item => <Order key={item.id} data={item} />)}
+                                            </tbody>
+                                        </table> :
                                         <div className={clsx(styles.account_right_content)}>
                                             Bạn chưa mua đơn hàng nào
                                         </div>

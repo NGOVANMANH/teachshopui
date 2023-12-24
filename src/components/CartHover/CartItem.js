@@ -6,7 +6,7 @@ import styles from './CartHover.module.scss';
 
 const CartItem = ({ data }) => {
     return (
-        <Link to={`/product/${data.id}`} className={clsx("row p-2", styles.cart_item)}>
+        <Link to={`/product/${data.id}/${data.color}`} className={clsx("row p-2", styles.cart_item)}>
             <div className="col-md-auto">
                 <Image
                     rounded

@@ -1,0 +1,30 @@
+.fixed_box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.53) !important;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .wrapper {
+        border-radius: 1rem;
+        padding: 1rem;
+        background-color: white;
+        width: 50%;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+.order_row {
+    user-select: none;
+}
+
+.cursor_poiter {
+    cursor: pointer;
+}

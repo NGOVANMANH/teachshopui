@@ -11,7 +11,7 @@ import { NOT_FOUND } from "../../services/constants";
 
 const ProductDetails = () => {
 
-    const { id } = useParams();
+    const { id, color } = useParams();
 
     const { products, addToCart } = useContextData();
 
@@ -29,11 +29,11 @@ const ProductDetails = () => {
 
     const [isLoadingPResponse, setIsLoadingPResponse] = useState(false);
 
-    const [keyCarousel, setKeyCarousel] = useState(0);
+    const [carouselKey, setCarouselKey] = useState(0);
 
     useEffect(() => {
-        setKeyCarousel((prevKey) => prevKey + 1);
-    }, [productImages]);
+        setCarouselKey((prev) => prev + 1);
+    }, [productImages])
 
     useEffect(() => {
         if (products && products.length > 0) {
@@ -54,15 +54,23 @@ const ProductDetails = () => {
             if (response !== NOT_FOUND) {
                 setProductResponse(response);
                 setProductColors(Object.keys(response.color));
-                setColorPicked(Object.keys(response.color)[0]);
-                setProductImages(response.color[Object.keys(response.color)[0]].images);
+
+                let _color = "";
+
+                if (color) {
+                    _color = color;
+                } else {
+                    _color = Object.keys(response.color)[0];
+                }
+                setColorPicked(_color);
+                setProductImages(response.color[_color].images);
             }
             else alert("Lỗi mạng!");
             setIsLoadingPResponse(false);
         }
 
         fetchColorsAndImages();
-    }, [id])
+    }, [id, color])
 
     const handleAddToCart = () => {
         if (isLoadingPResponse) return;
@@ -86,7 +94,7 @@ const ProductDetails = () => {
                     <Col md={5}>
                         {
                             productImages && productImages.length > 0 ?
-                                <Carousel key={keyCarousel} style={{ height: "100%" }} interval={null} className="d-flex align-items-center">
+                                <Carousel key={carouselKey} style={{ height: "100%" }} interval={null} className="d-flex align-items-center">
                                     {
                                         productImages.map((item, index) => (
                                             <Carousel.Item key={index}>

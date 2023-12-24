@@ -22,6 +22,12 @@ const Provider = ({ children }) => {
 
     const [address, setAddress] = useState([]);
 
+    const [total, setTotal] = useState(0);
+
+    const [discount, setDiscount] = useState(0);
+
+    const [fee, setFee] = useState(0);
+
     // Fetch Products
     useEffect(() => {
         const fetchApi = async () => {
@@ -180,8 +186,13 @@ const Provider = ({ children }) => {
         setCart(cartAfter);
     }
 
+    useEffect(() => {
+        const _total = [...cart].reduce((total, item) => total + item.quantity * item.price, 0);
+        setTotal(_total);
+    }, [cart])
+
     return (
-        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, emptyCart, address }}>
+        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, emptyCart, address, total, fee, discount, setFee, setDiscount }}>
             {children}
         </Context.Provider>
     );
