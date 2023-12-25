@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import { useContextData } from "../../hooks";
 import CartItem from "../../components/CartHover/CartItem";
 
 
 const Checkout = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const { cart, total, fee, discount } = useContextData();
 
     return (

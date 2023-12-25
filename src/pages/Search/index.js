@@ -8,6 +8,10 @@ import { HorizontalLine, ProductCard } from '../../components';
 const SearchResults = () => {
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+    useEffect(() => {
         document.title = "Search - Techshop";
     }, [])
 

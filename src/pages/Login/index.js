@@ -12,6 +12,10 @@ import { useContextData } from '../../hooks';
 const Login = () => {
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+    useEffect(() => {
         document.title = "Login - Techshop";
     }, [])
 
@@ -48,7 +52,7 @@ const Login = () => {
                                         auth: true,
                                         userInfor: response.data,
                                     })
-                                    usenavigate("/profile/1");
+                                    usenavigate("/");
                                     window.location.reload();
                                 }
                                 else {

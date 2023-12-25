@@ -14,3 +14,4 @@ export { default as ProductParameterTable } from './ProductParameterTable';
 export { default as CartHover } from './CartHover';
 export { default as Comments } from './Comments';
 export { default as Order } from './Order';
+export { default as Reload } from './Reload';

@@ -1,9 +1,13 @@
-import { Col, Container, Row, Spinner } from 'react-bootstrap';
-import { Category, Slide, ProductCarousel, CategoryBlock, HorizontalLine } from '../../components';
+import { Col, Container, Row } from 'react-bootstrap';
+import { Category, Slide, ProductCarousel, CategoryBlock, HorizontalLine, Reload } from '../../components';
 import { useEffect, useState } from 'react';
 import { useContextData } from '../../hooks';
 
 const Home = () => {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
   useEffect(() => {
     document.title = "Home - Techshop";
@@ -13,7 +17,7 @@ const Home = () => {
   const [cables, setCables] = useState([]);
   const [backupchargers, setBackupchargers] = useState([]);
   const [adapters, setAdapters] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { products } = useContextData();
 
@@ -39,9 +43,7 @@ const Home = () => {
 
   return (isLoading
     ?
-    <div className="d-flex justify-content-center align-items-center" style={{ height: "60vh" }}>
-      <Spinner size="lg" />
-    </div>
+    <Reload />
     :
     <Container className="Home mt-3">
       <Row>

@@ -5,7 +5,7 @@ import clsx from "clsx";
 import styles from './Comment.module.scss';
 import { useState } from "react";
 
-const Comment = ({ children, content }) => {
+const Comment = ({ children, content, time, author }) => {
     const [isShowMore, setIsShowMore] = useState(false);
 
     const handleShowMore = (event) => {
@@ -26,11 +26,11 @@ const Comment = ({ children, content }) => {
             </div>
             <div className={clsx(styles.wrapper_left)}>
                 <div className={clsx(styles.name)}>
-                    Mạnh
+                    {author || "noname"}
                 </div>
                 <div className={clsx(styles.time)}>
                     <FaRegClock />
-                    30/10/2003 19:01
+                    {time || "notime"}
                 </div>
                 <div className={clsx(styles.content)}>
                     {content}

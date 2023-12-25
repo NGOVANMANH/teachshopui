@@ -10,6 +10,10 @@ import { Spinner } from "react-bootstrap";
 const Forgot = () => {
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+    useEffect(() => {
         document.title = "Quên mật khẩu";
     }, [])
 

@@ -10,20 +10,11 @@ import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
 import { signup, checkEmail, checkKeyEmail } from '../../services/userServices';
 import styles from './Signup.module.scss';
 
-// {
-//     "email": "vanmanh0888@gmail.com",
-//     "name": "Ngô Văn Mạnh",
-//     "password": "123123123",
-//     "phone": "+84705288268",
-//     "gender": "Nam",
-//     "birthday": "29-11-2023",
-//     "address": "Đội 1 an thiết",
-//     "ward": "Linh Trung",
-//     "district": "Huyện Văn Chấn",
-//     "city": "Tỉnh Yên Bái"
-//   }
-
 const Signup = () => {
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
 
     const navigate = useNavigate();
 
@@ -83,24 +74,31 @@ const Signup = () => {
 
     useEffect(() => {
         if (userInfor && Object.keys(userInfor).length > 0) {
-            if (validateEmail === true && key.length > 0) {
-                setIsLoading(true);
-                const fetchCheckKey = async () => {
-                    const res = await checkKeyEmail(+key);
-                    if (res !== NOT_FOUND && res.status === SUCCESS_RESPONSE) {
-                        setCheckKey(true);
-                    }
-                    else {
-                        alert(res.message)
-                    }
-                    setIsLoading(false);
-                }
+            if (validateEmail === true) {
+                if (checkKey === true) {
 
-                fetchCheckKey();
+                }
             }
         }
-    }, [userInfor, validateEmail, key])
+    }, [userInfor, validateEmail, checkKey])
 
+    const handleSendKey = () => {
+        const fetchCheckKey = async () => {
+            setIsLoading(true);
+            const res = await checkKeyEmail(+key);
+            if (res !== NOT_FOUND && res.status === SUCCESS_RESPONSE) {
+                setCheckKey(true);
+            }
+            else {
+                alert(res.message)
+            }
+            setIsLoading(false);
+        }
+
+        if (validateEmail) {
+            fetchCheckKey();
+        }
+    }
 
     const { Formik } = formik;
 
@@ -139,7 +137,7 @@ const Signup = () => {
                                 </td>
                             </tr>
                             <tr>
-                                <td><Button variant='success' size='lg'>Gửi</Button></td>
+                                <td><Button variant='success' size='lg' onClick={handleSendKey}>{isLoading ? <Spinner /> : "Xác nhận"}</Button></td>
                             </tr>
                         </tbody>
                     </Table>

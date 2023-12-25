@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
 
-import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable, Comments } from "../../components";
+import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable, Comments, Reload } from "../../components";
 import styles from './Product.module.scss';
 import { useContextData } from "../../hooks";
 import { getColorsAndImages } from "../../services/productServices";
@@ -12,6 +12,10 @@ import { NOT_FOUND } from "../../services/constants";
 const ProductDetails = () => {
 
     const { id, color } = useParams();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id, color])
 
     const { products, addToCart } = useContextData();
 
@@ -79,6 +83,7 @@ const ProductDetails = () => {
             color: colorPicked,
             image: productResponse.color[colorPicked].thumbnail[0],
         })
+        alert("Đã thêm vào giỏ hàng!")
     }
 
     const handleChosseColor = (event) => {
@@ -89,6 +94,7 @@ const ProductDetails = () => {
 
     return (
         <>
+            {isLoadingPResponse && <Reload />}
             <Container className="mt-3 mb-3 bg-white p-3 rounded my-shadow">
                 <Row style={{ minHeight: "53rem" }}>
                     <Col md={5}>
@@ -170,9 +176,7 @@ const ProductDetails = () => {
                 <div className="col-md-8">
                     <Col className="bg-white rounded my-shadow p-3" style={{ marginRight: "1rem" }}>
                         <div className={clsx(styles.bottom_title)}>Đánh giá</div>
-                        <Comments>
-
-                        </Comments>
+                        <Comments data={+id} />
                     </Col>
                 </div>
                 <div className="col">

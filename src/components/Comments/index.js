@@ -1,38 +1,85 @@
 import { LuSendHorizonal } from "react-icons/lu";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 
 import styles from './Comment.module.scss';
 import Comment from "./Comment";
+import { getComments, addComment } from "../../services/commentServices";
+import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
+import { Spinner } from "react-bootstrap";
 
-const Comments = () => {
+const Comments = ({ data }) => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [sendingComment, setSendingComment] = useState(false);
+    const [content, setContent] = useState('');
+
+    const fetchComments = async (productId) => {
+        setIsLoading(true);
+        const res = await getComments(productId);
+        if (res !== NOT_FOUND) {
+            if (res.review) {
+                setComments(res.review)
+            }
+            else setComments([]);
+        }
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        fetchComments(data);
+    }, [data])
+
+    const handleComment = async () => {
+        if (!content.trim()) {
+            return
+        }
+        setSendingComment(true);
+        const res = await addComment(data, content.trim(), 5);
+        if (res) {
+            if (res !== NOT_FOUND) {
+                fetchComments(data);
+                if (res.status !== SUCCESS_RESPONSE) {
+                    alert(res.message);
+                }
+            }
+            setSendingComment(false);
+            setContent('');
+        }
+    }
+
     return (
         <div>
             <div className={clsx(styles.review_wrapper, "row")}>
                 <textarea name="myReviews" id="myReviews" rows="3"
                     className="col form-control"
                     placeholder="Đánh giá của bạn..."
+                    spellCheck={false}
+                    onChange={e => setContent(e.target.value)}
+                    value={content}
+                    onKeyDown={e => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            handleComment();
+                        }
+                    }}
                 >
-
                 </textarea>
-                <button className="btn col-md-auto"><LuSendHorizonal /></button>
+                <button className="btn col-md-auto" onClick={handleComment}>{sendingComment ? <Spinner /> : <LuSendHorizonal />}</button>
             </div>
-            <Comment content={"Hello ae "}>
-                <Comment content={"Hello ccc"}></Comment>
-            </Comment>
-            <Comment content={"Hello ae "}>
-                <Comment content={"Hello ccc"}>
-                    <Comment content={"DMM"}>
-                        <Comment content={"DMM"}>
-                            <Comment content={"DMM"}>
-                                <Comment content={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, iste dolorem? Explicabo non, possimus neque at similique autem nobis qui accusamus repellat, ab unde voluptas quo ratione porro vero libero."}></Comment>
+            {
+                isLoading ? <Spinner /> :
+                    comments && comments.length > 0 ?
+                        comments.map(comment => (
+                            <Comment key={`comment` + comment.id} content={comment.content} time={comment.created_at} author={comment.name}>
+                                {
+                                    comment.admin_reply && <Comment content={comment.admin_reply} time={comment.updated_at} author={"Admin"} />
+                                }
                             </Comment>
-                        </Comment>
-                    </Comment>
-                </Comment>
-            </Comment>
-            <Comment content={"Hello ae "}>
-                <Comment content={"Hello ccc"}></Comment>
-            </Comment>
+                        )) :
+                        "Không có đánh giá nào cho sản phẩm này"
+            }
         </div>
     );
 }

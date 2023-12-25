@@ -3,6 +3,10 @@ import { useEffect } from "react";
 const News = () => {
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
+    useEffect(() => {
         document.title = "News - Techshop";
     }, [])
 

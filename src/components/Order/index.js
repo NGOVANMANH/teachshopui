@@ -12,9 +12,12 @@ const Order = ({ data }) => {
                 <td>{data.name}</td>
                 <td>{data.address}</td>
                 <td>{data.order_date}</td>
-                <td>{data.payment_type}</td>
-                <td>{data.status}</td>
-                <td>{data.total_price.toLocaleString('en-US')} đ</td>
+                <td className="fw-bolder">{data.payment_type}</td>
+                <td className={clsx("fw-bold", {
+                    "text-success": data.status === "Done",
+                    "text-danger": data.status === "Cancel",
+                })}>{data.status}</td>
+                <td className="fw-bolder">{data.total_price.toLocaleString('en-US')} đ</td>
                 <td>
                     {
                         isShowMore && data.order_detail && data.order_detail.length > 0 &&

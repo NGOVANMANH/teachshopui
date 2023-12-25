@@ -17,6 +17,10 @@ import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
 
 const Cart = () => {
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -145,7 +149,7 @@ const Cart = () => {
 
         [...cart].forEach(item => {
             cartProducts.push({
-                id: item.id,
+                productId: item.id,
                 color: item.color,
                 quantity: item.quantity,
                 price: item.price,
