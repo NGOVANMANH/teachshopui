@@ -6,7 +6,7 @@ import { HiOutlineSpeakerphone, HiMenu } from 'react-icons/hi';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
-import { Button, Dropdown, DropdownButton, Image, Row } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useContextData, useDebounce } from '../../hooks'
@@ -140,47 +140,45 @@ const Header = () => {
         <>
             {
                 screenWidth <= 768 ?
-                    <div className={clsx(styles.HeaderMobileAndIpadMini)}>
+                    <div className={clsx(styles.HeaderMobileAndIpadMini, "my-shadow")}>
                         <div className={clsx("container", styles.wrapper)}>
-                            <Row>
-                                <Image src={logo} alt="logo" roundedCircle onClick={() => navigate("/")} />
-                                <TippyHeadless
-                                    interactive
-                                    content="Search result"
-                                    placement="bottom"
-                                    visible={showResult && searchResult.length > 0}
-                                    render={attrs => (
-                                        <PopperWrapper {...attrs}>
-                                            {searchResult.map(product => (
-                                                <SearchProductItem key={product.id} product={product} />
-                                            ))}
-                                        </PopperWrapper>
-                                    )}
-                                    onClickOutside={handleHideResult}
-                                >
-                                    <div className={clsx(styles.searchBox, "col-sm")}>
-                                        <input type="text" className="form form-control"
-                                            placeholder="Search mọi thứ bạn nhé!"
-                                            onFocus={() => setShowResult(true)}
-                                            onChange={handleChange}
-                                            spellCheck={false}
-                                            value={searchValue}
-                                        />
-                                        <button className="btn btn-secondary"
-                                            onClick={handleClickedSearch}
-                                        >
-                                            <FaSearch />
-                                        </button>
-                                    </div>
-                                </TippyHeadless>
-
-                                <div className={clsx("col-sm-auto d-flex position-relative")}>
-                                    {cart && cart.length > 0 && <div className={clsx("position-absolute", styles.numOfCart)}>{
-                                        cart.reduce((total, item) => total + item.quantity, 0)
-                                    }</div>}
-                                    <AiOutlineShoppingCart className={styles.cartIcon} onClick={() => navigate("/cart")} />
+                            <Image src={logo} alt="logo" roundedCircle onClick={() => navigate("/")} />
+                            <TippyHeadless
+                                interactive
+                                content="Search result"
+                                placement="bottom"
+                                visible={showResult && searchResult.length > 0}
+                                render={attrs => (
+                                    <PopperWrapper {...attrs}>
+                                        {searchResult.map(product => (
+                                            <SearchProductItem key={product.id} product={product} />
+                                        ))}
+                                    </PopperWrapper>
+                                )}
+                                onClickOutside={handleHideResult}
+                            >
+                                <div className={clsx(styles.searchBox)}>
+                                    <input type="text" className="form form-control"
+                                        placeholder="Search mọi thứ bạn nhé!"
+                                        onFocus={() => setShowResult(true)}
+                                        onChange={handleChange}
+                                        spellCheck={false}
+                                        value={searchValue}
+                                    />
+                                    <button className="btn btn-secondary"
+                                        onClick={handleClickedSearch}
+                                    >
+                                        <FaSearch />
+                                    </button>
                                 </div>
-                            </Row>
+                            </TippyHeadless>
+
+                            <div className={clsx("d-flex position-relative", styles.cartWrapper)}>
+                                {cart && cart.length > 0 && <div className={clsx("position-absolute", styles.numOfCart)}>{
+                                    cart.reduce((total, item) => total + item.quantity, 0)
+                                }</div>}
+                                <AiOutlineShoppingCart className={styles.cartIcon} onClick={() => navigate("/cart")} />
+                            </div>
                         </div>
                     </div> :
                     <div className={clsx("Header", styles.Header, "position-sticky top-0")}>

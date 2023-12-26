@@ -250,6 +250,10 @@
     color: white;
 
     .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
 
         img {
             padding: 0;
@@ -272,10 +276,14 @@
             font-size: 1.6rem;
         }
 
-        .cartIcon {
-            font-size: 5rem;
-            align-self: center;
-            cursor: pointer;
+        .cartWrapper {
+            width: auto;
+
+            .cartIcon {
+                font-size: 5rem;
+                align-self: center;
+                cursor: pointer;
+            }
         }
 
         .numOfCart {
