@@ -223,3 +223,73 @@
         opacity: 0.9;
     }
 }
+
+@media only screen and (max-width: 1200px) {
+    .socialMedia {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .helpCenter {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .Header {
+        display: none;
+    }
+}
+
+.HeaderMobileAndIpadMini {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--primary);
+    color: white;
+
+    .wrapper {
+
+        img {
+            padding: 0;
+            width: 5rem;
+            height: 5rem;
+            margin: 0.5rem;
+            cursor: pointer;
+        }
+
+        .searchBox {
+            display: flex;
+            padding: 1rem;
+
+            input {
+                font-size: 1.6rem;
+            }
+        }
+
+        svg {
+            font-size: 1.6rem;
+        }
+
+        .cartIcon {
+            font-size: 5rem;
+            align-self: center;
+            cursor: pointer;
+        }
+
+        .numOfCart {
+            right: 0;
+            font-size: 1.7rem;
+            font-weight: 700;
+            border: transparent;
+            width: 2.5rem;
+            height: 2.5rem;
+            text-align: center;
+            border-radius: 50%;
+            background-color: orange;
+            color: black;
+            transform: translateX(20%);
+        }
+    }
+}

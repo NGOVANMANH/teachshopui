@@ -8,7 +8,7 @@ const SearchProductItem = ({ product }) => {
         <Link to={`/product/${product.id}`}>
             <Container className={clsx("mt-1 mb-1", styles.container)}>
                 <Row>
-                    <Col md='auto'>
+                    <Col sm='auto'>
                         <img className={clsx(styles.img)} src={product && `data:image/jpeg;base64, ${product.image}`} alt={product && product.name} />
                     </Col>
                     <Col>

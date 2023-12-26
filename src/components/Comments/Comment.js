@@ -15,12 +15,12 @@ const Comment = ({ children, content, time, author }) => {
 
     return (
         <div className={clsx(styles.wrapper)}>
-            <MdExpandMore className={clsx(styles.button_more, {
+            {children && <MdExpandMore className={clsx(styles.button_more, {
                 [styles.active]: isShowMore,
                 [styles["rotate_-90"]]: isShowMore,
                 [styles["rotate-90deg"]]: !isShowMore,
                 [styles["rotate_90"]]: !isShowMore,
-            })} onClick={handleShowMore} />
+            })} onClick={handleShowMore} />}
             <div className={clsx(styles.avatar)}>
                 <FaRegUserCircle />
             </div>
