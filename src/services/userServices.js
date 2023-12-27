@@ -1,9 +1,12 @@
 import axios from "./customizeAxios";
 import { NOT_FOUND } from "./constants";
+import endPoints from "./endPoints";
+
+const userEndPoints = endPoints.user;
 
 export const login = async (userInfor) => {
     try {
-        const response = await axios.post(`/api/customer/login.php`, userInfor);
+        const response = await axios.post(userEndPoints.login, userInfor);
         if (response && response.data && response.data) {
             return response.data;
         }
@@ -14,7 +17,7 @@ export const login = async (userInfor) => {
 
 export const signup = async (userInfor) => {
     try {
-        const response = await axios.post(`/api/customer/signup.php`, userInfor);
+        const response = await axios.post(userEndPoints.signup, userInfor);
         if (response && response.data) {
             return response.data;
         }
@@ -25,7 +28,7 @@ export const signup = async (userInfor) => {
 
 export const checkToken = async (token) => {
     try {
-        const respone = await axios.get('/api/customer/read.php', { headers: { Authorization: token } })
+        const respone = await axios.get(userEndPoints.checkToken, { headers: { Authorization: token } })
         return respone.data;
     }
     catch (error) {
@@ -35,7 +38,7 @@ export const checkToken = async (token) => {
 
 export const updateInfor = async (token, infor) => {
     try {
-        const respone = await axios.put('/api/customer/update.php', infor, { headers: { Authorization: token } })
+        const respone = await axios.put(userEndPoints.updateInfor, infor, { headers: { Authorization: token } })
         return respone.data;
     }
     catch (error) {
@@ -45,7 +48,7 @@ export const updateInfor = async (token, infor) => {
 
 export const updatePassword = async (token, oldPass, newPass) => {
     try {
-        const respone = await axios.put('/api/customer/update.php', {
+        const respone = await axios.put(userEndPoints.updatePassword, {
             old_password: oldPass,
             new_password: newPass
         }, { headers: { Authorization: token } })
@@ -58,7 +61,7 @@ export const updatePassword = async (token, oldPass, newPass) => {
 
 export const checkEmail = async (email) => {
     try {
-        const respone = await axios.post('/api/customer/validate_email/send_validate_email.php', { email })
+        const respone = await axios.post(userEndPoints.checkEmail, { email })
         return respone.data;
     }
     catch (error) {
@@ -68,7 +71,7 @@ export const checkEmail = async (email) => {
 
 export const checkKeyEmail = async (key) => {
     try {
-        const respone = await axios.post('/api/customer/validate_email/check_validate_email.php', { key })
+        const respone = await axios.post(userEndPoints.checkKeyEmail, { key })
         return respone.data;
     }
     catch (error) {
@@ -78,7 +81,7 @@ export const checkKeyEmail = async (key) => {
 
 export const resetPassword = async (email) => {
     try {
-        const respone = await axios.post('/api/customer/reset_password/send_password_reset.php', { email })
+        const respone = await axios.post(userEndPoints.resetPassword, { email })
         return respone.data;
     }
     catch (error) {

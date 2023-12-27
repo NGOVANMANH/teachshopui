@@ -9,6 +9,7 @@ import { Spinner } from "react-bootstrap";
 
 const Forgot = () => {
 
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [])

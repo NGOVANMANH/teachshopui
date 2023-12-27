@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://localhost/restful_php_api',
+    baseURL: process.env.REACT_APP_BASE_URL_CS,
+    // baseURL: process.env.REACT_APP_BASE_URL_PHP,
 });
 
 // Add a response interceptor
