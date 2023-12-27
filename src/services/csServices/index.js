@@ -14,8 +14,8 @@ export const endpoints = {
         getDiscount: '/api/discount/validate'
     },
     order: {
-        getOrders: '/api/orders/read',
-        addOrder: '/api/orders/order'
+        getOrders: '/api/order/read',
+        addOrder: '/api/order/order'
     },
     product: {
         getAllProduct: '/api/product/read',
@@ -27,7 +27,7 @@ export const endpoints = {
         getColorsAndImages: '/api/imageDetail/show_by_productid_ver2'
     },
     shipping: {
-        getShippingFee: '/api/orders/shipping_fee',
+        getShippingFee: '/api/order/shipping_fee',
     },
     user: {
         login: '/api/customer/login',
