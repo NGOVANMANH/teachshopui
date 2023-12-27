@@ -1,4 +1,4 @@
-import { Home, Login, Cart, Signup, News, Products, Product, Search, Profile, Forget, Checkout } from '../pages';
+import { Home, Login, Cart, Signup, News, Products, Product, Search, Profile, Forget, Checkout, ResetPassword } from '../pages';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -11,6 +11,7 @@ const publicRoutes = [
     { path: '/products/:category', component: Products },
     { path: '/search/:searchValue', component: Search },
     { path: '/forget', component: Forget },
+    { path: '/forget/reset', component: ResetPassword },
     { path: '/checkout', component: Checkout },
 ];
 const privateRoutes = [

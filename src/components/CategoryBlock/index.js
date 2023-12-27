@@ -26,11 +26,28 @@ const CategoryBlock = ({ children, title, products }) => {
         }
     }, [products])
 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        // Update the screen width when the window is resized
+        const handleResize = () => {
+            setScreenWidth(window.innerWidth);
+        };
+
+        // Add event listener for window resize
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <Container>
             <Row>
                 <Col className={clsx("fs-2 fw-bold")}>{title}</Col>
-                <Col md='auto' className={clsx("d-flex align-items-center")}>
+                {screenWidth >= 1200 && <Col md='auto' className={clsx("d-flex align-items-center")}>
                     {
                         brands.map((brand, index) => (
                             <Link key={index} to={'/#'} style={{ marginLeft: "0.5rem" }}>
@@ -38,7 +55,7 @@ const CategoryBlock = ({ children, title, products }) => {
                             </Link>
                         ))
                     }
-                </Col>
+                </Col>}
             </Row>
             <Row>
                 {children}

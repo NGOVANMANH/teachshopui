@@ -9,3 +9,4 @@ export { default as Search } from './Search';
 export { default as Profile } from './Profile';
 export { default as Forget } from './Forget';
 export { default as Checkout } from './Checkout';
+export { default as ResetPassword } from './ResetPassword';
