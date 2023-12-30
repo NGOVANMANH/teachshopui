@@ -3,12 +3,20 @@ import { Col, Image, Row } from "react-bootstrap";
 const OrderDetail = ({ data }) => {
     return (
         <Row>
-            <Col md={2}>
+            <Col xs={3} sm={3} md={3} lg={2}>
                 <Image thumbnail src={`data:image/jpeg;base64, ${data.image}`} alt="thumnail" />
             </Col>
             <Col>
                 <table className="table">
                     <tbody>
+                        <tr>
+                            <th className="w-25">Tên sản phẩm:</th>
+                            <td>{data.name}</td>
+                        </tr>
+                        <tr>
+                            <th className="w-25">Màu sắc:</th>
+                            <td>{data.color}</td>
+                        </tr>
                         <tr>
                             <th className="w-25">Giá:</th>
                             <td>{data.price.toLocaleString('en-US')} đ</td>

@@ -66,3 +66,39 @@
         margin: 0 0.5rem;
     }
 }
+
+.footerTitleMobile {
+    background: #F4F4F4;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 0.3rem;
+    position: relative;
+
+    &:hover {
+        background: #999;
+    }
+
+    &:active {
+        background: #999;
+    }
+
+    svg {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateX(-50%);
+        transform: translateY(-50%);
+    }
+}
+
+.more_icon {
+    transition: transform 0.3s ease-in-out;
+}
+
+.rotated {
+    transform: rotate(-90deg) !important;
+}
+
+.rotated_90 {
+    transform: rotate(90deg) !important;
+}

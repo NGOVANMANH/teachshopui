@@ -184,6 +184,8 @@ const Provider = ({ children }) => {
             deleteCart();
         }
         setCart(cartAfter);
+        setFee(0);
+        discount(0);
     }
 
     useEffect(() => {

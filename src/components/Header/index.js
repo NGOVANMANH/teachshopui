@@ -58,8 +58,9 @@ const Header = () => {
             if (data === NOT_FOUND) {
                 setSearchResult([]);
             }
-            else
+            else {
                 setSearchResult(data);
+            }
         };
 
         fetchApi();
@@ -79,8 +80,9 @@ const Header = () => {
 
     const handleClickedSearch = () => {
         if (searchValue) {
+            const endcodedKey = encodeURIComponent(searchValue);
             setSearchValue("");
-            navigate(`/search/${searchValue}`);
+            navigate(`/search/${endcodedKey}`);
         }
     }
 
@@ -162,6 +164,7 @@ const Header = () => {
                                         placeholder="Search mọi thứ bạn nhé!"
                                         onFocus={() => setShowResult(true)}
                                         onChange={handleChange}
+                                        onKeyDown={handleKeyDown}
                                         spellCheck={false}
                                         value={searchValue}
                                     />

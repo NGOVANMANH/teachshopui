@@ -32,9 +32,6 @@ const Login = () => {
 
     const usenavigate = useNavigate();
 
-    const toSignup = () => {
-        usenavigate('/signup');
-    }
     return (
         <Container>
             <Formik
@@ -73,8 +70,8 @@ const Login = () => {
             >
                 {({ handleSubmit, handleChange, values, touched, errors }) =>
                     <Row>
-                        <Col>
-                            <Form className='container bg-white mt-3 mb-3 rounded' noValidate onSubmit={handleSubmit}>
+                        <Col sm={12} style={{ padding: "0" }}>
+                            <Form className='bg-white mt-3 mb-3 rounded' noValidate onSubmit={handleSubmit}>
                                 <Row className='justify-content-center h2 pt-4 pb-1'>Đăng nhập</Row>
                                 <Row className='justify-content-center m-2 fs-5'>
                                     <Form.Group as={Col} md="6" controlId="validationEmail" className={clsx(styles.form)}>
@@ -119,7 +116,7 @@ const Login = () => {
                                         >
                                             {isLogining ? <Spinner /> : "Đăng nhập"}
                                         </Button>
-                                        <Link className='m-2' to={"/forget"}>Quên mật khẩu?</Link>
+                                        <Link className='m-2' to={"'/signup'"}>Quên mật khẩu?</Link>
                                     </Col>
                                 </Row>
                             </Form>
@@ -127,19 +124,10 @@ const Login = () => {
 
                         <Col className='container bg-white mt-3 mb-3 rounded'>
                             <Row className='justify-content-center h2 pt-4 pb-1'>Chưa có tài khoản</Row>
-                            <Row className='justify-content-center m-2 fs-5' >
+                            <Row className='justify-content-center m-2 fs-4' >
                                 <Col>
                                     Đăng ký là thành viên để hưởng nhiều lợi ích và đặt mua hàng dễ dàng hơn.
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className='m-2'>
-                                    <Button
-                                        onClick={toSignup} size='lg' type="button" className='bg-main w-content'
-                                        style={{ marginLeft: "1rem" }}
-                                    >
-                                        Đăng kí ngay
-                                    </Button>
+                                    <Link className='m-2 text-success' to={'/signup'}>Đăng kí ngay</Link>
                                 </Col>
                             </Row>
                         </Col>

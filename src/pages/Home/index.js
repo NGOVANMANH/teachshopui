@@ -47,7 +47,7 @@ const Home = () => {
     :
     <Container className="Home mt-3">
       <Row>
-        <Col md={2}>
+        <Col md="auto" lg={2}>
           <Category />
         </Col>
         <Col>

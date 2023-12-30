@@ -132,9 +132,9 @@ const ProductDetails = () => {
                                 {
                                     productColors.length > 0 ?
                                         productColors.map((item, index) =>
-                                            <Col md="auto" key={index}>
+                                            <Col xs="auto" key={index}>
                                                 <Button
-                                                    className={clsx('w-100 fs-3 mb-3 mt-3')}
+                                                    className={clsx('fs-3 mb-3 mt-3')}
                                                     variant="outline-secondary"
                                                     size="lg"
                                                     value={item}
@@ -172,22 +172,20 @@ const ProductDetails = () => {
                     </Col>
                 </Row>
             </Container>
-            <div className="d-flex">
-                <div className="col-md-8">
-                    <Col className="bg-white rounded my-shadow p-3" style={{ marginRight: "1rem" }}>
+            <Container>
+                <Row>
+                    <Col sm={12} md={12} lg={12} xl={8} className="bg-white rounded my-shadow p-3">
                         <div className={clsx(styles.bottom_title)}>Đánh giá</div>
                         <Comments data={+id} />
                     </Col>
-                </div>
-                <div className="col">
-                    <Col className="bg-white rounded my-shadow p-3">
+                    <Col className={clsx("bg-white rounded my-shadow p-3 p-3", styles.reponsive)}>
                         <div className={clsx(styles.bottom_title)}>Thông số kĩ thuật</div>
                         <div className="pt-3">
                             <ProductParameterTable striped borderless productID={+id} />
                         </div>
                     </Col>
-                </div>
-            </div>
+                </Row>
+            </Container>
         </>
     )
 }

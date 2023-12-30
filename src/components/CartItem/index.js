@@ -19,7 +19,7 @@ const CartItem = ({ data }) => {
     return (
         <Container className="bg-white rounded mt-3 mb-3">
             <Row className="fs-4 p-3">
-                <Col md={6} className="d-flex">
+                <Col md={12} lg={6} className="d-flex">
                     <Image className={clsx(styles.thumnail)} src={`data:image/jpeg;base64, ${data.image}`} alt="thumnail" />
                     <div className={clsx.description}>
                         <div className={clsx(styles.title, "fs-4")}>{data.name}</div>

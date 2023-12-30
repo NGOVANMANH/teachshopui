@@ -1,4 +1,4 @@
-import { CardGroup, Col, Container, Row, Spinner, Button } from "react-bootstrap";
+import { Col, Container, Row, Spinner, Button } from "react-bootstrap";
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from "react";
 
@@ -136,12 +136,10 @@ const Products = () => {
                         </Col>
                     </Row>
                     <HorizontalLine className="mt-3 mb-3" />
-                    <Row>
-                        <CardGroup className="justify-content-center">
-                            {
-                                _products.map(product => <ProductCard key={product.id} product={product} />)
-                            }
-                        </CardGroup>
+                    <Row xs={2} sm={3} md={4} lg={5} xl={6} className="g-4">
+                        {
+                            _products.map(product => <Col key={product.id}><ProductCard product={product} /></Col>)
+                        }
                     </Row>
                 </Container>
                 :

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSearchedProduct } from '../../services/productServices';
-import { Col, Row, Container, CardGroup, Spinner, Button } from 'react-bootstrap';
+import { Col, Row, Container, Spinner, Button } from 'react-bootstrap';
 
 import { HorizontalLine, ProductCard } from '../../components';
 
@@ -20,11 +20,12 @@ const SearchResults = () => {
     const [products, setProducts] = useState([]);
     const [isSearching, setIsSearching] = useState(true);
 
-    const searchValue = params.searchValue.toLocaleLowerCase();
+    const searchValue = params.searchValue;
 
     useEffect(() => {
         const fetchApi = async () => {
             setIsSearching(true);
+
             const response = await getSearchedProduct(searchValue);
 
             if (response !== 404) {
@@ -39,6 +40,7 @@ const SearchResults = () => {
         fetchApi();
 
     }, [searchValue])
+
 
     const handleSortName = () => {
         const sortedProducts = [...products].sort((a, b) => a.name.localeCompare(b.name));
@@ -81,7 +83,7 @@ const SearchResults = () => {
                 </Row>
                 <HorizontalLine className="mt-3 mb-3" />
                 <Row>
-                    <CardGroup className="justify-content-center">
+                    <Row xs={2} sm={3} md={4} lg={5} xl={6} className="g-4 justify-content-center">
                         {
                             products && products.length > 0
                                 ?
@@ -91,7 +93,7 @@ const SearchResults = () => {
                                     "Tìm thấy 0 sản phẩm"
                                 </div>
                         }
-                    </CardGroup>
+                    </Row>
                 </Row>
             </Container>
             :

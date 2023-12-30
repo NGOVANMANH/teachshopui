@@ -159,7 +159,7 @@ const Profile = () => {
             {isCheckingToken && <Reload />}
             <div className={clsx(styles.profile, "d-block container bg-white mt-3 mb-3 rounded")}>
                 <div className="row">
-                    <div className={clsx(styles.account_left, "col-md-3")}>
+                    <div className={clsx(styles.account_left, "col-lg-3 col-md-12")}>
                         <div className={clsx(styles.account_left_title)}>
                             Đơn hàng đặt mua
                         </div>

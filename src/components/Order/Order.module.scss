@@ -14,11 +14,52 @@
 
     .wrapper {
         border-radius: 1rem;
-        padding: 1rem;
         background-color: white;
-        width: 50%;
-        max-height: 80vh;
-        overflow-y: auto;
+        position: relative;
+        animation: fadeOut .2s ease-out;
+
+        .products {
+            overflow-y: auto;
+            max-height: 80vh;
+            padding: 1rem;
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translateX(-50%) translateY(50%);
+            background: rgba(0, 0, 0, 0.53);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.2rem;
+            border-radius: 50%;
+        }
+
+        .cancel_button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transform: translateX(-10%) translateY(-20%);
+            background: rgba(0, 0, 0, 0.53);
+            color: white;
+            font-size: 1.6rem;
+            padding: .5rem;
+            cursor: pointer;
+            border-radius: .6rem;
+        }
+    }
+
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
 
@@ -29,4 +70,16 @@
 
 .cursor_poiter {
     cursor: pointer;
+}
+
+@media screen and (min-width: 992px) {
+    .wrapper {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .wrapper {
+        margin: 0 1rem;
+    }
 }

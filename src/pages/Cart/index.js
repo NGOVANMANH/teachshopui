@@ -12,7 +12,7 @@ import styles from './Cart.module.scss';
 import { useContextData, useDebounce } from "../../hooks";
 import { getShippingFee } from '../../services/shippingServices'
 import { getDiscount } from "../../services/discountService";
-import { addOrder } from "../../services/orderServices";
+import { addOrder, addOrderGuest } from "../../services/orderServices";
 import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
 
 const Cart = () => {
@@ -177,7 +177,13 @@ const Cart = () => {
 
         const fetchAddOrder = async () => {
             setIsOrdering(true);
-            const res = await addOrder(data);
+            let res;
+            if (user && user.auth) {
+                res = await addOrder(data);
+            }
+            else if (user) {
+                res = await addOrderGuest(data);
+            }
             if (res && res !== NOT_FOUND) {
                 if (res.status && res.status === SUCCESS_RESPONSE) {
                     alert("Order thành công!");
@@ -186,7 +192,9 @@ const Cart = () => {
                     }
                     else {
                         emptyCart();
-                        navigate("/profile/0");
+                        if (user.auth) {
+                            navigate("/profile/0");
+                        }
                     }
                 }
                 else alert(res.message);
@@ -205,14 +213,13 @@ const Cart = () => {
 
             <Container className="mt-3 mb-3 bg-white rounded">
                 <Row className="p-3 fs-4 fst-nomal">
-                    <Col md="auto">THÔNG TIN GIỎ HÀNG</Col>
-                    <Col></Col>
-                    <Col md="auto"><Link to={"/"} className="d-flex align-items-center"><BiLeftArrowAlt />CHỌN TIẾP SẢN PHẨM KHÁC</Link></Col>
-                    <Col md="auto"><span className={clsx(styles.buttonDelete, "text-danger")} onClick={handleDeleteCart}>XÓA GIỎ HÀNG</span></Col>
+                    <Col>THÔNG TIN GIỎ HÀNG</Col>
+                    <Col xs="auto"><Link to={"/"} className="d-flex align-items-center"><BiLeftArrowAlt />CHỌN TIẾP SẢN PHẨM KHÁC</Link></Col>
+                    <Col xs="auto"><span className={clsx(styles.buttonDelete, "text-danger")} onClick={handleDeleteCart}>XÓA GIỎ HÀNG</span></Col>
                 </Row>
                 <Row><HorizontalLine className="opacity-25" /></Row>
                 <Row className="p-3 fs-4">
-                    <Col md={6}>Sản phẩm</Col>
+                    <Col md={12} lg={6}>Sản phẩm</Col>
                     <Col align="center">Đơn giá</Col>
                     <Col align="center">Số lượng</Col>
                     <Col align="center">Số tiền</Col>
@@ -230,7 +237,7 @@ const Cart = () => {
                 cartItems.length > 0 &&
                 <Container className="mt-3 mb-3 bg-white rounded">
                     <form className="row" onSubmit={formik.handleSubmit}>
-                        <Col className={clsx(styles.customer)}>
+                        <Col sm={12} lg={6} className={clsx(styles.customer)}>
                             <div className={clsx(styles.title, "d-flex align-items-center fs-4")}>
                                 &nbsp;
                                 <FaMapMarkedAlt className="fs-1" />
@@ -370,7 +377,7 @@ const Cart = () => {
                             </Container>
 
                         </Col>
-                        <Col md={5} className={clsx(styles.customer, "position-relative")}>
+                        <Col sm={12} lg={6} className={clsx(styles.customer)}>
                             <div className={clsx(styles.title, "d-flex align-items-center fs-4")}>
                                 &nbsp;
                                 <FaCreditCard className="fs-1" />

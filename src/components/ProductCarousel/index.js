@@ -13,12 +13,24 @@ const ProductCarousel = ({ products, className }) => {
             items: 7
         },
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: { max: 3000, min: 1200 },
             items: 6
         },
+        miniDesktop: {
+            breakpoint: { max: 1200, min: 1024 },
+            items: 5
+        },
         tablet: {
-            breakpoint: { max: 1024, min: 464 },
+            breakpoint: { max: 1024, min: 991 },
             items: 4
+        },
+        miniTablet: {
+            breakpoint: { max: 991, min: 768 },
+            items: 3
+        },
+        superMobile: {
+            breakpoint: { max: 768, min: 464 },
+            items: 3
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },
@@ -37,7 +49,7 @@ const ProductCarousel = ({ products, className }) => {
     const numOfLoadingCard = [1, 2, 3, 4, 5, 6, 7];
 
     return (
-        <Carousel {...carouselOptions} removeArrowOnDeviceType={["tablet", "mobile"]} className={clsx(styles.ProductCarousel, className)}>
+        <Carousel {...carouselOptions} removeArrowOnDeviceType={["tablet", "miniTablet", "superMobile", "mobile"]} className={clsx(styles.ProductCarousel, className)}>
             {
                 products && products.length > 0
                     ?

@@ -15,3 +15,5 @@ export { default as CartHover } from './CartHover';
 export { default as Comments } from './Comments';
 export { default as Order } from './Order';
 export { default as Reload } from './Reload';
+export { default as Toggle } from './Toggle';
+export { default as MobileFooterNavbar } from './MobileFooterNavbar';

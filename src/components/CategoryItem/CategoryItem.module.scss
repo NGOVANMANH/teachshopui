@@ -4,9 +4,17 @@
     height: 5rem;
     border: transparent !important;
     cursor: pointer;
+    padding: 1rem !important;
 
     &:hover {
         background: var(--primary) !important;
         color: white !important;
     }
+}
+
+.text_center {
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+    text-align: center;
 }
