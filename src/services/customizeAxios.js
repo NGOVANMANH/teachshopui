@@ -1,18 +1,20 @@
 import axios from "axios";
 
+const API_INTERFACE = process.env.REACT_APP_API_INTERFACE;
+
+let BASE_URL = process.env.REACT_APP_BASE_URL_PHP;
+
+if (API_INTERFACE === "CS") {
+    BASE_URL = process.env.REACT_APP_BASE_URL_CS;
+}
+
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL_CS,
-    // baseURL: process.env.REACT_APP_BASE_URL_PHP,
+    baseURL: BASE_URL,
 });
 
-// Add a response interceptor
 instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response;
 }, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     return Promise.reject(error);
 });
 

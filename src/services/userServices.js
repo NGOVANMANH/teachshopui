@@ -69,9 +69,9 @@ export const checkEmail = async (email) => {
     }
 }
 
-export const checkKeyEmail = async (key) => {
+export const checkKeyEmail = async (key, email) => {
     try {
-        const respone = await axios.post(userEndPoints.checkKeyEmail, { key })
+        const respone = await axios.post(userEndPoints.checkKeyEmail, { key, email })
         return respone.data;
     }
     catch (error) {

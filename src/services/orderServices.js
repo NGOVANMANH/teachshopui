@@ -36,7 +36,7 @@ export const cancelOrder = async (id) => {
         return;
     }
     try {
-        const response = await axios.put('/api/Order/cancel', {
+        const response = await axios.put(orderEndpoints.cancelOrder, {
             id,
         }, { headers: { Authorization: token } })
         return response.data;
@@ -48,7 +48,7 @@ export const cancelOrder = async (id) => {
 
 export const getOrdersGuest = async () => {
     try {
-        const response = await axios.get('/api/Order/read_guest', {
+        const response = await axios.get(orderEndpoints.getOrdersGuest, {
             id: 0,
             name: "string",
             phone: "string"
@@ -62,7 +62,7 @@ export const getOrdersGuest = async () => {
 
 export const addOrderGuest = async (data) => {
     try {
-        const response = await axios.put('/api/Order/order_guest', {
+        const response = await axios.put(orderEndpoints.addOrderGuest, {
             ...data,
         });
         return response.data;
@@ -73,7 +73,7 @@ export const addOrderGuest = async (data) => {
 
 export const cancelOrderGuest = async (orderID) => {
     try {
-        const response = await axios.put('/api/Order/order_guest', {
+        const response = await axios.put(orderEndpoints.cancelOrderGuest, {
             id: orderID,
         });
         return response.data;

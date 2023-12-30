@@ -7,6 +7,7 @@ import OrderDetail from "./OrderDetail";
 import { cancelOrder } from "../../services/orderServices";
 import { Spinner } from "react-bootstrap";
 import { NOT_FOUND } from "../../services/constants";
+import { toast } from "react-toastify";
 
 const Order = ({ data }) => {
     const [isShowMore, setIsShowMore] = useState(false);
@@ -19,11 +20,11 @@ const Order = ({ data }) => {
             setIsCancelling(true);
             const response = await cancelOrder(data.id);
             if (response !== NOT_FOUND && response.status === 200) {
-                alert("Hủy đơn thành công!")
+                toast.success("Hủy đơn thành công!")
                 setStatus("Cancelled");
             }
             else {
-                alert("Lỗi")
+                toast.error(response.message || "Lỗi")
             }
             setIsCancelling(false);
             setIsShowMore(false);

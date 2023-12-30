@@ -8,6 +8,7 @@ import * as yup from 'yup';
 import styles from '../Signup/Signup.module.scss';
 import { login } from '../../services/userServices';
 import { useContextData } from '../../hooks';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
@@ -53,7 +54,7 @@ const Login = () => {
                                     window.location.reload();
                                 }
                                 else {
-                                    alert(response.message);
+                                    toast.info(response.message);
                                 }
                             }
 

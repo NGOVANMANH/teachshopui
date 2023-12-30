@@ -8,6 +8,7 @@ import { getComments, addComment } from "../../services/commentServices";
 import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
 import { Spinner } from "react-bootstrap";
 import { useContextData } from "../../hooks";
+import { toast } from "react-toastify";
 
 const Comments = ({ data }) => {
 
@@ -53,7 +54,7 @@ const Comments = ({ data }) => {
             }
         }
         else {
-            alert("Vui lòng đăng nhập!")
+            toast.warn("Vui lòng đăng nhập để có thể góp ý");
         }
     }
 

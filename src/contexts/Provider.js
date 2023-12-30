@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Context from "./Context";
+import { toast, ToastContainer } from "react-toastify";
 
 import { getAllProduct } from '../services/productServices';
 import getAddress from '../services/addressServices';
@@ -185,7 +186,7 @@ const Provider = ({ children }) => {
         }
         setCart(cartAfter);
         setFee(0);
-        discount(0);
+        setDiscount(0);
     }
 
     useEffect(() => {
@@ -193,8 +194,36 @@ const Provider = ({ children }) => {
         setTotal(_total);
     }, [cart])
 
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    useEffect(() => {
+        // Hàm xử lý khi trạng thái mạng thay đổi
+        const handleNetworkChange = () => {
+            setIsOnline(navigator.onLine);
+        };
+
+        // Thêm sự kiện lắng nghe sự thay đổi trạng thái mạng
+        window.addEventListener('online', handleNetworkChange);
+        window.addEventListener('offline', handleNetworkChange);
+
+        // Loại bỏ sự kiện khi component unmount
+        return () => {
+            window.removeEventListener('online', handleNetworkChange);
+            window.removeEventListener('offline', handleNetworkChange);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!isOnline) {
+            toast.warn("Bạn đang Offline", {
+                position: toast.POSITION.BOTTOM_LEFT
+            })
+        }
+    }, [isOnline])
+
     return (
         <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, emptyCart, address, total, fee, discount, setFee, setDiscount }}>
+            <ToastContainer position="top-right" />
             {children}
         </Context.Provider>
     );

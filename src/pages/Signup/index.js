@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
 import { signup, checkEmail, checkKeyEmail } from '../../services/userServices';
 import styles from './Signup.module.scss';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
 
@@ -41,11 +42,11 @@ const Signup = () => {
 
                     if (res !== NOT_FOUND) {
                         if (res.status === SUCCESS_RESPONSE) {
-                            alert(res.message);
+                            toast.success("Tạo tài khoản thành công!");
                             navigate("/login");
                         }
                         else {
-                            alert(res.message);
+                            toast.error(res.message || "Lỗi");
                         }
                     }
                 }
@@ -63,7 +64,7 @@ const Signup = () => {
                     setValidateEmail(true);
                 }
                 else {
-                    alert(res.message);
+                    toast.error(res.message || "Lỗi");
                 }
                 setIsLoading(false);
             }
@@ -85,12 +86,12 @@ const Signup = () => {
     const handleSendKey = () => {
         const fetchCheckKey = async () => {
             setIsLoading(true);
-            const res = await checkKeyEmail(+key);
+            const res = await checkKeyEmail(+key, userInfor.email);
             if (res !== NOT_FOUND && res.status === SUCCESS_RESPONSE) {
                 setCheckKey(true);
             }
             else {
-                alert(res.message)
+                toast.error(res.message || "Lỗi")
             }
             setIsLoading(false);
         }

@@ -15,7 +15,11 @@ export const endpoints = {
     },
     order: {
         getOrders: '/api/order/read.php',
-        addOrder: '/api/order/order.php'
+        addOrder: '/api/order/order.php',
+        cancelOrder: '/api/order/cancel.php',
+        getOrdersGuest: '/api/order/read_guest.php',
+        addOrderGuest: '/api/order/order_guest.php',
+        cancelOrderGuest: '/api/order/cancel_guest.php',
     },
     product: {
         getAllProduct: '/api/product/read.php',

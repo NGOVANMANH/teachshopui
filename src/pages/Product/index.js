@@ -2,6 +2,7 @@ import { Col, Container, Row, Button, Carousel, Image, Spinner } from "react-boo
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import clsx from "clsx";
+import { toast } from 'react-toastify';
 
 import { CategoryBlock, HorizontalLine, ProductCarousel, ProductParameterTable, Comments, Reload } from "../../components";
 import styles from './Product.module.scss';
@@ -69,7 +70,7 @@ const ProductDetails = () => {
                 setColorPicked(_color);
                 setProductImages(response.color[_color].images);
             }
-            else alert("Lỗi mạng!");
+            else toast.error("Lỗi mạng!");
             setIsLoadingPResponse(false);
         }
 
@@ -83,7 +84,7 @@ const ProductDetails = () => {
             color: colorPicked,
             image: productResponse.color[colorPicked].thumbnail[0],
         })
-        alert("Đã thêm vào giỏ hàng!")
+        toast.success("Đã thêm vào giỏ hàng!");
     }
 
     const handleChosseColor = (event) => {

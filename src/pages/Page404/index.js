@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import './Page404.scss';
 
 const Page404 = () => {
+
+    useEffect(() => {
+        toast.error("Đường dẫn sai!");
+    }, [])
+
     return (
         <div>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />

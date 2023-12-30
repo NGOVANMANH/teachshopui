@@ -3,6 +3,7 @@ import { useContextData } from "../../hooks";
 import CartItem from "../../components/CartHover/CartItem";
 import { Spinner } from "react-bootstrap";
 import { MdDoneAll } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 const Checkout = () => {
 
@@ -22,6 +23,7 @@ const Checkout = () => {
             setIsSendingReq(false);
             setIsDone(true);
             emptyCart();
+            toast.info("Cảm ơn bạn đã ủng hộ!")
         }, 500)
     }
 

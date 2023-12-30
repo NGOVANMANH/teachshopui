@@ -4,6 +4,7 @@ import { publicRoutes, privateRoutes } from '../routes';
 import Page404 from '../pages/Page404';
 import { useContextData } from '../hooks';
 
+
 function App() {
 
   const { user } = useContextData();

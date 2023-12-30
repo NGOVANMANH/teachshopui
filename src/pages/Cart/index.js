@@ -6,12 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 import { CartItem, HorizontalLine } from "../../components";
 import styles from './Cart.module.scss';
 import { useContextData, useDebounce } from "../../hooks";
 import { getShippingFee } from '../../services/shippingServices'
-import { getDiscount } from "../../services/discountService";
+import { getDiscount } from "../../services/discountServices";
 import { addOrder, addOrderGuest } from "../../services/orderServices";
 import { NOT_FOUND, SUCCESS_RESPONSE } from "../../services/constants";
 
@@ -186,7 +187,7 @@ const Cart = () => {
             }
             if (res && res !== NOT_FOUND) {
                 if (res.status && res.status === SUCCESS_RESPONSE) {
-                    alert("Order thành công!");
+                    toast.success("Order thành công!");
                     if (formik.values.paymentMethod === "tranfer") {
                         navigate("/checkout");
                     }
@@ -199,7 +200,7 @@ const Cart = () => {
                 }
                 else alert(res.message);
             }
-            else alert("Lỗi! Không thể thêm order! Vui tạo tài khoản (đăng nhập) để tiếp tục");
+            else toast.error("Lỗi! Không thể thêm order!");
             setIsOrdering(false);
         }
 
