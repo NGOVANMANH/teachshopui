@@ -11,6 +11,7 @@ import { updateInfor, updatePassword, checkToken } from '../../services/userServ
 import { getOrders } from '../../services/orderServices';
 import { NOT_FOUND, SUCCESS_RESPONSE } from '../../services/constants';
 import { Order, Reload } from '../../components';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
 
@@ -68,10 +69,10 @@ const Profile = () => {
             const fetchApi = async () => {
                 const res = await updatePassword(localStorage.getItem("token"), values.oldPassword, values.newPassword);
                 if (res === NOT_FOUND) {
-                    alert("Update lỗi!");
+                    toast.error("Update lỗi!");
                 }
                 else {
-                    alert(res.message);
+                    toast.success(res.message);
                 }
                 setIsUpdatingPassword(false);
             }
@@ -100,7 +101,7 @@ const Profile = () => {
                 setIsUpdatingInfor(true);
                 const respone = await updateInfor(localStorage.getItem("token"), values)
                 if (respone === NOT_FOUND) {
-                    alert("Cập nhật không thành công!");
+                    toast.error("Cập nhật không thành công!");
                 }
                 else {
                     if (respone.status === SUCCESS_RESPONSE) {
@@ -116,12 +117,12 @@ const Profile = () => {
                                         userInfor: res.data,
                                     }
                                 });
-                                alert("Cập nhật thành công!");
+                                toast.success("Cập nhật thành công!");
                             }
                         }
                     }
                     else {
-                        alert(respone.message);
+                        toast(respone.message);
                     }
                 }
                 setIsUpdatingInfor(false);

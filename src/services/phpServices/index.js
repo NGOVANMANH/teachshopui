@@ -41,6 +41,7 @@ export const endpoints = {
         updatePassword: '/api/customer/update.php',
         checkEmail: '/api/customer/validate_email/send_validate_email.php',
         checkKeyEmail: '/api/customer/validate_email/check_validate_email.php',
-        resetPassword: '/api/customer/reset_password/send_password_reset.php'
+        resetPassword: '/api/customer/reset_password/send_password_reset.php',
+        resetPasswordToken: '/api/customer/reset_password/reset_password.php',
     }
 }
