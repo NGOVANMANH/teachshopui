@@ -89,3 +89,14 @@ export const resetPassword = async (email) => {
     }
 }
 
+export const resetPasswordToken = async (password, token) => {
+    try {
+        const response = await axios.post('/api/customer/reset_password/reset_password.php', {
+            password,
+            token,
+        });
+        return response.data;
+    } catch (error) {
+        return NOT_FOUND;
+    }
+}

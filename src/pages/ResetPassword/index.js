@@ -1,14 +1,47 @@
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useFormik } from "formik";
+import { resetPasswordToken } from '../../services/userServices';
 import * as yup from 'yup';
+import { Spinner } from 'react-bootstrap';
+import { NOT_FOUND } from '../../services/constants';
+import { toast } from 'react-toastify';
 
 const ResetPassword = () => {
+
+    const location = useLocation();
+
+    const [TOKEN, setTOKEN] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(location.search);
+        const token = searchParams.get('token');
+
+        if (token) {
+            setTOKEN(token);
+        }
+    }, [location.search]);
 
     const formik = useFormik({
         initialValues: {
             password: '',
             confirmedPassword: '',
         },
-        onSubmit: values => { console.log(values) },
+        onSubmit: values => {
+            const fetchResetPassword = async () => {
+                setIsLoading(true);
+                const response = await resetPasswordToken(values.password, TOKEN);
+                if (response !== NOT_FOUND) {
+                    toast.success(response.message);
+                }
+                else {
+                    toast.error("Lỗi!")
+                }
+                setIsLoading(false);
+            }
+            fetchResetPassword();
+        },
         validationSchema: yup.object().shape({
             password: yup.string().required("Is required!").min(8, "Too short!").max(50, 'Too long!'),
             confirmedPassword: yup.string().required("Is required!").min(8, "Too short!").max(50, 'Too long!').oneOf([yup.ref('password'), null], 'Passwords must match'),
@@ -46,7 +79,11 @@ const ResetPassword = () => {
                             </tr>
                             <tr>
                                 <td colSpan={2} className="d-flex justify-content-end">
-                                    <button type="submit" className="btn btn-secondary" style={{ fontSize: "1.6rem", paddingRight: "1rem", paddingLeft: "1rem" }}>Gửi</button>
+                                    <button type="submit" className="btn btn-secondary" style={{ fontSize: "1.6rem", paddingRight: "1rem", paddingLeft: "1rem" }}
+                                        disabled={isLoading}
+                                    >
+                                        {isLoading ? <Spinner /> : "Gửi"}
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

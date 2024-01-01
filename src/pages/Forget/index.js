@@ -6,6 +6,7 @@ import clsx from "clsx";
 import styles from './Forget.module.scss';
 import { resetPassword } from "../../services/userServices";
 import { Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Forgot = () => {
 
@@ -28,7 +29,7 @@ const Forgot = () => {
             const fetchApi = async () => {
                 setIsLoading(true);
                 const res = await resetPassword(values.email);
-                alert(res.message);
+                toast(res.message);
                 setIsLoading(false);
             }
 
