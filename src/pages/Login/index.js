@@ -117,7 +117,7 @@ const Login = () => {
                                         >
                                             {isLogining ? <Spinner /> : "Đăng nhập"}
                                         </Button>
-                                        <Link className='m-2' to={"'/signup'"}>Quên mật khẩu?</Link>
+                                        <Link className='m-2' to={"/forget"}>Quên mật khẩu?</Link>
                                     </Col>
                                 </Row>
                             </Form>

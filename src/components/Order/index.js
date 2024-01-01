@@ -4,21 +4,29 @@ import { FaXmark } from "react-icons/fa6";
 
 import styles from './Order.module.scss';
 import OrderDetail from "./OrderDetail";
-import { cancelOrder } from "../../services/orderServices";
+import { cancelOrder, cancelOrderGuest } from "../../services/orderServices";
 import { Spinner } from "react-bootstrap";
 import { NOT_FOUND } from "../../services/constants";
 import { toast } from "react-toastify";
+import { useContextData } from "../../hooks";
 
 const Order = ({ data }) => {
     const [isShowMore, setIsShowMore] = useState(false);
     const [isCancelling, setIsCancelling] = useState(false);
     const [status, setStatus] = useState(data.status);
+    const { user } = useContextData();
 
     const handelCancelOrder = async (e) => {
         e.preventDefault();
         if (data.id) {
             setIsCancelling(true);
-            const response = await cancelOrder(data.id);
+            let response;
+            if (user.auth) {
+                response = await cancelOrder(data.id);
+            }
+            else {
+                response = await cancelOrderGuest(data.id);
+            }
             if (response !== NOT_FOUND && response.status === 200) {
                 toast.success("Hủy đơn thành công!")
                 setStatus("Cancelled");

@@ -8,15 +8,16 @@ import { useContextData } from "../../hooks";
 
 const Products = () => {
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
 
     useEffect(() => {
         document.title = "Products - Techshop";
     }, [])
 
     const params = useParams();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [params])
 
     const category = params.category.toLocaleLowerCase();
 

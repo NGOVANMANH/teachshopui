@@ -46,12 +46,12 @@ export const cancelOrder = async (id) => {
 }
 
 
-export const getOrdersGuest = async () => {
+export const getOrdersGuest = async (data) => {
     try {
-        const response = await axios.get(orderEndpoints.getOrdersGuest, {
-            id: 0,
-            name: "string",
-            phone: "string"
+        const response = await axios.post(orderEndpoints.getOrdersGuest, {
+            id: +data.id,
+            name: data.name,
+            phone: data.phone
         });
         return response.data;
     } catch (error) {
@@ -71,10 +71,11 @@ export const addOrderGuest = async (data) => {
     }
 }
 
-export const cancelOrderGuest = async (orderID) => {
+export const cancelOrderGuest = async (orderID, email) => {
     try {
         const response = await axios.put(orderEndpoints.cancelOrderGuest, {
             id: orderID,
+            email,
         });
         return response.data;
     } catch (error) {

@@ -6,7 +6,7 @@ import { BiCategory } from "react-icons/bi";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useContextData } from '../../hooks';
-import LeftCategory from './LeftCategory';
+import CategoryItem from "../CategoryItem";
 
 const MobileFooterNavbar = () => {
 
@@ -15,8 +15,7 @@ const MobileFooterNavbar = () => {
     const { user } = useContextData();
 
     const [activeButton, setActiveButton] = useState(1);
-    const [isSelectCategory, setIsSelectCategory] = useState(false);
-
+    const [active, setActive] = useState(false);
 
     const handleClick = (btnID) => {
 
@@ -26,7 +25,7 @@ const MobileFooterNavbar = () => {
                 navigate('/');
                 break;
             case 2:
-                setIsSelectCategory(!isSelectCategory);
+                setActive(!active)
                 break;
             case 3:
                 break;
@@ -55,7 +54,7 @@ const MobileFooterNavbar = () => {
                             <div>Trang chủ</div>
                         </div>
                         <div className={clsx('col', styles.item, {
-                            [styles.active]: isSelectCategory
+                            [styles.active]: active
                         })} onClick={() => handleClick(2)}>
                             <BiCategory />
                             <div>Danh mục</div>
@@ -74,8 +73,17 @@ const MobileFooterNavbar = () => {
                 </div>
             </div>
 
-            <LeftCategory className={clsx("my-shadow", styles.left_category, { [styles.active]: isSelectCategory, [styles.hidden]: !isSelectCategory })} />
-
+            <div className={clsx(styles.left_category_wrapper, {
+                "d-block": active,
+                "d-none": !active
+            })} onClick={() => { setActive(false) }}>
+                <div className={clsx("my-shadow", styles.left_category, { [styles.active]: active, [styles.hidden]: !active })}>
+                    <CategoryItem to={"/products/phone"}>Điện thoại</CategoryItem>
+                    <CategoryItem to={"/products/cable"}>Dây sạc</CategoryItem>
+                    <CategoryItem to={"/products/backupcharger"}>Sạc dự phòng</CategoryItem>
+                    <CategoryItem to={"/products/adapter"}>Củ sạc</CategoryItem>
+                </div>
+            </div>
         </>
     );
 }

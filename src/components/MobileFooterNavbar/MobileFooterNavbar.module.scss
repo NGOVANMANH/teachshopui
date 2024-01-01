@@ -31,13 +31,18 @@
     }
 }
 
-.left_category {
+.left_category_wrapper {
     position: fixed;
+    width: 100%;
+    height: 100vh;
     top: 0;
+    z-index: 100;
+}
+
+.left_category {
     width: 80%;
     height: 100vh;
     background: white;
-    z-index: 100;
     padding: 1rem;
 }
 
