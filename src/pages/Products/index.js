@@ -8,10 +8,11 @@ import { useContextData } from "../../hooks";
 
 const Products = () => {
 
-
     useEffect(() => {
         document.title = "Products - Techshop";
     }, [])
+
+    const { products } = useContextData();
 
     const params = useParams();
 
@@ -25,8 +26,6 @@ const Products = () => {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const { products } = useContextData();
-
     useEffect(() => {
         if (products && products.length > 0) {
 
@@ -37,14 +36,20 @@ const Products = () => {
             else if (category === "cable") categoryID = 3;
             else if (category === "backupcharger") categoryID = 4;
 
-            setProducts(products.filter(item => item.category === categoryID));
+            let pTemp = products.filter(item => item.category === categoryID);
+
+            if (params.brand) {
+                pTemp = pTemp.filter(item => item.brand === params.brand);
+            }
+
+            setProducts(pTemp);
 
             setIsLoading(false);
         }
         else {
             setIsLoading(true);
         }
-    }, [category, products])
+    }, [category, products, params.brand])
 
     const getTitle = useCallback(() => {
         switch (category) {
@@ -78,6 +83,37 @@ const Products = () => {
     const handleSortPriceDesc = () => {
         const sortedProducts = [..._products].sort((a, b) => b.price - a.price);
         setProducts(sortedProducts);
+    }
+
+    const handleSortROM = () => {
+
+    }
+
+    const handleSortROMDesc = () => {
+
+    }
+
+    const handleSortRAM = () => {
+
+    }
+
+    const handleSortRAMDesc = () => {
+
+    }
+
+    const handleSortCapacity = () => {
+
+    }
+
+    const handleSortCapacityDesc = () => {
+
+    }
+
+    const handleSortP = () => {
+
+    }
+    const handleSortPDesc = () => {
+
     }
 
     return (
@@ -134,6 +170,98 @@ const Products = () => {
                             >
                                 {"Thấp-Cao"}
                             </Button>
+
+                            {
+                                category === "phone" &&
+                                <>
+                                    <Button
+                                        style={{ marginRight: "0.5rem" }}
+                                        className="mt-3"
+                                        variant="outline-secondary"
+                                        size="lg"
+                                        onClick={handleSortROM}
+                                    >
+                                        {"ROM(Thấp-Cao)"}
+                                    </Button>
+
+                                    <Button
+                                        style={{ marginRight: "0.5rem" }}
+                                        className="mt-3"
+                                        variant="outline-secondary"
+                                        size="lg"
+                                        onClick={handleSortROMDesc}
+                                    >
+                                        {"ROM(Cao-Thấp)"}
+                                    </Button>
+
+                                    <Button
+                                        style={{ marginRight: "0.5rem" }}
+                                        className="mt-3"
+                                        variant="outline-secondary"
+                                        size="lg"
+                                        onClick={handleSortRAM}
+                                    >
+                                        {"RAM(Thấp-Cao)"}
+                                    </Button>
+
+                                    <Button
+                                        style={{ marginRight: "0.5rem" }}
+                                        className="mt-3"
+                                        variant="outline-secondary"
+                                        size="lg"
+                                        onClick={handleSortRAMDesc}
+                                    >
+                                        {"RAM(Cao-Thấp)"}
+                                    </Button>
+                                </>
+                            }
+                            {
+                                category === 'backupcharger' &&
+                                <>
+                                    <Button
+                                        style={{ marginRight: "0.5rem" }}
+                                        className="mt-3"
+                                        variant="outline-secondary"
+                                        size="lg"
+                                        onClick={handleSortCapacity}
+                                    >
+                                        {"Dung lượng(Cao-Thấp)"}
+                                    </Button>
+
+                                    <Button
+                                        style={{ marginRight: "0.5rem" }}
+                                        className="mt-3"
+                                        variant="outline-secondary"
+                                        size="lg"
+                                        onClick={handleSortCapacityDesc}
+                                    >
+                                        {"Dung lượng(Thấp-Cao)"}
+                                    </Button>
+                                </>
+                            }
+                            {
+                                category === 'cable' || category === 'adapter' ?
+                                    <>
+                                        <Button
+                                            style={{ marginRight: "0.5rem" }}
+                                            className="mt-3"
+                                            variant="outline-secondary"
+                                            size="lg"
+                                            onClick={handleSortP}
+                                        >
+                                            {"Công suất(Cao-Thấp)"}
+                                        </Button>
+                                        <Button
+                                            style={{ marginRight: "0.5rem" }}
+                                            className="mt-3"
+                                            variant="outline-secondary"
+                                            size="lg"
+                                            onClick={handleSortPDesc}
+                                        >
+                                            {"Công suất(Thấp-Cao)"}
+                                        </Button>
+                                    </> : <></>
+                            }
                         </Col>
                     </Row>
                     <HorizontalLine className="mt-3 mb-3" />

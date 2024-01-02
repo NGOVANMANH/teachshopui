@@ -57,25 +57,25 @@ const Home = () => {
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Điện thoại"} products={phones}>
+      <CategoryBlock title={"Điện thoại"} isShow={true} type={"phone"} products={phones}>
         <ProductCarousel className="pt-3 pb-3" products={phones}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Dây sạc"} products={cables}>
+      <CategoryBlock title={"Dây sạc"} isShow={true} type={"cable"} products={cables}>
         <ProductCarousel className="pt-3 pb-3" products={cables}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Sạc dự phòng"} products={backupchargers}>
+      <CategoryBlock title={"Sạc dự phòng"} isShow={true} type={"backupcharger"} products={backupchargers}>
         <ProductCarousel className="pt-3 pb-3" products={backupchargers}></ProductCarousel>
       </CategoryBlock>
 
       <HorizontalLine className="mt-3 mb-3" />
 
-      <CategoryBlock title={"Củ sạc"} products={adapters}>
+      <CategoryBlock title={"Củ sạc"} isShow={true} type={"adapter"} products={adapters}>
         <ProductCarousel className="pt-3 pb-3" products={adapters}></ProductCarousel>
       </CategoryBlock>
 

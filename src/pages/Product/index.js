@@ -101,7 +101,7 @@ const ProductDetails = () => {
                     <Col md={5}>
                         {
                             productImages && productImages.length > 0 ?
-                                <Carousel key={carouselKey} style={{ height: "100%" }} interval={null} className="d-flex align-items-center">
+                                <Carousel key={carouselKey} style={{ height: "100%" }} interval={null} className={clsx("d-flex align-items-center product_carousel")}>
                                     {
                                         productImages.map((item, index) => (
                                             <Carousel.Item key={index}>
@@ -167,7 +167,7 @@ const ProductDetails = () => {
             <Container className="bg-white rounded my-shadow mt-3 mb-3 p-3">
                 <Row>
                     <Col>
-                        <CategoryBlock title={"Sản phẩm tương tự"} products={similarProducts}>
+                        <CategoryBlock title={"Sản phẩm tương tự"} isShow={false} products={similarProducts}>
                             <ProductCarousel className="pt-3 pb-3" products={similarProducts.length > 0 ? similarProducts : null}></ProductCarousel>
                         </CategoryBlock>
                     </Col>
