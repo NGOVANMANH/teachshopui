@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { validateEmail } from '../../hooks';
 import { IoIosArrowBack } from "react-icons/io";
 import { Toggle } from '../../components';
+import { toast } from "react-toastify";
 
 const Footer = () => {
     const handldleSentEmail = (e) => {
@@ -20,7 +21,7 @@ const Footer = () => {
             console.log(inputElement.value);
         }
         else {
-            alert("Vui lòng nhập email...!")
+            toast("Vui lòng nhập email...!")
         }
     }
 
