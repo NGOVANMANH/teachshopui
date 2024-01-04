@@ -55,7 +55,7 @@ const DefaultLayout = ({ children }) => {
             <Footer />
             {screenWidth < 768 && <MobileFooterNavbar />}
             {isVisible && (
-                <button onClick={scrollToTop} style={{ position: 'fixed', bottom: '6rem', right: '0.5rem', zIndex: '2000', border: 'transparent', padding: '1rem', width: '44px', height: '44px', borderRadius: '50%', color: 'white', background: 'gray' }}>
+                <button className="my-shadow" onClick={scrollToTop} style={{ position: 'fixed', bottom: '15%', right: '2%', zIndex: '2000', border: 'transparent', padding: '1rem', width: '5rem', height: '5rem', borderRadius: '50%', color: 'white', background: 'gray' }}>
                     <FaArrowUp />
                 </button>
             )}

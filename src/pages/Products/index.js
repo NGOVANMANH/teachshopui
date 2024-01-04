@@ -221,8 +221,8 @@ const Products = () => {
         setProductProps(_props);
     }
 
-    const handleFilter = async () => {
-
+    const handleReset = () => {
+        if (!isFiltered) return;
         if (isFiltered) {
             let categoryID = -1;
 
@@ -240,8 +240,100 @@ const Products = () => {
             }
             setProducts(products.filter(item => item.category === categoryID));
             setIsFiltered(false);
-            return;
         }
+        setProductProps({
+            phone: {
+                brand: {
+                    props: [],
+                    userSelect: [],
+                },
+                os: {
+                    props: [],
+                    userSelect: [],
+                },
+                ram: {
+                    props: [],
+                    userSelect: [],
+                },
+                rom: {
+                    props: [],
+                    userSelect: [],
+                },
+                charger: {
+                    props: [],
+                    userSelect: [],
+                },
+            },
+            cable: {
+                brand: {
+                    props: [],
+                    userSelect: [],
+                },
+                input: {
+                    props: [],
+                    userSelect: [],
+                },
+                output: {
+                    props: [],
+                    userSelect: [],
+                },
+                length: {
+                    props: [],
+                    userSelect: [],
+                },
+                charger: {
+                    props: [],
+                    userSelect: [],
+                }
+            },
+            backupcharger: {
+                brand: {
+                    props: [],
+                    userSelect: [],
+                },
+                capacity: {
+                    props: [],
+                    userSelect: [],
+                },
+                input: {
+                    props: [],
+                    userSelect: [],
+                },
+                output: {
+                    props: [],
+                    userSelect: [],
+                },
+                charger: {
+                    props: [],
+                    userSelect: [],
+                }
+            },
+            adapter: {
+                brand: {
+                    props: [],
+                    userSelect: [],
+                },
+                numberport: {
+                    props: [],
+                    userSelect: [],
+                },
+                output: {
+                    props: [],
+                    userSelect: [],
+                },
+                charger: {
+                    props: [],
+                    userSelect: [],
+                }
+            }
+        });
+        setRange([0, 1000000]);
+        setIsFiltered(false);
+    }
+
+    const handleFilter = async () => {
+
+        if (isFiltering) return;
 
         setIsFiltering(true);
 
@@ -297,10 +389,14 @@ const Products = () => {
                     <Col md="auto" className="mt-3">
                         <Button className="fs-4 bg-main" variant="success" onClick={handleFilter}>
                             {
-                                isFiltered ? <MdHistory /> :
-                                    isFiltering ? <Spinner animation="grow" /> :
-                                        <VscFilter />
+                                isFiltering ? <Spinner animation="grow" /> :
+                                    <VscFilter />
                             }
+                        </Button>
+                    </Col>
+                    <Col md="auto" className="mt-3">
+                        <Button className="fs-4 bg-main" variant="success" onClick={handleReset} disabled={!isFiltered}>
+                            <MdHistory />
                         </Button>
                     </Col>
                     <Col className="mt-3">
@@ -319,6 +415,7 @@ const Products = () => {
                                         step={100000}
                                         range
                                         defaultValue={range}
+                                        value={range}
                                         onChange={handleRangeChange}
                                     />
                                 </div>
