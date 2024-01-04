@@ -267,6 +267,21 @@ const Products = () => {
         setIsFiltering(false);
     };
 
+    const translateProp = (prop) => {
+        switch (prop) {
+            case 'brand': return "Hãng";
+            case 'os': return "Hệ điều hành";
+            case 'ram': return "RAM";
+            case 'rom': return "Dung Lượng";
+            case 'charger': return "Công suất sạc";
+            case 'capacity': return "Dung lượng pin";
+            case 'input': return "Cổng sạc (vô)";
+            case 'output': return "Cổng sạc (ra)";
+            case 'numberport': return "Số lượng cổng";
+            case 'length': return "Chiều dài";
+            default: return undefined;
+        }
+    }
 
     return (
         !isLoading
@@ -291,7 +306,7 @@ const Products = () => {
                     <Col className="mt-3">
                         <Dropdown className="d-inline mx-2" autoClose="outside">
                             <Dropdown.Toggle className="bg-secondary fs-4">
-                                price
+                                Giá
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu style={{ width: "fit-content" }}>
@@ -314,7 +329,7 @@ const Products = () => {
                             Object.keys(productProps[category]).map((key, index) =>
                                 <Dropdown className="d-inline mx-2" autoClose="outside" key={index} onClick={() => handleChosseProp(key)}>
                                     <Dropdown.Toggle className="bg-secondary fs-4">
-                                        {key}
+                                        {translateProp(key)}
                                     </Dropdown.Toggle>
 
                                     <Dropdown.Menu style={{ width: "fit-content" }}>

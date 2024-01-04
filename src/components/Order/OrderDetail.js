@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { Col, Image, Row } from "react-bootstrap";
 
 const OrderDetail = ({ data }) => {
+    const navigate = useNavigate();
     return (
         <Row>
             <Col xs={3} sm={3} md={3} lg={2}>
-                <Image thumbnail src={`data:image/jpeg;base64, ${data.image}`} alt="thumnail" />
+                <Image onClick={() => navigate(`/product/${data.product_id}/${data.color}`)} thumbnail src={`data:image/jpeg;base64, ${data.image}`} alt="thumnail" />
             </Col>
             <Col>
                 <table className="table">

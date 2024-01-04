@@ -28,7 +28,19 @@ export const endpoints = {
         getSearchedProduct: '/api/product/search.php',
         getProductParameters: '/api/product/get_param.php',
         getProductColors: '/api/product/show_color.php',
-        getColorsAndImages: '/api/imageDetail/show_by_productid_ver2.php'
+        getColorsAndImages: '/api/imageDetail/show_by_productid_ver2.php',
+        getSortProps: {
+            phone: '/api/product/sort/phone/showProp.php',
+            cable: '/api/product/sort/cable/showProp.php',
+            backupcharger: '/api/product/sort/backupcharger/showProp.php',
+            adapter: '/api/product/sort/adapter/showProp.php'
+        },
+        getSortProducts: {
+            phone: '/api/product/sort/phone/sort.php',
+            cable: '/api/product/sort/cable/sort.php',
+            backupcharger: '/api/product/sort/backupcharger/sort.php',
+            adapter: '/api/product/sort/adapter/sort.php'
+        }
     },
     shipping: {
         getShippingFee: '/api/order/shipping_fee.php',

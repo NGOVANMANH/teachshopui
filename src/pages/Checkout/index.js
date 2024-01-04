@@ -33,11 +33,11 @@ const Checkout = () => {
                 <div align="center" className="fs-1 fw-bolder text-secondary text-capitalize">Chuyển khoản đến ngân hàng VCB</div>
             </div>
             <div className="bg-white rounded container p-3">
-                <div className="row">
-                    <div className="col-lg-auto p-3 d-flex justify-content-center">
-                        <img src="https://img.vietqr.io/image/vietcombank-1025884939-qr_only.png" alt="qr_code_vcb" />
-                    </div>
-                    <div className="col">
+                <div className="p-3 d-flex justify-content-center">
+                    <img style={{ width: '25%' }} src="https://img.vietqr.io/image/vietcombank-1025884939-qr_only.png" alt="qr_code_vcb" />
+                </div>
+                <div className="d-flex justify-content-center">
+                    <div style={{ width: "50%" }}>
                         <div style={{ maxHeight: "45.5rem", overflowY: "scroll", overflowX: "hidden", padding: "0.5rem" }}>
                             {cart.map(item => <CartItem key={`${item.id}-${item.color}`} data={item} />)}
                         </div>

@@ -84,28 +84,28 @@ export const getSortProps = async (category, prop) => {
     switch (category) {
         case 'phone':
             try {
-                const response = await axios.get(`/api/product/sort/phone/showProp.php?prop=${prop}`);
+                const response = await axios.get(`${productEndPoints.getSortProps.phone}?prop=${prop}`);
                 return response.data;
             } catch (error) {
                 return NOT_FOUND;
             }
         case 'cable':
             try {
-                const response = await axios.get(`/api/product/sort/cable/showProp.php?prop=${prop}`);
+                const response = await axios.get(`${productEndPoints.getSortProps.cable}?prop=${prop}`);
                 return response.data;
             } catch (error) {
                 return NOT_FOUND;
             }
         case 'backupcharger':
             try {
-                const response = await axios.get(`/api/product/sort/backupcharger/showProp.php?prop=${prop}`);
+                const response = await axios.get(`${productEndPoints.getSortProps.backupcharger}?prop=${prop}`);
                 return response.data;
             } catch (error) {
                 return NOT_FOUND;
             }
         case 'adapter':
             try {
-                const response = await axios.get(`/api/product/sort/adapter/showProp.php?prop=${prop}`);
+                const response = await axios.get(`${productEndPoints.getSortProps.adapter}?prop=${prop}`);
                 return response.data;
             } catch (error) {
                 return NOT_FOUND;
@@ -118,7 +118,7 @@ export const getSortProducts = async (category, data) => {
     switch (category) {
         case 'phone':
             try {
-                const response = await axios.post(`/api/product/sort/phone/sort.php`, {
+                const response = await axios.post(productEndPoints.getSortProducts.phone, {
                     brand: data.brand,
                     os: data.os,
                     price: data.price,
@@ -132,7 +132,7 @@ export const getSortProducts = async (category, data) => {
             }
         case 'cable':
             try {
-                const response = await axios.post(`/api/product/sort/cable/sort.php`, {
+                const response = await axios.post(productEndPoints.getSortProducts.cable, {
                     brand: data.brand,
                     price: data.price,
                     input: data.input,
@@ -146,7 +146,7 @@ export const getSortProducts = async (category, data) => {
             }
         case 'backupcharger':
             try {
-                const response = await axios.post(`/api/product/sort/backupcharger/sort.php`, {
+                const response = await axios.post(productEndPoints.getSortProducts.backupcharger, {
                     brand: data.brand,
                     price: data.price,
                     capacity: data.capacity,
@@ -160,7 +160,7 @@ export const getSortProducts = async (category, data) => {
             }
         case 'adapter':
             try {
-                const response = await axios.post(`/api/product/sort/adapter/sort.php`, {
+                const response = await axios.post(productEndPoints.getSortProducts.adapter, {
                     brand: data.brand,
                     price: data.price,
                     numberport: data.numberport,

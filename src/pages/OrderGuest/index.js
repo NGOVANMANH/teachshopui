@@ -84,7 +84,7 @@ const OrderGuest = () => {
                 </table>
             </form>
             {
-                isSuscess && <div className="container bg-white rounded">
+                isSuscess && <div className="container bg-white rounded pb-2">
                     {
                         orders && orders.length > 0 ?
                             <table className="table table-hover table-striped">
