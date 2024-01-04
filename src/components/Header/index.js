@@ -6,6 +6,7 @@ import { HiOutlineSpeakerphone, HiMenu } from 'react-icons/hi';
 import { FaUserCircle, FaSearch } from 'react-icons/fa';
 import { BiPhoneCall } from 'react-icons/bi';
 import { AiOutlineThunderbolt, AiOutlineShoppingCart } from 'react-icons/ai';
+import { MdHistoryEdu } from "react-icons/md";
 import { Button, Dropdown, DropdownButton, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -177,6 +178,16 @@ const Header = () => {
                             </TippyHeadless>
 
                             <div className={clsx("d-flex position-relative", styles.cartWrapper)}>
+                                {
+                                    user && !user.auth &&
+                                    <Link to="/orderguest" className={clsx("col-md-auto d-flex flex-wrap justify-content-center align-items-center")}>
+                                        <MdHistoryEdu className={clsx("w-100 fs-1")} />
+                                        Đơn hàng
+                                    </Link>
+                                }
+                            </div>
+
+                            <div className={clsx("d-flex position-relative", styles.cartWrapper)}>
                                 {cart && cart.length > 0 && <div className={clsx("position-absolute", styles.numOfCart)}>{
                                     cart.reduce((total, item) => total + item.quantity, 0)
                                 }</div>}
@@ -231,6 +242,13 @@ const Header = () => {
                                             <HiOutlineSpeakerphone className={clsx(styles.userDivIcon)} />
                                             <Link to="/news">Tin tức</Link>
                                         </div>
+                                        {
+                                            user && !user.auth &&
+                                            <div className={clsx(styles.userDiv)}>
+                                                <MdHistoryEdu className={clsx(styles.userDivIcon)} />
+                                                <Link to="/orderguest">Đơn hàng</Link>
+                                            </div>
+                                        }
                                         <div className={clsx(styles.userDiv)}>
                                             <FaUserCircle className={clsx(styles.userDivIcon)} />
                                             {

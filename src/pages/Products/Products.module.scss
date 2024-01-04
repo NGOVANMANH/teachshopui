@@ -1,0 +1,23 @@
+.dropdown_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 40vw;
+
+    .dropdown_item {
+        width: fit-content;
+        font-size: 1.4rem;
+        border-radius: 0.5rem;
+        margin: 0.2rem 0.2rem;
+        cursor: pointer;
+        user-select: none;
+
+        &:active {
+            color: white;
+            background: var(--primary) !important;
+        }
+
+        &:hover {
+            background: rgba(161, 161, 161, 0.53);
+        }
+    }
+}

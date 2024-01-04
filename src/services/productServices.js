@@ -78,3 +78,99 @@ export const getColorsAndImages = async (id) => {
         return NOT_FOUND;
     }
 }
+
+// sort
+export const getSortProps = async (category, prop) => {
+    switch (category) {
+        case 'phone':
+            try {
+                const response = await axios.get(`/api/product/sort/phone/showProp.php?prop=${prop}`);
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        case 'cable':
+            try {
+                const response = await axios.get(`/api/product/sort/cable/showProp.php?prop=${prop}`);
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        case 'backupcharger':
+            try {
+                const response = await axios.get(`/api/product/sort/backupcharger/showProp.php?prop=${prop}`);
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        case 'adapter':
+            try {
+                const response = await axios.get(`/api/product/sort/adapter/showProp.php?prop=${prop}`);
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        default: break;
+    }
+}
+
+export const getSortProducts = async (category, data) => {
+    switch (category) {
+        case 'phone':
+            try {
+                const response = await axios.post(`/api/product/sort/phone/sort.php`, {
+                    brand: data.brand,
+                    os: data.os,
+                    price: data.price,
+                    ram: data.ram,
+                    rom: data.rom,
+                    charger: data.charger
+                });
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        case 'cable':
+            try {
+                const response = await axios.post(`/api/product/sort/cable/sort.php`, {
+                    brand: data.brand,
+                    price: data.price,
+                    input: data.input,
+                    output: data.output,
+                    length: data.length,
+                    charger: data.charger
+                });
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        case 'backupcharger':
+            try {
+                const response = await axios.post(`/api/product/sort/backupcharger/sort.php`, {
+                    brand: data.brand,
+                    price: data.price,
+                    capacity: data.capacity,
+                    input: data.input,
+                    output: data.output,
+                    charger: data.charger,
+                });
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        case 'adapter':
+            try {
+                const response = await axios.post(`/api/product/sort/adapter/sort.php`, {
+                    brand: data.brand,
+                    price: data.price,
+                    numberport: data.numberport,
+                    output: data.output,
+                    charger: data.charger
+                });
+                return response.data;
+            } catch (error) {
+                return NOT_FOUND;
+            }
+        default: break;
+    }
+}
