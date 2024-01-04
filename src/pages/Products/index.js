@@ -144,18 +144,22 @@ const Products = () => {
             if (category === "phone") {
                 categoryID = 1;
                 setMaxRange(100000000);
+                setRange([0, 100000000]);
             }
             else if (category === "adapter") {
                 categoryID = 2;
-                setMaxRange(10000000);
+                setMaxRange(5000000);
+                setRange([0, 5000000]);
             }
             else if (category === "cable") {
                 categoryID = 3;
-                setMaxRange(10000000);
+                setMaxRange(1000000);
+                setRange([0, 1000000]);
             }
             else if (category === "backupcharger") {
                 categoryID = 4;
                 setMaxRange(10000000);
+                setRange([0, 10000000]);
             }
 
             let pTemp = products.filter(item => item.category === categoryID);
@@ -164,7 +168,6 @@ const Products = () => {
                 pTemp = pTemp.filter(item => item.brand === params.brand);
             }
 
-            setRange([0, 1000000]);
 
             setProducts(pTemp);
 
@@ -206,6 +209,7 @@ const Products = () => {
     const handleChossePropsToSort = (key, item) => {
         const _props = { ...productProps };
         let userSelect = _props[category][key].userSelect;
+
         if (!userSelect.includes(item)) {
             _props[category][key].userSelect = [
                 ...userSelect,
@@ -219,6 +223,46 @@ const Products = () => {
             ]
         }
         setProductProps(_props);
+    }
+
+    const getChargerDataFromChargerInfor = (data) => {
+        const arrTemp = ["Dưới 15 W",
+            "Từ 15-25 W",
+            "Từ 26-60 W",
+            "Trên 60 W"]
+
+        let item = data;
+
+        if (item === arrTemp[0]) {
+            item = "15";
+        }
+        else if (item === arrTemp[1]) {
+            item = "1525";
+        }
+        else if (item === arrTemp[2]) {
+            item = "2660";
+        }
+        else if (item === arrTemp[3]) {
+            item = "60";
+        }
+        return item;
+    }
+
+    const getLengthDataFromLengthInfor = (data) => {
+        const arrTemp = [
+            "Dưới 1 m",
+            "Từ 1 - 2 m"
+        ];
+
+        let item = data;
+
+        if (item === arrTemp[0]) {
+            item = "1";
+        }
+        else if (item === arrTemp[1]) {
+            item = "12";
+        }
+        return item;
     }
 
     const handleReset = () => {
@@ -327,7 +371,7 @@ const Products = () => {
                 }
             }
         });
-        setRange([0, 1000000]);
+        setRange([0, maxRange]);
         setIsFiltered(false);
     }
 
@@ -347,6 +391,8 @@ const Products = () => {
             ...data,
             price: range.join("-"),
         }
+
+        console.log(data);
 
         const res = await getSortProducts(category, data);
         if (res !== NOT_FOUND) {
@@ -439,8 +485,22 @@ const Products = () => {
                                                             as={"div"}
                                                             className={clsx(styles.dropdown_item)}
                                                             key={`drop-item-${index}`}
-                                                            onClick={() => handleChossePropsToSort(key, item)}
-                                                            active={productProps[category][key].userSelect.includes(item)}
+                                                            onClick={() => {
+                                                                if (key === "charger") {
+                                                                    handleChossePropsToSort(key, getChargerDataFromChargerInfor(item));
+                                                                }
+                                                                else if (key === "length") {
+                                                                    handleChossePropsToSort(key, getLengthDataFromLengthInfor(item));
+                                                                }
+                                                                else {
+                                                                    handleChossePropsToSort(key, item);
+                                                                }
+                                                            }}
+                                                            active={key === "charger" ?
+                                                                productProps[category][key].userSelect.includes(getChargerDataFromChargerInfor(item)) :
+                                                                key === "length" ?
+                                                                    productProps[category][key].userSelect.includes(getLengthDataFromLengthInfor(item)) :
+                                                                    productProps[category][key].userSelect.includes(item)}
                                                         >
                                                             {item}
                                                         </Dropdown.Item>

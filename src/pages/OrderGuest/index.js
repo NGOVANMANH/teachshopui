@@ -27,7 +27,7 @@ const OrderGuest = () => {
                     setIsSuscess(true)
                 }
                 else {
-                    toast.success("Lỗi");
+                    toast.error("Lỗi");
                     setIsSuscess(false)
                 }
                 setIsLoading(false);
