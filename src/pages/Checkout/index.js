@@ -11,7 +11,7 @@ const Checkout = () => {
         window.scrollTo(0, 0);
     }, [])
 
-    const { cart, total, fee, discount, emptyCart } = useContextData();
+    const { cart, total, fee, discount, emptyCart, user } = useContextData();
 
     const [isSendingReq, setIsSendingReq] = useState(false);
 
@@ -34,7 +34,7 @@ const Checkout = () => {
             </div>
             <div className="bg-white rounded container p-3">
                 <div className="p-3 d-flex justify-content-center">
-                    <img style={{ width: '25%' }} src="https://img.vietqr.io/image/vietcombank-1025884939-qr_only.png" alt="qr_code_vcb" />
+                    <img style={{ width: '40%' }} src={`https://img.vietqr.io/image/VCB-1025884939-compact2.png?amount=${total + fee - discount}&addInfo=${`Thanh toan don hang: ${user.auth ? user.userInfor.email : "Guest"}`}&accountName=NGOVANMANH}`} alt="qr_code_vcb" />
                 </div>
                 <div className="d-flex justify-content-center">
                     <div style={{ width: "50%" }}>

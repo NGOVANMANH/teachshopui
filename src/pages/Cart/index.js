@@ -103,7 +103,6 @@ const Cart = () => {
                         setShippingFee(0);
                         setFee(0);
                     }
-                    toast.info(response.message);
                 }
                 setGettingFee(false);
             }
@@ -132,6 +131,8 @@ const Cart = () => {
                     setDiscountValue(0);
                     setDiscount(0);
                 }
+
+                toast.info(response.message);
             }
         }
 
