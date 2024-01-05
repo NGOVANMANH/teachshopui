@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, FormCheck, Row, Spinner } from "react-bootstrap";
 import { BiLeftArrowAlt } from "react-icons/bi";
 import { FaMapMarkedAlt, FaCreditCard } from "react-icons/fa";
 import clsx from "clsx";
@@ -28,7 +28,7 @@ const Cart = () => {
         document.title = "Cart - Techshop";
     }, [])
 
-    const { cart, address, user, emptyCart, setFee, setDiscount } = useContextData();
+    const { cart, address, user, emptyCart, setFee, setDiscount, total, isCheckAll, checkedAllProducts, unCheckedAllProducts } = useContextData();
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -42,7 +42,6 @@ const Cart = () => {
     const [discountCode, setDiscountCode] = useState("");
     const [discountValue, setDiscountValue] = useState(0);
     const [isOrdering, setIsOrdering] = useState(false);
-
 
     useEffect(() => {
         if (cart) {
@@ -104,6 +103,7 @@ const Cart = () => {
                         setShippingFee(0);
                         setFee(0);
                     }
+                    toast.info(response.message);
                 }
                 setGettingFee(false);
             }
@@ -149,12 +149,14 @@ const Cart = () => {
         const cartProducts = [];
 
         [...cart].forEach(item => {
-            cartProducts.push({
-                productId: item.id,
-                color: item.color,
-                quantity: item.quantity,
-                price: item.price,
-            });
+            if (item.check === true) {
+                cartProducts.push({
+                    productId: item.id,
+                    color: item.color,
+                    quantity: item.quantity,
+                    price: item.price,
+                });
+            }
         });
 
         const data = {
@@ -168,7 +170,7 @@ const Cart = () => {
                 phone: formValues.phoneNumber,
                 shipping_fee: shippingFee,
                 discount_code: discountValue === 0 ? null : discountCode,
-                total_price: [...cart].reduce((total, item) => total + item.price * item.quantity, 0) + shippingFee - discountValue,
+                total_price: total,
                 note: formValues.note,
                 delivery_type: "Standard",
                 payment_type: formValues.paymentMethod
@@ -198,7 +200,7 @@ const Cart = () => {
                         }
                     }
                 }
-                else alert(res.message);
+                else toast(res.message);
             }
             else toast.error("Lỗi! Không thể thêm order!");
             setIsOrdering(false);
@@ -220,6 +222,11 @@ const Cart = () => {
                 </Row>
                 <Row><HorizontalLine className="opacity-25" /></Row>
                 <Row className="p-3 fs-4">
+                    <Col md="auto" lg="auto" sm="auto" xs="auto" className="d-flex align-items-center">
+                        <FormCheck style={{ fontSize: "2rem" }} checked={isCheckAll} onChange={() => {
+                            isCheckAll ? unCheckedAllProducts() : checkedAllProducts()
+                        }} />
+                    </Col>
                     <Col md={12} lg={6}>Sản phẩm</Col>
                     <Col align="center">Đơn giá</Col>
                     <Col align="center">Số lượng</Col>
@@ -437,7 +444,9 @@ const Cart = () => {
                                                 <tbody>
                                                     <tr>
                                                         <th><span className="text-secondary">Số lượng: </span></th>
-                                                        <td><span className="text-danger">{cart.reduce((total, item) => total + item.quantity, 0)}</span>
+                                                        <td><span className="text-danger">{cart.reduce((total, item) => {
+                                                            return item.check === true ? total + item.quantity : total + 0
+                                                        }, 0)}</span>
                                                             <span className="text-secondary"> sản phẩm</span></td>
                                                     </tr>
                                                     <tr>
@@ -456,7 +465,7 @@ const Cart = () => {
                                                     <tr>
                                                         <th><span className="text-secondary">Tổng giá: </span></th>
                                                         <td>
-                                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0)).toLocaleString('en-US')} đ</span>
+                                                            <span className="text-danger fs-2">{(total).toLocaleString('en-US')} đ</span>
                                                         </td>
                                                     </tr>
                                                     {
@@ -471,7 +480,7 @@ const Cart = () => {
                                                     <tr>
                                                         <th><span className="text-secondary">Tổng tiền: </span></th>
                                                         <td>
-                                                            <span className="text-danger fs-2">{(cart.reduce((total, item) => total + item.quantity * item.price, 0) + shippingFee - discountValue).toLocaleString('en-US')} đ</span>
+                                                            <span className="text-danger fs-2">{(total + shippingFee - discountValue).toLocaleString('en-US')} đ</span>
                                                         </td>
                                                     </tr>
                                                 </tbody>

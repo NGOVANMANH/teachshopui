@@ -1,4 +1,4 @@
-import { Container, Row, Col, Image } from "react-bootstrap";
+import { Container, Row, Col, Image, FormCheck } from "react-bootstrap";
 import clsx from "clsx";
 import { useContextData } from "../../hooks";
 
@@ -7,7 +7,7 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 
 const CartItem = ({ data }) => {
 
-    const { updateQuantity, deleteCartItem } = useContextData();
+    const { updateQuantity, deleteCartItem, checkedProduct } = useContextData();
 
     const handleDelete = () => {
         deleteCartItem(data.id, data.color);
@@ -16,9 +16,21 @@ const CartItem = ({ data }) => {
         updateQuantity(data.id, data.color, value);
     }
 
+    const handleChange = () => {
+        if (data.check === true) {
+            checkedProduct(data.id, data.color, false);
+        }
+        else {
+            checkedProduct(data.id, data.color, true);
+        }
+    }
+
     return (
         <Container className="bg-white rounded mt-3 mb-3">
             <Row className="fs-4 p-3">
+                <Col md="auto" lg="auto" sm="auto" xs="auto" className="d-flex align-items-center">
+                    <FormCheck style={{ fontSize: "2rem" }} onChange={handleChange} checked={data.check} />
+                </Col>
                 <Col md={12} lg={6} className="d-flex">
                     <Image className={clsx(styles.thumnail)} src={`data:image/jpeg;base64, ${data.image}`} alt="thumnail" />
                     <div className={clsx.description}>

@@ -39,7 +39,7 @@ const Checkout = () => {
                 <div className="d-flex justify-content-center">
                     <div style={{ width: "50%" }}>
                         <div style={{ maxHeight: "45.5rem", overflowY: "scroll", overflowX: "hidden", padding: "0.5rem" }}>
-                            {cart.map(item => <CartItem key={`${item.id}-${item.color}`} data={item} />)}
+                            {cart.map(item => item.check === true ? <CartItem key={`${item.id}-${item.color}`} data={item} /> : <></>)}
                         </div>
                         <div className="text-end fs-3 text-secondary">
                             <button className="btn btn-secondary m-4 fs-2" onClick={handleDoneTranfer}>{isSendingReq ? <Spinner /> : isDone ? <MdDoneAll /> : "Done"}</button>

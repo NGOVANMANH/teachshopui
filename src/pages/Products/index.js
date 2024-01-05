@@ -392,8 +392,6 @@ const Products = () => {
             price: range.join("-"),
         }
 
-        console.log(data);
-
         const res = await getSortProducts(category, data);
         if (res !== NOT_FOUND) {
             if (res.product) {

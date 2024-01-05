@@ -29,6 +29,9 @@ const Provider = ({ children }) => {
 
     const [fee, setFee] = useState(0);
 
+    const [isCheckAll, setIsCheckAll] = useState(false);
+
+
     // Fetch Products
     useEffect(() => {
         const fetchApi = async () => {
@@ -96,9 +99,11 @@ const Provider = ({ children }) => {
             const fetchCart = async () => {
                 const res = await getCart();
                 if (res && res.product_cart && res.product_cart.length > 0) {
-                    setCart([
-                        ...res.product_cart,
-                    ]);
+                    const _cart = [...res.product_cart].map(item => ({
+                        ...item,
+                        check: false,
+                    }));
+                    setCart(_cart);
                 }
                 else {
                     setCart([]);
@@ -119,6 +124,7 @@ const Provider = ({ children }) => {
             cartPrev.push({
                 ...product,
                 quantity: 1,
+                check: false,
             })
         }
         setCart(cartPrev);
@@ -133,6 +139,7 @@ const Provider = ({ children }) => {
                 addCart({
                     ...product,
                     quantity: 1,
+                    check: false,
                 })
             }
         }
@@ -189,8 +196,41 @@ const Provider = ({ children }) => {
         setDiscount(0);
     }
 
+    const checkedProduct = (productID, productColor, value) => {
+        const cartAfter = [...cart];
+        const foundProduct = cartAfter.find(item => (item.id === productID && item.color === productColor));
+        if (foundProduct) {
+            foundProduct.check = value;
+            setCart(cartAfter);
+            if (user.auth === false) {
+                localStorage.setItem("cart", JSON.stringify(cartAfter));
+            }
+        }
+    }
+
+    const checkedAllProducts = () => {
+        const cartAfter = [...cart];
+        cartAfter.forEach(item => {
+            item.check = true;
+        })
+        setCart(cartAfter);
+        setIsCheckAll(true);
+    }
+
+    const unCheckedAllProducts = () => {
+        const cartAfter = [...cart];
+        cartAfter.forEach(item => {
+            item.check = false;
+        })
+        setCart(cartAfter);
+        setIsCheckAll(false);
+    }
+
     useEffect(() => {
-        const _total = [...cart].reduce((total, item) => total + item.quantity * item.price, 0);
+        const _total = [...cart].reduce((total, item) => {
+            if (item.check === false) return total;
+            else return total + item.quantity * item.price;
+        }, 0);
         setTotal(_total);
     }, [cart])
 
@@ -222,7 +262,7 @@ const Provider = ({ children }) => {
     }, [isOnline])
 
     return (
-        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, emptyCart, address, total, fee, discount, setFee, setDiscount }}>
+        <Context.Provider value={{ products, user, setUser, cart, addToCart, deleteCartItem, updateQuantity, emptyCart, isCheckAll, checkedProduct, checkedAllProducts, unCheckedAllProducts, address, total, fee, discount, setFee, setDiscount }}>
             <ToastContainer position="top-right" />
             {children}
         </Context.Provider>
